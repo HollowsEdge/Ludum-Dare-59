@@ -3,7 +3,7 @@ using System;
 
 public partial class MainMenuUi : Control
 {
-    [Export] private PackedScene playScene;
+    [Export] private string playScenePath;
     [Export] private Control mainMenu;
     [Export] private Control loadingMenu;
     [Export] private Control optionsMenu;
@@ -20,7 +20,7 @@ public partial class MainMenuUi : Control
         mainMenu.Hide();
         // TODO: If time: animation
         loadingMenu.Show();
-        GetTree().ChangeSceneToPacked(playScene);
+        GetTree().ChangeSceneToFile(playScenePath);
     }
 
     public void OnOptionsButtonPressed()

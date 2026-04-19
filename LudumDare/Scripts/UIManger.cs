@@ -2,7 +2,7 @@ using Godot;
 
 public partial class UIManger : Control
 {
-    [Export] private PackedScene mainMenuScene;
+    [Export] private string mainMenuSceneString;
     [Export] private Control pausedMenu;
 
     public override void _Ready()
@@ -30,7 +30,7 @@ public partial class UIManger : Control
 
     public void OnMenuButtonPressed()
     {
-        GetTree().ChangeSceneToPacked(mainMenuScene);
+        GetTree().ChangeSceneToFile(mainMenuSceneString);
     }
 
     public void OnQuitButtonPressed()

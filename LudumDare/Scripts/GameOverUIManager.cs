@@ -3,11 +3,11 @@ using System;
 
 public partial class GameOverUIManager : Control
 {
-    [Export] private PackedScene mainMenuScene;
+    [Export] private string mainMenuScenePath;
 
     public void OnMenuButtonPressed()
     {
-        GetTree().ChangeSceneToPacked(mainMenuScene);
+        GetTree().ChangeSceneToFile(mainMenuScenePath);
     }
 
     public void OnQuitButtonPressed()

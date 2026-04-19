@@ -7,7 +7,7 @@ public partial class GameManager : Node
 
     private int collectedTreasure = 0;
 
-    [Export] private PackedScene gameOverUIScene;
+    [Export] private string gameOverUIScenePath;
 
     public void SetTotalTreasure(int amount)
     {
@@ -29,6 +29,6 @@ public partial class GameManager : Node
 
     public void FinishGame()
     {
-        GetTree().ChangeSceneToPacked(gameOverUIScene);
+        GetTree().ChangeSceneToFile(gameOverUIScenePath);
     }
 }

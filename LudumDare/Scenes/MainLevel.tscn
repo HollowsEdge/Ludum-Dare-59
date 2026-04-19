@@ -7,9 +7,7 @@
 [ext_resource type="Environment" uid="uid://cpof8ahuhv7ks" path="res://MainLevelEnv.tres" id="5_bfvw3"]
 [ext_resource type="PackedScene" uid="uid://bhnj61kaacyym" path="res://Prefabs/Player.tscn" id="6_gkx6n"]
 [ext_resource type="Script" uid="uid://cxansgc54xph7" path="res://Scripts/GameManager.cs" id="7_ndu1b"]
-[ext_resource type="PackedScene" uid="uid://c6jyddssch8si" path="res://Scenes/GameOverUI.tscn" id="8_385d4"]
 [ext_resource type="Script" uid="uid://bh11ejgxorxgj" path="res://Scripts/UIManger.cs" id="9_i24ni"]
-[ext_resource type="PackedScene" uid="uid://dwu30f7dnl5v5" path="res://Scenes/MainMenu.tscn" id="10_dquol"]
 
 [node name="Level" type="Node3D" unique_id=1238649477 node_paths=PackedStringArray("player", "gamemanager")]
 script = ExtResource("1_wa8mu")
@@ -33,7 +31,7 @@ environment = ExtResource("5_bfvw3")
 
 [node name="Gamemanager" type="Node" parent="." unique_id=1217925287 groups=["GameManager"]]
 script = ExtResource("7_ndu1b")
-gameOverUIScene = ExtResource("8_385d4")
+gameOverUIScenePath = "res://Scenes/GameOverUI.tscn"
 
 [node name="PlayerUI" type="Control" parent="." unique_id=2000826654 node_paths=PackedStringArray("pausedMenu") groups=["UIManager"]]
 process_mode = 3
@@ -45,7 +43,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_i24ni")
-mainMenuScene = ExtResource("10_dquol")
+mainMenuSceneString = "res://Scenes/MainMenu.tscn"
 pausedMenu = NodePath("PauseMenu")
 
 [node name="PauseMenu" type="Control" parent="PlayerUI" unique_id=1647853109]

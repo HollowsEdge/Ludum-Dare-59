@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://dwu30f7dnl5v5"]
 
 [ext_resource type="Script" uid="uid://ds1boheygowj5" path="res://Scripts/MainMenuUi.cs" id="1_65ows"]
-[ext_resource type="PackedScene" uid="uid://cfcyjw1rprqpv" path="res://Scenes/MainLevel.tscn" id="2_2ld8x"]
 [ext_resource type="Material" uid="uid://7c7yix6ya8u8" path="res://Materials/Rock/RockMenu.tres" id="3_ooo5j"]
 [ext_resource type="Environment" uid="uid://clqo2cunk6shc" path="res://MainMenuEnv.tres" id="4_gerv3"]
 
@@ -42,7 +41,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_65ows")
-playScene = ExtResource("2_2ld8x")
+playScenePath = "res://Scenes/MainLevel.tscn"
 mainMenu = NodePath("MainMenu")
 loadingMenu = NodePath("LoadingMenu")
 optionsMenu = NodePath("OptionsMenu")
