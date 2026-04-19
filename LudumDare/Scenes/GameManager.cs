@@ -7,6 +7,8 @@ public partial class GameManager : Node
 
     private int collectedTreasure = 0;
 
+    [Export] private PackedScene gameOverUIScene;
+
     public void SetTotalTreasure(int amount)
     {
         totalTreasure = amount;
@@ -19,12 +21,14 @@ public partial class GameManager : Node
 
         collectedTreasure++;
 
+        GD.Print($"GameManager: Total treasure {collectedTreasure} / {totalTreasure}");
+
         if (collectedTreasure >= totalTreasure)
             FinishGame();
     }
 
     public void FinishGame()
     {
-        // Stop systems and show game over
+        GetTree().ChangeSceneToPacked(gameOverUIScene);
     }
 }

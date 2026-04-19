@@ -31,6 +31,9 @@ public partial class PlayerController : CharacterBody3D
         if(Input.IsKeyPressed(Key.Escape))
             Input.MouseMode = Input.MouseModeEnum.Visible;
 
+        if(Input.IsKeyPressed(Key.Asciitilde))
+            Input.MouseMode = Input.MouseModeEnum.Captured;
+
         Vector2 input = Input.GetVector("move_left", "move_right", "move_down", "move_up").Normalized();
 
         currSpeed = Input.IsActionPressed("sprint") ? sprintSpeed : walkSpeed;
@@ -72,7 +75,7 @@ public partial class PlayerController : CharacterBody3D
                 {
                     // Drop
                     carryingTreasure.QueueFree();
-                    // TODO: Alert gamemanager collection
+                    ((DropTreasure)exitArea).RecieveTreasure();
                     GD.Print("SUCCESS : " + carryingTreasure);
                     carryingTreasure = null;
                 }

@@ -7,12 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://bhnj61kaacyym" path="res://Player.tscn" id="4_81xng"]
 [ext_resource type="PackedScene" uid="uid://d05pes65wrhvr" path="res://treasure.tscn" id="5_wqkje"]
 [ext_resource type="Script" uid="uid://cxansgc54xph7" path="res://Scenes/GameManager.cs" id="7_8c0lf"]
+[ext_resource type="PackedScene" uid="uid://c6jyddssch8si" path="res://game_over_ui.tscn" id="8_754fn"]
 
-[node name="Level" type="Node3D" unique_id=1238649477 node_paths=PackedStringArray("player")]
+[node name="Level" type="Node3D" unique_id=1238649477 node_paths=PackedStringArray("player", "gamemanager")]
 script = ExtResource("1_tumq0")
 treasureScene = ExtResource("5_wqkje")
 exitScene = ExtResource("3_0f350")
 player = NodePath("Player")
+gamemanager = NodePath("Gamemanager")
 mapSize = 55
 middleLayers = 3
 width = 64
@@ -27,5 +29,6 @@ environment = ExtResource("3_6phgx")
 
 [node name="Player" parent="." unique_id=223059442 instance=ExtResource("4_81xng")]
 
-[node name="Gamemanager" type="Node" parent="." unique_id=1217925287]
+[node name="Gamemanager" type="Node" parent="." unique_id=1217925287 groups=["GameManager"]]
 script = ExtResource("7_8c0lf")
+gameOverUIScene = ExtResource("8_754fn")
