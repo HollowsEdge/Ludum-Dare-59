@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://d05pes65wrhvr" path="res://treasure.tscn" id="5_wqkje"]
 [ext_resource type="Script" uid="uid://cxansgc54xph7" path="res://Scenes/GameManager.cs" id="7_8c0lf"]
 [ext_resource type="PackedScene" uid="uid://c6jyddssch8si" path="res://game_over_ui.tscn" id="8_754fn"]
+[ext_resource type="Script" uid="uid://bh11ejgxorxgj" path="res://UIManger.cs" id="9_bvt00"]
+[ext_resource type="PackedScene" uid="uid://dwu30f7dnl5v5" path="res://main_menu.tscn" id="10_oqgf2"]
 
 [node name="Level" type="Node3D" unique_id=1238649477 node_paths=PackedStringArray("player", "gamemanager")]
 script = ExtResource("1_tumq0")
@@ -32,3 +34,85 @@ environment = ExtResource("3_6phgx")
 [node name="Gamemanager" type="Node" parent="." unique_id=1217925287 groups=["GameManager"]]
 script = ExtResource("7_8c0lf")
 gameOverUIScene = ExtResource("8_754fn")
+
+[node name="PlayerUI" type="Control" parent="." unique_id=2000826654 node_paths=PackedStringArray("pausedMenu") groups=["UIManager"]]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_bvt00")
+mainMenuScene = ExtResource("10_oqgf2")
+pausedMenu = NodePath("PauseMenu")
+
+[node name="PauseMenu" type="Control" parent="PlayerUI" unique_id=1647853109]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Bg" type="ColorRect" parent="PlayerUI/PauseMenu" unique_id=1492712007]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.27058825)
+
+[node name="Label" type="Label" parent="PlayerUI/PauseMenu" unique_id=1184617372]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -139.0
+offset_top = 48.0
+offset_right = 139.0
+offset_bottom = 157.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 79
+text = "Paused"
+
+[node name="ButtonHolder" type="VBoxContainer" parent="PlayerUI/PauseMenu" unique_id=1663358980]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -213.0
+offset_top = -145.0
+offset_right = 214.0
+offset_bottom = 173.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="PlayerUI/PauseMenu/ButtonHolder" unique_id=67013164]
+custom_minimum_size = Vector2(0, 104.36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Resume"
+
+[node name="MenuButton" type="Button" parent="PlayerUI/PauseMenu/ButtonHolder" unique_id=119735172]
+custom_minimum_size = Vector2(0, 104.36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Main Menu"
+
+[node name="QuitButton" type="Button" parent="PlayerUI/PauseMenu/ButtonHolder" unique_id=1973415227]
+custom_minimum_size = Vector2(0, 104.36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Quit"
+
+[connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/ResumeButton" to="PlayerUI" method="OnResumeButtonPressed"]
+[connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/MenuButton" to="PlayerUI" method="OnMenuButtonPressed"]
+[connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/QuitButton" to="PlayerUI" method="OnQuitButtonPressed"]

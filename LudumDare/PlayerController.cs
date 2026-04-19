@@ -19,20 +19,19 @@ public partial class PlayerController : CharacterBody3D
 
     private Area3D exitArea;
 
+    private UIManger uIManger;
+
     public override void _Ready()
     {
         cameraHolder = GetNode<Node3D>("CameraHolder");
         Input.MouseMode = Input.MouseModeEnum.Captured;
+        uIManger = (UIManger)GetTree().GetFirstNodeInGroup("UIManager");
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        //TMP
-        if(Input.IsKeyPressed(Key.Escape))
-            Input.MouseMode = Input.MouseModeEnum.Visible;
-
-        if(Input.IsKeyPressed(Key.Asciitilde))
-            Input.MouseMode = Input.MouseModeEnum.Captured;
+        if (Input.IsKeyPressed(Key.Escape))
+            uIManger.TogglePaused();
 
         Vector2 input = Input.GetVector("move_left", "move_right", "move_down", "move_up").Normalized();
 
