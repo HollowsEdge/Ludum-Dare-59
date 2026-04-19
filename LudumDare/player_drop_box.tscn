@@ -1,13 +1,24 @@
 [gd_scene format=3 uid="uid://brwhupk2n01k6"]
 
+[ext_resource type="Script" uid="uid://4o74jiigko0e" path="res://DropTreasure.cs" id="1_jal7x"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_xr358"]
 size = Vector3(3, 5, 3)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jal7x"]
+size = Vector2(3, 3)
 
 [node name="PlayerDropBox" type="Node3D" unique_id=2147074141]
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1621386024]
-collision_mask = 2
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_jal7x")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1972711876]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("BoxShape3D_xr358")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=337522739]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+mesh = SubResource("PlaneMesh_jal7x")

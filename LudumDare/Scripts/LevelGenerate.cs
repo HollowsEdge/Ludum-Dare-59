@@ -8,8 +8,10 @@ public partial class LevelGenerate : Node3D
     [Export] private int treasureAmount = 3;
 
     [ExportCategory("References")]
-    [Export] private PackedScene treasure;
-    [Export] private Node3D player;
+    [Export] private PackedScene treasureScene;
+    [Export] private PackedScene exitScene;
+    [Export] private PlayerController player;
+    [Export] private GameManager gamemanager;
 
     [ExportCategory("Cave Settings")]
     [Export] private int mapSize = 5;
@@ -322,7 +324,7 @@ public partial class LevelGenerate : Node3D
     {
         gameMap = new bool[width, height];
         GenerateCave();
-        SpawnPlayer();
+        SpawnPlayerAndExit();
         SpawnTreasure();
     }
 
@@ -531,7 +533,7 @@ public partial class LevelGenerate : Node3D
         
     }
 
-    private void SpawnPlayer()
+    private void SpawnPlayerAndExit()
     {
         float aspectRatio = (float)width / (float)height;
         Vector2 meshSize = new Vector2(aspectRatio, 1f) * mapSize;
@@ -545,6 +547,11 @@ public partial class LevelGenerate : Node3D
                 {
                     Vector3 pos = new(((float)-mapSize / 2) + (x * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (z * pixelWorldSizeZ));
                     player.GlobalPosition = pos;
+                    Node3D exitNode = exitScene.Instantiate<Node3D>();
+                    AddChild(exitNode);
+                    player.SetTouchingArea(exitNode.GetNode<Area3D>("Area3D"));
+                    exitNode.GlobalPosition = pos;
+                    return;
                 }
             }
     }
@@ -575,7 +582,8 @@ public partial class LevelGenerate : Node3D
 
                 // TODO: Distance check the chests
 
-                Node3D treasureNode = treasure.Instantiate<Node3D>();
+                Node3D treasureNode = treasureScene.Instantiate<Node3D>();
+                treasureNode.Name = "Treasure " + treasurePlaced;
                 //treasureNode.GetNode<RigidBody3D>("RigidBody3D").Freeze = true;
                 AddChild(treasureNode);
                 treasureNode.GlobalPosition = pos;
@@ -588,6 +596,8 @@ public partial class LevelGenerate : Node3D
 
             maxLoops++;
         }
+
+        gamemanager.SetTotalTreasure(treasureAmount);
 
         if (maxLoops <= 0)
             GD.PushWarning($"LevelGenerate: Max loops hit when spawning treasure, breaking loop.");

@@ -15,6 +15,9 @@ public partial class PlayerController : CharacterBody3D
     private float currSpeed;
 
     private Node3D carryingTreasure;
+    private bool touchingExit = false;
+
+    private Area3D exitArea;
 
     public override void _Ready()
     {
@@ -38,13 +41,6 @@ public partial class PlayerController : CharacterBody3D
 
         Velocity = direction * currSpeed * (float)delta;
         MoveAndSlide();
-
-        //if (carryingTreasure != null)
-        //{
-        //    carryingTreasure.GlobalPosition = carryingPos.GlobalPosition;
-        //    carryingTreasure.GlobalRotation = carryingPos.Rotation;
-        //    carryingPos.AddChild(carryingTreasure);
-        //}
     }
 
     public override void _Input(InputEvent @event)
@@ -56,17 +52,29 @@ public partial class PlayerController : CharacterBody3D
                 // Pick up
                 GodotObject hitObject = ray.GetCollider();
                 carryingTreasure = ((Node3D)hitObject).GetParent<Node3D>();
-                carryingTreasure.GlobalPosition = carryingPos.GlobalPosition;
-                carryingTreasure.Reparent(carryingPos);
-                carryingTreasure.RotationDegrees = Vector3.Zero;
-                GD.Print("Picked up : " + carryingTreasure);
+                // Check if it is treasure
+                if (carryingTreasure.Name.ToString().Contains("Treasure"))
+                {
+                    carryingTreasure.GlobalPosition = carryingPos.GlobalPosition;
+                    carryingTreasure.Reparent(carryingPos);
+                    carryingTreasure.RotationDegrees = Vector3.Zero;
+                    GD.Print("Picked up : " + carryingTreasure);
+                }
+                else
+                {
+                    carryingTreasure = null;
+                }
             }
             else
             {
                 // Check if standing in recieve zone
-                if ()
+                if (exitArea.OverlapsBody(GetNode<PlayerController>(GetPath())))
                 {
-
+                    // Drop
+                    carryingTreasure.QueueFree();
+                    // TODO: Alert gamemanager collection
+                    GD.Print("SUCCESS : " + carryingTreasure);
+                    carryingTreasure = null;
                 }
                 else
                 {
@@ -92,4 +100,13 @@ public partial class PlayerController : CharacterBody3D
         }
     }
 
+    public void SetTouchingExit(bool touching)
+    {
+        touchingExit = touching;
+    }
+
+    public void SetTouchingArea(Area3D area)
+    {
+        exitArea = area;
+    }
 }

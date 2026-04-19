@@ -10,7 +10,7 @@ radius = 0.35
 
 [sub_resource type="BoxMesh" id="BoxMesh_0rwas"]
 
-[node name="Player" type="CharacterBody3D" unique_id=223059442 node_paths=PackedStringArray("ray", "carryingPos")]
+[node name="Player" type="CharacterBody3D" unique_id=223059442 node_paths=PackedStringArray("ray", "carryingPos") groups=["Player"]]
 script = ExtResource("1_xhfnw")
 walkSpeed = 125.0
 sprintSpeed = 200.0
