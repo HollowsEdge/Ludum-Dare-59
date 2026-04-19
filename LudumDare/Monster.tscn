@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://d4gktu0eh13uo"]
+
+[ext_resource type="Shader" uid="uid://comhx732g8jtf" path="res://MonsterShader.tres" id="1_vb3nq"]
+[ext_resource type="CapsuleMesh" uid="uid://cclbp2cf2knsy" path="res://CapsuleMonsterMesh.tres" id="2_qheve"]
+[ext_resource type="Script" uid="uid://j3gnxqrbragb" path="res://MonsterGrabWall.cs" id="2_ssiii"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vb3nq"]
+noise_type = 3
+seed = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ssiii"]
+noise = SubResource("FastNoiseLite_vb3nq")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ssiii"]
+render_priority = 0
+shader = ExtResource("1_vb3nq")
+shader_parameter/FloatParameter = 0.2
+shader_parameter/Texture2DParameter = SubResource("NoiseTexture2D_ssiii")
+shader_parameter/EffectStrength = 1.395
+shader_parameter/ColorParameter = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_5vc1h"]
+material = SubResource("ShaderMaterial_ssiii")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5vc1h"]
+
+[node name="Monster" type="CharacterBody3D" unique_id=1139476480]
+collision_layer = 8
+collision_mask = 8
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=579899264]
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=979349973]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+layers = 8
+mesh = SubResource("SphereMesh_5vc1h")
+
+[node name="GrabHolder" type="Node3D" parent="." unique_id=1079356298]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=465361016 node_paths=PackedStringArray("grabHolder")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+shape = SubResource("SphereShape3D_5vc1h")
+script = ExtResource("2_ssiii")
+grabHolder = NodePath("../GrabHolder")
+grabMesh = ExtResource("2_qheve")
+
+[node name="RayCast3D" type="RayCast3D" parent="CollisionShape3D" unique_id=1789585148]
+target_position = Vector3(0, -2.5, 0)
+
+[node name="RayCast3D2" type="RayCast3D" parent="CollisionShape3D" unique_id=322342519]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+target_position = Vector3(0, -2.5, 0)
+
+[node name="RayCast3D3" type="RayCast3D" parent="CollisionShape3D" unique_id=2111101910]
+transform = Transform3D(1, 0, 0, 0, -5.9604645e-08, -1, 0, 1, -5.9604645e-08, 0, 0, 0)
+target_position = Vector3(0, -2.5, 0)
+
+[node name="RayCast3D4" type="RayCast3D" parent="CollisionShape3D" unique_id=500035837]
+transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0)
+target_position = Vector3(0, -2.5, 0)
+
+[node name="RayCast3D5" type="RayCast3D" parent="CollisionShape3D" unique_id=1646348204]
+transform = Transform3D(1.1920929e-07, 1, 0, -1, 1.1920929e-07, 0, 0, 0, 1, 0, 0, 0)
+target_position = Vector3(0, -2.5, 0)
+
+[node name="RayCast3D6" type="RayCast3D" parent="CollisionShape3D" unique_id=749756863]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+target_position = Vector3(0, -2.5, 0)
+
+[node name="RayCast3D7" type="RayCast3D" parent="CollisionShape3D" unique_id=1098738266]
+transform = Transform3D(0.49999994, -0.49999994, 0.70710677, 0.7071067, 0.7071067, 0, -0.49999994, 0.49999994, 0.70710677, -8.4293696e-08, 0, 0)
+target_position = Vector3(0, -2.5, 0)
+
+[node name="RayCast3D8" type="RayCast3D" parent="CollisionShape3D" unique_id=1418611099]
+transform = Transform3D(0.7071067, -0.49999994, 0.4999999, 0, 0.70710677, 0.7071067, -0.7071067, -0.49999994, 0.4999999, -8.4293696e-08, 0, 0)
+target_position = Vector3(0, -2.5, 0)
+
+[node name="RayCast3D9" type="RayCast3D" parent="CollisionShape3D" unique_id=1774732836]
+transform = Transform3D(0.7071067, 0.49999994, 0.49999997, 0, 0.70710665, -0.7071067, -0.7071067, 0.49999994, 0.49999997, -8.4293696e-08, 0, 0)
+target_position = Vector3(0, -2.5, 0)
+
+[node name="RayCast3D10" type="RayCast3D" parent="CollisionShape3D" unique_id=2085421484]
+transform = Transform3D(-0.70710677, 0.4999999, 0.49999994, 0, 0.70710665, -0.7071067, -0.7071067, -0.49999994, -0.49999997, -8.4293696e-08, 0, 0)
+target_position = Vector3(0, -2.5, 0)
+
+[node name="RayCast3D11" type="RayCast3D" parent="CollisionShape3D" unique_id=43575441]
+transform = Transform3D(-0.49999988, 0.5, -0.70710677, -0.70710677, -0.70710665, -6.181724e-08, -0.49999994, 0.49999994, 0.70710677, -8.4293696e-08, 0, 0)
+target_position = Vector3(0, -2.5, 0)
+
+[node name="RayCast3D12" type="RayCast3D" parent="CollisionShape3D" unique_id=1302863824]
+transform = Transform3D(-0.7071067, 0.5, -0.49999985, -1.0396407e-07, -0.7071067, -0.70710677, -0.7071067, -0.49999994, 0.4999999, -8.4293696e-08, 0, 0)
+target_position = Vector3(0, -2.5, 0)
+
+[node name="RayCast3D13" type="RayCast3D" parent="CollisionShape3D" unique_id=1084065078]
+transform = Transform3D(-0.70710677, -0.49999985, -0.50000006, -6.181723e-08, -0.7071067, 0.70710665, -0.7071067, 0.49999994, 0.49999997, -8.4293696e-08, 0, 0)
+target_position = Vector3(0, -2.5, 0)
+
+[node name="RayCast3D14" type="RayCast3D" parent="CollisionShape3D" unique_id=1783114091]
+transform = Transform3D(0.70710677, -0.49999985, -0.5, 1.250375e-07, -0.70710665, 0.7071067, -0.7071067, -0.49999997, -0.49999997, -8.4293696e-08, 0, 0)
+target_position = Vector3(0, -2.5, 0)

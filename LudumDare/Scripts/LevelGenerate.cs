@@ -12,6 +12,7 @@ public partial class LevelGenerate : Node3D
     [Export] private PackedScene exitScene;
     [Export] private PlayerController player;
     [Export] private GameManager gamemanager;
+    [Export] private NavigationRegion3D navRegion;
 
     [ExportCategory("Cave Settings")]
     [Export] private int mapSize = 5;
@@ -324,6 +325,7 @@ public partial class LevelGenerate : Node3D
     {
         gameMap = new bool[width, height];
         GenerateCave();
+//        navRegion.BakeNavigationMesh();
         SpawnPlayerAndExit();
         SpawnTreasure();
     }
@@ -540,20 +542,45 @@ public partial class LevelGenerate : Node3D
         float pixelWorldSizeX = meshSize.X / width;
         float pixelWorldSizeZ = meshSize.Y / height;
 
-        for (int x = 0; x < width - 1; x++)
-            for (int z = 0; z < height - 1; z++)
+        //for (int x = 0; x < width - 1; x++)
+        //    for (int z = 0; z < height - 1; z++)
+        //    {
+        //        if (!gameMap3D[x, 1, z])
+        //        {
+        //            Vector3 pos = new(((float)-mapSize / 2) + (x * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (z * pixelWorldSizeZ));
+        //            player.GlobalPosition = pos;
+        //            Node3D exitNode = exitScene.Instantiate<Node3D>();
+        //            AddChild(exitNode);
+        //            player.SetTouchingArea(exitNode.GetNode<Area3D>("Area3D"));
+        //            exitNode.GlobalPosition = pos;
+        //            return;
+        //        }
+        //    }
+
+        int maxLoops = 10000;
+
+        while (maxLoops > 0)
+        {
+            int randX = GD.RandRange(1, width - 1);
+            int randZ = GD.RandRange(1, height - 1);
+            // Check valid spawn location
+            if (!gameMap3D[randX, 1, randZ])
             {
-                if (!gameMap3D[x, 1, z])
-                {
-                    Vector3 pos = new(((float)-mapSize / 2) + (x * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (z * pixelWorldSizeZ));
-                    player.GlobalPosition = pos;
-                    Node3D exitNode = exitScene.Instantiate<Node3D>();
-                    AddChild(exitNode);
-                    player.SetTouchingArea(exitNode.GetNode<Area3D>("Area3D"));
-                    exitNode.GlobalPosition = pos;
-                    return;
-                }
+
+                Vector3 pos = new(((float)-mapSize / 2) + (randX * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (randZ * pixelWorldSizeZ));
+                player.GlobalPosition = pos;
+                Node3D exitNode = exitScene.Instantiate<Node3D>();
+                AddChild(exitNode);
+                player.SetTouchingArea(exitNode.GetNode<Area3D>("Area3D"));
+                exitNode.GlobalPosition = pos;
+                return;
             }
+
+            maxLoops++;
+        }
+
+        if (maxLoops <= 0)
+            GD.PushWarning($"LevelGenerate: Max loops hit when spawning player, breaking loop.");
     }
 
     private void SpawnTreasure()
@@ -568,7 +595,7 @@ public partial class LevelGenerate : Node3D
 
         List<Node3D> previousChests = new();
 
-        while (treasurePlaced < treasureAmount || maxLoops <= 0)
+        while (treasurePlaced < treasureAmount && maxLoops > 0)
         {
             int randX = GD.RandRange(1, width - 1);
             int randZ = GD.RandRange(1, height - 1);

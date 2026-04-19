@@ -3,36 +3,46 @@ using System.Collections.Generic;
 
 public partial class ScannerTool : Node3D
 {
+    [ExportCategory("Gameplay")]
+    [Export] private float timeBtwScans = 2;
+    [Export] private float scanFadeTime = 1.5f;
+
+    [ExportCategory("Grid")]
     [Export] private int gridY = 50;
     [Export] private int gridX = 50;
     [Export] private int spacing = 2;
-    [Export] private float lineWidth = .1f;
+    [Export] private float scanTime = 2;
     [Export] private Mesh visualMesh;
+
+    [ExportCategory("Debug")]
+    [Export] private bool debugRaycastPoints = false;
     [Export] private Material sphereMat;
 
-
-    [Export] private bool debugRaycastPoints = false;
-
     private List<Node> previousPointMeshes = new();
-    private (Vector3 position, Vector3 normal)[,] previousPointPositions;
-
     private MultiMeshInstance3D multiMeshInstance3D = new();
     private MultiMesh multimesh = new();
+    private float currTimeBtwScans = 0;
 
     public override void _Ready()
     {
-        previousPointPositions = new (Vector3 position, Vector3 normal)[gridX, gridY];
         GetTree().Root.CallDeferred("add_child", multiMeshInstance3D);
         multiMeshInstance3D.Multimesh = multimesh;
         multimesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3D;
         multimesh.Mesh = visualMesh;
-        multimesh.InstanceCount = gridX * gridY;
+    }
+
+    public override void _Process(double delta)
+    {
+        if(currTimeBtwScans > 0)
+            currTimeBtwScans -= (float)delta;
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        if (Input.IsKeyPressed(Key.Q)) // TODO: Switch to mouse click
+        if (Input.IsKeyPressed(Key.Q) && currTimeBtwScans <= 0) // TODO: Switch to mouse click
         {
+            currTimeBtwScans = timeBtwScans;
+            multimesh.InstanceCount = gridX * gridY;
             if (debugRaycastPoints)
             {
                 foreach (var item in previousPointMeshes)
@@ -54,11 +64,9 @@ public partial class ScannerTool : Node3D
                     var origin = cam.ProjectRayOrigin(mousePos);
                     var end = origin + cam.ProjectRayNormal(mousePos + new Vector2(offsetX, offsetY)) * 10000;
                     var query = PhysicsRayQueryParameters3D.Create(origin, end, 0b00000000_00000000_00000000_00000001);
-
                     var result = spaceState.IntersectRay(query);
-                    previousPointPositions[x, y] = ((Vector3)result["position"], (Vector3)result["normal"]);
-                    multimesh.SetInstanceTransform(currIndex, new Transform3D(new Basis(), (Vector3)result["position"]));
 
+                    multimesh.SetInstanceTransform(currIndex, new Transform3D(Basis.Identity, (Vector3)result["position"]));
 
                     if (debugRaycastPoints)
                     {
@@ -84,7 +92,7 @@ public partial class ScannerTool : Node3D
 
             }
 
-            GD.Print(previousPointMeshes.Count);
+            //GD.Print(previousPointMeshes.Count);
         }
         
     }

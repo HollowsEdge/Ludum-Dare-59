@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://crqpq0l70kpjl" path="res://Scripts/PlayerController.cs" id="1_xhfnw"]
 [ext_resource type="Script" uid="uid://ct622uvfyxo3c" path="res://Scripts/ScannerTool.cs" id="2_x3d5u"]
+[ext_resource type="Material" uid="uid://kpkideeg5njj" path="res://ScanMaterial.tres" id="3_b43ah"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
 radius = 0.2
@@ -12,6 +13,9 @@ radius = 0.35
 [sub_resource type="BoxMesh" id="BoxMesh_0rwas"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_x3d5u"]
+material = ExtResource("3_b43ah")
+radius = 0.02
+height = 0.04
 radial_segments = 8
 rings = 4
 
@@ -58,12 +62,11 @@ transform = Transform3D(0.99619466, -0.08715573, 0, 0.08715573, 0.99619466, 0, 0
 
 [node name="Scanner" type="Node3D" parent="CameraHolder" unique_id=111162488]
 script = ExtResource("2_x3d5u")
-gridY = 30
+gridY = 20
 gridX = 30
-spacing = 40
+spacing = 25
 visualMesh = SubResource("SphereMesh_x3d5u")
 sphereMat = SubResource("StandardMaterial3D_x3d5u")
-debugRaycastPoints = true
 
 [node name="Cube" type="MeshInstance3D" parent="CameraHolder/Scanner" unique_id=1802907844]
 transform = Transform3D(0.14542629, 0, 0, 0, 0.14542629, 0, 0, 0, 0.14542629, 0.4748571, -0.35445905, -0.558345)
