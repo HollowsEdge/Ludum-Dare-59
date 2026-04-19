@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://c6jyddssch8si"]
 
-[ext_resource type="Script" uid="uid://dksdq8np2hi3i" path="res://GameOverUIManager.cs" id="1_ji7mg"]
+[ext_resource type="Script" uid="uid://bh11ejgxorxgj" path="res://UIManger.cs" id="1_ji7mg"]
 
-[node name="GameOver" type="Control" unique_id=1968407630]
+[node name="UIHolder" type="Control" unique_id=1968407630]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -49,14 +49,17 @@ grow_vertical = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="PlayButton" type="Button" parent="ButtonHolder" unique_id=25522473]
+[node name="MenuButton" type="Button" parent="ButtonHolder" unique_id=25522473]
 custom_minimum_size = Vector2(0, 104.36)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = "Play"
+text = "Main Menu"
 
 [node name="QuitButton" type="Button" parent="ButtonHolder" unique_id=1810037122]
 custom_minimum_size = Vector2(0, 104.36)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Quit"
+
+[connection signal="pressed" from="ButtonHolder/MenuButton" to="." method="OnMenuButtonPressed"]
+[connection signal="pressed" from="ButtonHolder/QuitButton" to="." method="OnQuitButtonPressed"]

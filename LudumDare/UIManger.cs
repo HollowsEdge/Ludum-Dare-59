@@ -1,12 +1,12 @@
 using Godot;
-using System;
 
-// TODO: DELETE THIS
-public partial class GameOverUIManager : Control
+public partial class UIManger : Control
 {
+    [Export] private PackedScene mainMenuScene;
+
     public void OnMenuButtonPressed()
     {
-
+        GetTree().ChangeSceneToPacked(mainMenuScene);
     }
 
     public void OnQuitButtonPressed()

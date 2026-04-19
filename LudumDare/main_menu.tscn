@@ -1,0 +1,178 @@
+[gd_scene format=3 uid="uid://dwu30f7dnl5v5"]
+
+[ext_resource type="Material" uid="uid://7c7yix6ya8u8" path="res://Materials/Rock/RockMenu.tres" id="1_06t4h"]
+[ext_resource type="Script" uid="uid://ds1boheygowj5" path="res://MainMenuUi.cs" id="1_7vrkn"]
+[ext_resource type="PackedScene" uid="uid://cfcyjw1rprqpv" path="res://Scenes/level.tscn" id="2_fu7sn"]
+[ext_resource type="Environment" uid="uid://clqo2cunk6shc" path="res://mainMenuEnv.tres" id="4_jix8l"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rhts7"]
+noise_type = 3
+frequency = 0.0027
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rhts7"]
+noise = SubResource("FastNoiseLite_rhts7")
+seamless = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_06t4h"]
+albedo_color = Color(0.36226156, 0.30280095, 0.2411376, 1)
+albedo_texture = SubResource("NoiseTexture2D_rhts7")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7vrkn"]
+material = SubResource("StandardMaterial3D_06t4h")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_06t4h"]
+noise = SubResource("FastNoiseLite_rhts7")
+seamless = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7vrkn"]
+albedo_color = Color(0, 0.32533124, 0, 1)
+albedo_texture = SubResource("NoiseTexture2D_06t4h")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fu7sn"]
+material = SubResource("StandardMaterial3D_7vrkn")
+
+[node name="MainMenuScene" type="Node3D" unique_id=1945999567]
+
+[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "loadingMenu", "optionsMenu")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7vrkn")
+playScene = ExtResource("2_fu7sn")
+mainMenu = NodePath("MainMenu")
+loadingMenu = NodePath("LoadingMenu")
+optionsMenu = NodePath("OptionsMenu")
+metadata/_edit_use_anchors_ = true
+
+[node name="MainMenu" type="Control" parent="MainMenuUI" unique_id=917621942]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="MainMenuUI/MainMenu" unique_id=991996240]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -465.0
+offset_right = 465.0
+offset_bottom = 215.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 66
+text = "NAME GOES HERE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonHolder" type="VBoxContainer" parent="MainMenuUI/MainMenu" unique_id=959117487]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -213.0
+offset_top = -153.75
+offset_right = 214.0
+offset_bottom = 182.25
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=1825381018]
+custom_minimum_size = Vector2(0, 104.36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Main Menu"
+
+[node name="OptionsButton" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=1490167389]
+custom_minimum_size = Vector2(0, 104.36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=507176736]
+custom_minimum_size = Vector2(0, 104.36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Quit"
+
+[node name="OptionsMenu" type="Control" parent="MainMenuUI" unique_id=1917341570]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoadingMenu" type="Control" parent="MainMenuUI" unique_id=1763098334]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="MainMenuUI/LoadingMenu" unique_id=548003830]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="MainMenuUI/LoadingMenu" unique_id=830913747]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -465.0
+offset_top = -107.5
+offset_right = 465.0
+offset_bottom = 107.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 66
+text = "Loading..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Ground5" type="MeshInstance3D" parent="." unique_id=1919655030]
+transform = Transform3D(10.901428, 0, 0, 0, 1, 0, 0, 0, 10.901428, 0, 0, -9.064234)
+material_override = ExtResource("1_06t4h")
+mesh = SubResource("PlaneMesh_7vrkn")
+
+[node name="Ground2" type="MeshInstance3D" parent="." unique_id=1513732035]
+transform = Transform3D(10.901427, 0, 0, 0, 0.8567355, -5.622477, 0, 0.51575595, 9.339641, 0, 4.882015, -19.166927)
+mesh = SubResource("PlaneMesh_fu7sn")
+
+[node name="Ground3" type="MeshInstance3D" parent="." unique_id=1106702129]
+transform = Transform3D(7.708473, 0.36469454, 6.604123, 0, 0.8567355, -5.622477, -7.708473, 0.36469454, 6.604123, -11, 4.882015, -15.166927)
+mesh = SubResource("PlaneMesh_fu7sn")
+
+[node name="Ground4" type="MeshInstance3D" parent="." unique_id=430880197]
+transform = Transform3D(7.708473, -0.36469454, -6.604123, 2.1860998e-08, 0.8567355, -5.6224766, 7.708473, 0.36469454, 6.604123, 11.359935, 4.8820143, -14.753315)
+mesh = SubResource("PlaneMesh_fu7sn")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1210649752]
+transform = Transform3D(1, 0, 0, 0, 0.86602545, 0.5, 0, -0.5, 0.86602545, 0, 3.70564, -0.905056)
+
+[node name="THE SUN" type="DirectionalLight3D" parent="." unique_id=2103286527]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 9.234915, 3.5730615)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=176566597]
+environment = ExtResource("4_jix8l")
