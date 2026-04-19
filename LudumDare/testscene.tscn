@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cmr0qh1sbfrei"]
+
+[ext_resource type="PackedScene" uid="uid://bhnj61kaacyym" path="res://Player.tscn" id="1_jotil"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_44gc5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_jotil"]
+
+[node name="Node3D" type="Node3D" unique_id=1054581668]
+
+[node name="Player" parent="." unique_id=223059442 instance=ExtResource("1_jotil")]
+walkSpeed = 125.0
+sprintSpeed = 175.0
+sensitivity = 1.5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=193019441]
+transform = Transform3D(5.2, 0, 0, 0, 1, 0, 0, 0, 15.735, 0, 0, 0)
+mesh = SubResource("PlaneMesh_44gc5")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1533198395]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20546198, -7.1972294)
+mesh = SubResource("BoxMesh_jotil")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=374051122]
+transform = Transform3D(0.70710677, 0.5, -0.5, 0, 0.7071068, 0.7071068, 0.70710677, -0.5, 0.5, 0, 1.899544, 2.3479295)
+shadow_enabled = true

@@ -451,8 +451,10 @@ public partial class LevelGenerate : Node3D
         MeshInstance3D meshInstance3D = new()
         {
             Mesh = mesh,
+            Name = "Caves",
             MaterialOverride = rockMaterial
         };
+        meshInstance3D.CreateTrimeshCollision();
         AddChild(meshInstance3D);
 
         if(createDebugSandwich)

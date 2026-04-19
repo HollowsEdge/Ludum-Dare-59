@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bhnj61kaacyym"]
+
+[ext_resource type="Script" uid="uid://crqpq0l70kpjl" path="res://PlayerController.cs" id="1_xhfnw"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
+radius = 0.2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xhfnw"]
+radius = 0.35
+
+[sub_resource type="BoxMesh" id="BoxMesh_0rwas"]
+
+[node name="Player" type="CharacterBody3D" unique_id=223059442]
+script = ExtResource("1_xhfnw")
+walkSpeed = 125.0
+sprintSpeed = 200.0
+sensitivity = 1.5
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=614385902]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_0rwas")
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=1986700502]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_xhfnw")
+
+[node name="Glasses" type="MeshInstance3D" parent="Body" unique_id=1157421339]
+transform = Transform3D(0.47144705, 0, 0, 0, 0.22111084, 0, 0, 0, 0.42343408, 0, 0.65089035, -0.1390471)
+mesh = SubResource("BoxMesh_0rwas")
+
+[node name="CameraHolder" type="Node3D" parent="." unique_id=1250082951]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraHolder" unique_id=560130718]
