@@ -1,50 +1,51 @@
 [gd_scene format=3 uid="uid://cfcyjw1rprqpv"]
 
-[ext_resource type="Script" uid="uid://d6nx87h5xb0m" path="res://Scripts/LevelGenerate.cs" id="1_tumq0"]
-[ext_resource type="Material" uid="uid://dyod1jbokdtv0" path="res://Materials/Rock/Rock.tres" id="2_k5f4k"]
-[ext_resource type="PackedScene" uid="uid://brwhupk2n01k6" path="res://player_drop_box.tscn" id="3_0f350"]
-[ext_resource type="Environment" uid="uid://cpof8ahuhv7ks" path="res://new_environment.tres" id="3_6phgx"]
-[ext_resource type="PackedScene" uid="uid://bhnj61kaacyym" path="res://Player.tscn" id="4_81xng"]
-[ext_resource type="PackedScene" uid="uid://d05pes65wrhvr" path="res://treasure.tscn" id="5_wqkje"]
-[ext_resource type="Script" uid="uid://cxansgc54xph7" path="res://Scenes/GameManager.cs" id="7_8c0lf"]
-[ext_resource type="PackedScene" uid="uid://c6jyddssch8si" path="res://game_over_ui.tscn" id="8_754fn"]
-[ext_resource type="Script" uid="uid://bh11ejgxorxgj" path="res://UIManger.cs" id="9_bvt00"]
-[ext_resource type="PackedScene" uid="uid://dwu30f7dnl5v5" path="res://main_menu.tscn" id="10_oqgf2"]
+[ext_resource type="Script" uid="uid://d6nx87h5xb0m" path="res://Scripts/LevelGenerate.cs" id="1_wa8mu"]
+[ext_resource type="PackedScene" uid="uid://d05pes65wrhvr" path="res://Prefabs/Treasure.tscn" id="2_0gyb6"]
+[ext_resource type="PackedScene" uid="uid://brwhupk2n01k6" path="res://Prefabs/PlayerExitDropTrigger.tscn" id="3_vqjuy"]
+[ext_resource type="Material" uid="uid://dyod1jbokdtv0" path="res://Materials/Rock/Rock.tres" id="4_5wso4"]
+[ext_resource type="Environment" uid="uid://cpof8ahuhv7ks" path="res://MainLevelEnv.tres" id="5_bfvw3"]
+[ext_resource type="PackedScene" uid="uid://bhnj61kaacyym" path="res://Prefabs/Player.tscn" id="6_gkx6n"]
+[ext_resource type="Script" uid="uid://cxansgc54xph7" path="res://Scripts/GameManager.cs" id="7_ndu1b"]
+[ext_resource type="PackedScene" uid="uid://c6jyddssch8si" path="res://Scenes/GameOverUI.tscn" id="8_385d4"]
+[ext_resource type="Script" uid="uid://bh11ejgxorxgj" path="res://Scripts/UIManger.cs" id="9_i24ni"]
+[ext_resource type="PackedScene" uid="uid://dwu30f7dnl5v5" path="res://Scenes/MainMenu.tscn" id="10_dquol"]
 
 [node name="Level" type="Node3D" unique_id=1238649477 node_paths=PackedStringArray("player", "gamemanager")]
-script = ExtResource("1_tumq0")
-treasureScene = ExtResource("5_wqkje")
-exitScene = ExtResource("3_0f350")
+script = ExtResource("1_wa8mu")
+treasureScene = ExtResource("2_0gyb6")
+exitScene = ExtResource("3_vqjuy")
 player = NodePath("Player")
 gamemanager = NodePath("Gamemanager")
 mapSize = 55
 middleLayers = 3
 width = 64
 height = 64
-rockMaterial = ExtResource("2_k5f4k")
+rockMaterial = ExtResource("4_5wso4")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1889682643]
 transform = Transform3D(0.70710677, -3.090862e-08, 0.70710677, -0.70710677, -3.090862e-08, 0.70710677, 0, -1, -4.371139e-08, 0, 3.5250778, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1824950699]
-environment = ExtResource("3_6phgx")
+environment = ExtResource("5_bfvw3")
 
-[node name="Player" parent="." unique_id=223059442 instance=ExtResource("4_81xng")]
+[node name="Player" parent="." unique_id=223059442 instance=ExtResource("6_gkx6n")]
 
 [node name="Gamemanager" type="Node" parent="." unique_id=1217925287 groups=["GameManager"]]
-script = ExtResource("7_8c0lf")
-gameOverUIScene = ExtResource("8_754fn")
+script = ExtResource("7_ndu1b")
+gameOverUIScene = ExtResource("8_385d4")
 
 [node name="PlayerUI" type="Control" parent="." unique_id=2000826654 node_paths=PackedStringArray("pausedMenu") groups=["UIManager"]]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("9_bvt00")
-mainMenuScene = ExtResource("10_oqgf2")
+script = ExtResource("9_i24ni")
+mainMenuScene = ExtResource("10_dquol")
 pausedMenu = NodePath("PauseMenu")
 
 [node name="PauseMenu" type="Control" parent="PlayerUI" unique_id=1647853109]

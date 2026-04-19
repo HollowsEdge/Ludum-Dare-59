@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dwu30f7dnl5v5"]
 
-[ext_resource type="Material" uid="uid://7c7yix6ya8u8" path="res://Materials/Rock/RockMenu.tres" id="1_06t4h"]
-[ext_resource type="Script" uid="uid://ds1boheygowj5" path="res://MainMenuUi.cs" id="1_7vrkn"]
-[ext_resource type="PackedScene" uid="uid://cfcyjw1rprqpv" path="res://Scenes/level.tscn" id="2_fu7sn"]
-[ext_resource type="Environment" uid="uid://clqo2cunk6shc" path="res://mainMenuEnv.tres" id="4_jix8l"]
+[ext_resource type="Script" uid="uid://ds1boheygowj5" path="res://Scripts/MainMenuUi.cs" id="1_65ows"]
+[ext_resource type="PackedScene" uid="uid://cfcyjw1rprqpv" path="res://Scenes/MainLevel.tscn" id="2_2ld8x"]
+[ext_resource type="Material" uid="uid://7c7yix6ya8u8" path="res://Materials/Rock/RockMenu.tres" id="3_ooo5j"]
+[ext_resource type="Environment" uid="uid://clqo2cunk6shc" path="res://MainMenuEnv.tres" id="4_gerv3"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rhts7"]
 noise_type = 3
@@ -41,8 +41,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_7vrkn")
-playScene = ExtResource("2_fu7sn")
+script = ExtResource("1_65ows")
+playScene = ExtResource("2_2ld8x")
 mainMenu = NodePath("MainMenu")
 loadingMenu = NodePath("LoadingMenu")
 optionsMenu = NodePath("OptionsMenu")
@@ -153,7 +153,7 @@ vertical_alignment = 1
 
 [node name="Ground5" type="MeshInstance3D" parent="." unique_id=1919655030]
 transform = Transform3D(10.901428, 0, 0, 0, 1, 0, 0, 0, 10.901428, 0, 0, -9.064234)
-material_override = ExtResource("1_06t4h")
+material_override = ExtResource("3_ooo5j")
 mesh = SubResource("PlaneMesh_7vrkn")
 
 [node name="Ground2" type="MeshInstance3D" parent="." unique_id=1513732035]
@@ -176,7 +176,7 @@ transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.70710
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=176566597]
-environment = ExtResource("4_jix8l")
+environment = ExtResource("4_gerv3")
 
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/PlayButton" to="MainMenuUI" method="OnPlayButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/OptionsButton" to="MainMenuUI" method="OnOptionsButtonPressed"]

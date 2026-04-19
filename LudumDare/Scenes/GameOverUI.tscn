@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c6jyddssch8si"]
 
-[ext_resource type="Script" uid="uid://dksdq8np2hi3i" path="res://GameOverUIManager.cs" id="1_ji7mg"]
-[ext_resource type="PackedScene" uid="uid://dwu30f7dnl5v5" path="res://main_menu.tscn" id="2_xu1am"]
+[ext_resource type="Script" uid="uid://dksdq8np2hi3i" path="res://Scripts/GameOverUIManager.cs" id="1_186eu"]
+[ext_resource type="PackedScene" uid="uid://dwu30f7dnl5v5" path="res://Scenes/MainMenu.tscn" id="2_wa420"]
 
 [node name="UIHolder" type="Control" unique_id=1968407630]
 layout_mode = 3
@@ -10,8 +10,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ji7mg")
-mainMenuScene = ExtResource("2_xu1am")
+script = ExtResource("1_186eu")
+mainMenuScene = ExtResource("2_wa420")
 
 [node name="Panel" type="Panel" parent="." unique_id=1289718697]
 layout_mode = 1
