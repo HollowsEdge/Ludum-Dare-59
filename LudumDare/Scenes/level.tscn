@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cfcyjw1rprqpv"]
+
+[ext_resource type="Script" uid="uid://d6nx87h5xb0m" path="res://Scripts/LevelGenerate.cs" id="1_tumq0"]
+[ext_resource type="Material" uid="uid://dyod1jbokdtv0" path="res://Materials/Rock/Rock.tres" id="2_k5f4k"]
+[ext_resource type="Environment" uid="uid://cpof8ahuhv7ks" path="res://new_environment.tres" id="3_6phgx"]
+
+[node name="Level" type="Node3D" unique_id=1238649477]
+script = ExtResource("1_tumq0")
+mapSize = 8
+middleLayers = 3
+width = 64
+height = 64
+rockMaterial = ExtResource("2_k5f4k")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=763557238]
+transform = Transform3D(1, 0, 0, 0, 0.89948916, 0.43694308, 0, -0.43694308, 0.89948916, 0, 3.7323315, 6.469887)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1889682643]
+transform = Transform3D(0.70710677, -3.090862e-08, 0.70710677, -0.70710677, -3.090862e-08, 0.70710677, 0, -1, -4.371139e-08, 0, 3.5250778, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1824950699]
+environment = ExtResource("3_6phgx")
