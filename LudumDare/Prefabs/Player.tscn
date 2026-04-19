@@ -11,6 +11,13 @@ radius = 0.35
 
 [sub_resource type="BoxMesh" id="BoxMesh_0rwas"]
 
+[sub_resource type="SphereMesh" id="SphereMesh_x3d5u"]
+radial_segments = 8
+rings = 4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x3d5u"]
+shading_mode = 0
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_um8lo"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_x3d5u"]
@@ -51,9 +58,11 @@ transform = Transform3D(0.99619466, -0.08715573, 0, 0.08715573, 0.99619466, 0, 0
 
 [node name="Scanner" type="Node3D" parent="CameraHolder" unique_id=111162488]
 script = ExtResource("2_x3d5u")
-gridY = 40
-gridX = 40
-spacing = 25
+gridY = 30
+gridX = 30
+spacing = 40
+visualMesh = SubResource("SphereMesh_x3d5u")
+sphereMat = SubResource("StandardMaterial3D_x3d5u")
 debugRaycastPoints = true
 
 [node name="Cube" type="MeshInstance3D" parent="CameraHolder/Scanner" unique_id=1802907844]
@@ -70,3 +79,9 @@ mesh = SubResource("CylinderMesh_um8lo")
 transform = Transform3D(1.8098603, 0, 0, 0, 1.7518246, -0.053131267, 0, 0.21047407, 0.44222397, 0, -0.79743576, 0.55863667)
 layers = 2
 mesh = SubResource("BoxMesh_x3d5u")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=43600432]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4887545, 0)
+light_energy = 0.5
+distance_fade_enabled = true
+omni_range = 2.0

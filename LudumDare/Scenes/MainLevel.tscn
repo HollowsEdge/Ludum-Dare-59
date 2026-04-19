@@ -21,9 +21,6 @@ width = 64
 height = 64
 rockMaterial = ExtResource("4_5wso4")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1889682643]
-transform = Transform3D(0.70710677, -3.090862e-08, 0.70710677, -0.70710677, -3.090862e-08, 0.70710677, 0, -1, -4.371139e-08, 0, 3.5250778, 0)
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1824950699]
 environment = ExtResource("5_bfvw3")
 
