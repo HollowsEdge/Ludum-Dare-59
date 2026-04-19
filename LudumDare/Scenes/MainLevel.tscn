@@ -35,7 +35,6 @@ gameOverUIScenePath = "res://Scenes/GameOverUI.tscn"
 
 [node name="PlayerUI" type="Control" parent="." unique_id=2000826654 node_paths=PackedStringArray("pausedMenu") groups=["UIManager"]]
 process_mode = 3
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
