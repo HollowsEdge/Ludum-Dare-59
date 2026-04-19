@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bg1jdkvt28ivb"
-path.s3tc="res://.godot/imported/Rock060_4K-JPG_AmbientOcclusion.jpg-eb4fbe747e6c62a5523cce4eb2f5d374.s3tc.ctex"
+uid="uid://brr7c387p3eio"
+path.s3tc="res://.godot/imported/Metal046B_2K-JPG_NormalGL.jpg-5c27826f48321d75fba1ea733802afd3.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Materials/Rock/Rock060_4K-JPG_AmbientOcclusion.jpg"
-dest_files=["res://.godot/imported/Rock060_4K-JPG_AmbientOcclusion.jpg-eb4fbe747e6c62a5523cce4eb2f5d374.s3tc.ctex"]
+source_file="res://Materials/Metal/Metal046B_2K-JPG_NormalGL.jpg"
+dest_files=["res://.godot/imported/Metal046B_2K-JPG_NormalGL.jpg-5c27826f48321d75fba1ea733802afd3.s3tc.ctex"]
 
 [params]
 
@@ -22,11 +22,11 @@ compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
-compress/normal_map=0
+compress/normal_map=1
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=8
+roughness/mode=1
 roughness/src_normal="res://Materials/Metal/Metal046B_2K-JPG_NormalGL.jpg"
 process/channel_remap/red=0
 process/channel_remap/green=1

@@ -10,11 +10,13 @@ radius = 0.35
 
 [sub_resource type="BoxMesh" id="BoxMesh_0rwas"]
 
-[node name="Player" type="CharacterBody3D" unique_id=223059442]
+[node name="Player" type="CharacterBody3D" unique_id=223059442 node_paths=PackedStringArray("ray", "carryingPos")]
 script = ExtResource("1_xhfnw")
 walkSpeed = 125.0
 sprintSpeed = 200.0
 sensitivity = 1.5
+ray = NodePath("CameraHolder/RayCast3D")
+carryingPos = NodePath("CameraHolder/HoldPos")
 
 [node name="Collision" type="CollisionShape3D" parent="." unique_id=614385902]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -22,6 +24,7 @@ shape = SubResource("CapsuleShape3D_0rwas")
 
 [node name="Body" type="MeshInstance3D" parent="." unique_id=1986700502]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+layers = 2
 mesh = SubResource("CapsuleMesh_xhfnw")
 
 [node name="Glasses" type="MeshInstance3D" parent="Body" unique_id=1157421339]
@@ -32,3 +35,11 @@ mesh = SubResource("BoxMesh_0rwas")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraHolder" unique_id=560130718]
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraHolder" unique_id=2065286833]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.044496894, 0)
+target_position = Vector3(0, -5, 0)
+collision_mask = 5
+
+[node name="HoldPos" type="Node3D" parent="CameraHolder" unique_id=1847178746]
+transform = Transform3D(0.99619466, -0.08715573, 0, 0.08715573, 0.99619466, 0, 0, 0, 1, 0.05, -0.791, -0.635)

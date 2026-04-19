@@ -4,9 +4,12 @@
 [ext_resource type="Material" uid="uid://dyod1jbokdtv0" path="res://Materials/Rock/Rock.tres" id="2_k5f4k"]
 [ext_resource type="Environment" uid="uid://cpof8ahuhv7ks" path="res://new_environment.tres" id="3_6phgx"]
 [ext_resource type="PackedScene" uid="uid://bhnj61kaacyym" path="res://Player.tscn" id="4_81xng"]
+[ext_resource type="PackedScene" uid="uid://d05pes65wrhvr" path="res://treasure.tscn" id="5_wqkje"]
 
-[node name="Level" type="Node3D" unique_id=1238649477]
+[node name="Level" type="Node3D" unique_id=1238649477 node_paths=PackedStringArray("player")]
 script = ExtResource("1_tumq0")
+treasure = ExtResource("5_wqkje")
+player = NodePath("Player")
 mapSize = 55
 middleLayers = 3
 width = 64

@@ -1,8 +1,17 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class LevelGenerate : Node3D
-{
+{ 
+    [ExportCategory("Treasure Settings")]
+    [Export] private int treasureAmount = 3;
+
+    [ExportCategory("References")]
+    [Export] private PackedScene treasure;
+    [Export] private Node3D player;
+
+    [ExportCategory("Cave Settings")]
     [Export] private int mapSize = 5;
     [Export] private int middleLayers = 1;
     [Export] private int width = 32;
@@ -313,6 +322,8 @@ public partial class LevelGenerate : Node3D
     {
         gameMap = new bool[width, height];
         GenerateCave();
+        SpawnPlayer();
+        SpawnTreasure();
     }
 
     private void GenerateCave()
@@ -518,5 +529,67 @@ public partial class LevelGenerate : Node3D
             meshInstance3D.SetSurfaceOverrideMaterial(0, material);
         }
         
+    }
+
+    private void SpawnPlayer()
+    {
+        float aspectRatio = (float)width / (float)height;
+        Vector2 meshSize = new Vector2(aspectRatio, 1f) * mapSize;
+        float pixelWorldSizeX = meshSize.X / width;
+        float pixelWorldSizeZ = meshSize.Y / height;
+
+        for (int x = 0; x < width - 1; x++)
+            for (int z = 0; z < height - 1; z++)
+            {
+                if (!gameMap3D[x, 1, z])
+                {
+                    Vector3 pos = new(((float)-mapSize / 2) + (x * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (z * pixelWorldSizeZ));
+                    player.GlobalPosition = pos;
+                }
+            }
+    }
+
+    private void SpawnTreasure()
+    {
+        float aspectRatio = (float)width / (float)height;
+        Vector2 meshSize = new Vector2(aspectRatio, 1f) * mapSize;
+        float pixelWorldSizeX = meshSize.X / width;
+        float pixelWorldSizeZ = meshSize.Y / height;
+
+        int treasurePlaced = 0;
+        int maxLoops = 10000;
+
+        List<Node3D> previousChests = new();
+
+        while (treasurePlaced < treasureAmount || maxLoops <= 0)
+        {
+            int randX = GD.RandRange(1, width - 1);
+            int randZ = GD.RandRange(1, height - 1);
+            // Check valid spawn location
+            if (!gameMap3D[randX, 1, randZ])
+            {
+                
+                // Spawn scene at pos + random Y rotation
+                Vector3 pos = new(((float)-mapSize / 2) + (randX * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (randZ * pixelWorldSizeZ));
+
+
+                // TODO: Distance check the chests
+
+                Node3D treasureNode = treasure.Instantiate<Node3D>();
+                //treasureNode.GetNode<RigidBody3D>("RigidBody3D").Freeze = true;
+                AddChild(treasureNode);
+                treasureNode.GlobalPosition = pos;
+                treasureNode.RotateY(Mathf.DegToRad(GD.RandRange(0, 360)));
+
+                previousChests.Add(treasureNode);
+
+                treasurePlaced++;
+            }
+
+            maxLoops++;
+        }
+
+        if (maxLoops <= 0)
+            GD.PushWarning($"LevelGenerate: Max loops hit when spawning treasure, breaking loop.");
     }
 }

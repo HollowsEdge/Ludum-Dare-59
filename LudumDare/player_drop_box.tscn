@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://brwhupk2n01k6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xr358"]
+size = Vector3(3, 5, 3)
+
+[node name="PlayerDropBox" type="Node3D" unique_id=2147074141]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1621386024]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1972711876]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_xr358")
