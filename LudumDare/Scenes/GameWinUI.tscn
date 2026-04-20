@@ -1,15 +1,15 @@
-[gd_scene format=3 uid="uid://c6jyddssch8si"]
+[gd_scene format=3 uid="uid://d3v3c3kqsmlxd"]
 
-[ext_resource type="Script" uid="uid://dksdq8np2hi3i" path="res://Scripts/GameOverUIManager.cs" id="1_186eu"]
+[ext_resource type="Script" uid="uid://dksdq8np2hi3i" path="res://Scripts/GameOverUIManager.cs" id="1_ibw4g"]
 
-[node name="GameOverUI" type="Control" unique_id=1968407630]
+[node name="GameWinUI" type="Control" unique_id=1968407630]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_186eu")
+script = ExtResource("1_ibw4g")
 mainMenuScenePath = "res://Scenes/MainMenu.tscn"
 
 [node name="Panel" type="Panel" parent="." unique_id=1289718697]
@@ -26,11 +26,13 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -465.0
+offset_top = 69.0
 offset_right = 465.0
-offset_bottom = 215.0
+offset_bottom = 284.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 66
-text = "GAME OVER :("
+text = "YOU WIN
+All treasure collected!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -42,9 +44,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -213.0
-offset_top = -145.0
+offset_top = -104.0
 offset_right = 214.0
-offset_bottom = 173.5
+offset_bottom = 214.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12

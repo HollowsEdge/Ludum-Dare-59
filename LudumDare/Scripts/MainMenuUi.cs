@@ -13,6 +13,8 @@ public partial class MainMenuUi : Control
         mainMenu.Show();
         loadingMenu.Hide();
         optionsMenu.Hide();
+
+        Input.MouseMode = Input.MouseModeEnum.Visible;
     }
 
     public void OnPlayButtonPressed()

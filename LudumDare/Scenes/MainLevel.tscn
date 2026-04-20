@@ -16,7 +16,7 @@ geometry_collision_mask = 4294967281
 agent_height = 1.0
 agent_radius = 0.2
 
-[node name="Level" type="Node3D" unique_id=1238649477 node_paths=PackedStringArray("player", "gamemanager", "navRegion")]
+[node name="Level" type="Node3D" unique_id=1238649477 node_paths=PackedStringArray("player", "gamemanager", "navRegion") groups=["LevelGenerate"]]
 script = ExtResource("1_wa8mu")
 treasureScene = ExtResource("2_0gyb6")
 exitScene = ExtResource("3_vqjuy")

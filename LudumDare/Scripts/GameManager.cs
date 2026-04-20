@@ -8,6 +8,7 @@ public partial class GameManager : Node
     private int collectedTreasure = 0;
 
     [Export] private string gameOverUIScenePath;
+    [Export] private string gameWinUIScenePath;
 
     public void SetTotalTreasure(int amount)
     {
@@ -24,11 +25,11 @@ public partial class GameManager : Node
         GD.Print($"GameManager: Total treasure {collectedTreasure} / {totalTreasure}");
 
         if (collectedTreasure >= totalTreasure)
-            FinishGame();
+            FinishGame(true);
     }
 
-    public void FinishGame()
+    public void FinishGame(bool win)
     {
-        GetTree().ChangeSceneToFile(gameOverUIScenePath);
+        GetTree().ChangeSceneToFile(win ? gameWinUIScenePath : gameOverUIScenePath);
     }
 }

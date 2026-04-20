@@ -646,9 +646,7 @@ public partial class LevelGenerate : Node3D
         int monstersPlaced = 0;
         int maxLoops = 10000;
 
-        List<Node3D> previousChests = new();
-
-        while (monstersPlaced < treasureAmount && maxLoops > 0)
+        while (monstersPlaced < ballMonsterCount && maxLoops > 0)
         {
             int randX = GD.RandRange(1, width - 1);
             int randZ = GD.RandRange(1, height - 1);
@@ -670,9 +668,32 @@ public partial class LevelGenerate : Node3D
             maxLoops++;
         }
 
-        gamemanager.SetTotalTreasure(treasureAmount);
-
         if (maxLoops <= 0)
             GD.PushWarning($"LevelGenerate: Max loops hit when spawning monsters, breaking loop.");
+    }
+
+    public Vector3 GetRandomPointOnNavmesh()
+    {
+        float aspectRatio = (float)width / (float)height;
+        Vector2 meshSize = new Vector2(aspectRatio, 1f) * mapSize;
+        float pixelWorldSizeX = meshSize.X / width;
+        float pixelWorldSizeZ = meshSize.Y / height;
+
+        int maxLoops = 10000;
+
+        while (maxLoops > 0)
+        {
+            int randX = GD.RandRange(1, width - 1);
+            int randZ = GD.RandRange(1, height - 1);
+            // Check valid spawn location
+            if (!gameMap3D[randX, 1, randZ])
+                return new(((float)-mapSize / 2) + (randX * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (randZ * pixelWorldSizeZ));
+
+            maxLoops++;
+        }
+
+        if (maxLoops <= 0)
+            GD.PushWarning($"LevelGenerate: Max loops hit when getting monster wander pos, breaking loop.");
+        return Vector3.Zero;
     }
 }
