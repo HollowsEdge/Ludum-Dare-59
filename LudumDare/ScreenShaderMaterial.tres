@@ -1,0 +1,25 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://c2x2sujb7s4m2"]
+
+[ext_resource type="Shader" uid="uid://l8rusx2h5d5" path="res://ScreenMaterial.tres" id="1_ic8b6"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nq6xl"]
+noise_type = 2
+frequency = 0.0599
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vcw3j"]
+noise = SubResource("FastNoiseLite_nq6xl")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bf3n4"]
+frequency = 0.0047
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_grkci"]
+noise = SubResource("FastNoiseLite_bf3n4")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ic8b6")
+shader_parameter/AlbedoColor = Color(0.109804, 0.2, 0, 1)
+shader_parameter/AlbedoNoise = SubResource("NoiseTexture2D_vcw3j")
+shader_parameter/EmissionColor = Color(5.06877e-07, 0.18744895, 0, 1)
+shader_parameter/FloatParameter = 0.1
+shader_parameter/EmissionNoise = SubResource("NoiseTexture2D_grkci")

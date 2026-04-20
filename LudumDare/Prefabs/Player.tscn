@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://crqpq0l70kpjl" path="res://Scripts/PlayerController.cs" id="1_xhfnw"]
 [ext_resource type="Script" uid="uid://ct622uvfyxo3c" path="res://Scripts/ScannerTool.cs" id="2_x3d5u"]
+[ext_resource type="PackedScene" uid="uid://dwss30v6di4o4" path="res://Scanner.glb" id="3_b43ah"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
 radius = 0.2
@@ -24,10 +25,6 @@ rings = 4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x3d5u"]
 shading_mode = 0
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_um8lo"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_x3d5u"]
 
 [node name="Player" type="CharacterBody3D" unique_id=223059442 node_paths=PackedStringArray("ray", "carryingPos") groups=["Player"]]
 collision_layer = 11
@@ -73,29 +70,18 @@ spacing = 25
 visualMesh = SubResource("SphereMesh_x3d5u")
 sphereMat = SubResource("StandardMaterial3D_x3d5u")
 
-[node name="Cube" type="MeshInstance3D" parent="CameraHolder/Scanner" unique_id=1802907844]
-transform = Transform3D(0.14542629, 0, 0, 0, 0.14542629, 0, 0, 0, 0.14542629, 0.4748571, -0.35445905, -0.558345)
-layers = 2
-mesh = SubResource("CylinderMesh_um8lo")
-
-[node name="Cube2" type="MeshInstance3D" parent="CameraHolder/Scanner/Cube" unique_id=11811395]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.39312357, 0.9194855, 0, -0.9194855, 0.39312357, 0, 1.0089836, -1.3587785)
-layers = 2
-mesh = SubResource("CylinderMesh_um8lo")
-
-[node name="Cube3" type="MeshInstance3D" parent="CameraHolder/Scanner/Cube/Cube2" unique_id=1974645725]
-transform = Transform3D(1.8098603, 0, 0, 0, 1.7518246, -0.053131267, 0, 0.21047407, 0.44222397, 0, -0.79743576, 0.55863667)
-layers = 2
-mesh = SubResource("BoxMesh_x3d5u")
-
 [node name="DistanceText" type="Label3D" parent="CameraHolder/Scanner" unique_id=1606341753]
-transform = Transform3D(0.49314055, 0, 0, 0, 0.25370574, 0.4228724, 0, -0.4228724, 0.25370574, 0.4748571, -0.1338706, -0.62120146)
+transform = Transform3D(0.49314046, 0, 0, 0, 0.4761832, 0.12820783, 0, -0.12820783, 0.4761832, 0.44750184, -0.09904146, -0.53274256)
 text = "100m"
+font_size = 25
 
 [node name="TreasureText" type="Label3D" parent="CameraHolder/Scanner" unique_id=779402257]
-transform = Transform3D(0.49314055, 0, 0, 0, 0.25370574, 0.4228724, 0, -0.4228724, 0.25370574, 0.4748571, -0.18392181, -0.54144335)
+transform = Transform3D(0.49314046, 0, 0, 0, 0.4761832, 0.12820783, 0, -0.12820783, 0.4761832, 0.44981068, -0.19043803, -0.51008844)
 text = "1  /  3"
 font_size = 16
+
+[node name="Scanner" parent="CameraHolder/Scanner" unique_id=1594522325 instance=ExtResource("3_b43ah")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0.70710677, 0.70710677, -3.090862e-08, 0.70710677, -0.70710677, -3.090862e-08, 0.44541425, -0.3978622, -0.36923867)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=43600432]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4887545, 0)
