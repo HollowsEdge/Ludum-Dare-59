@@ -630,6 +630,7 @@ public partial class LevelGenerate : Node3D
             maxLoops++;
         }
 
+        gamemanager.SetTreasureList(previousChests);
         gamemanager.SetTotalTreasure(treasureAmount);
 
         if (maxLoops <= 0)

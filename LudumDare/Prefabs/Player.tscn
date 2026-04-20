@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://crqpq0l70kpjl" path="res://Scripts/PlayerController.cs" id="1_xhfnw"]
 [ext_resource type="Script" uid="uid://ct622uvfyxo3c" path="res://Scripts/ScannerTool.cs" id="2_x3d5u"]
-[ext_resource type="Material" uid="uid://kpkideeg5njj" path="res://ScanMaterial.tres" id="3_b43ah"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
 radius = 0.2
@@ -12,8 +11,12 @@ radius = 0.35
 
 [sub_resource type="BoxMesh" id="BoxMesh_0rwas"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b43ah"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
 [sub_resource type="SphereMesh" id="SphereMesh_x3d5u"]
-material = ExtResource("3_b43ah")
+material = SubResource("StandardMaterial3D_b43ah")
 radius = 0.02
 height = 0.04
 radial_segments = 8
@@ -85,8 +88,17 @@ transform = Transform3D(1.8098603, 0, 0, 0, 1.7518246, -0.053131267, 0, 0.210474
 layers = 2
 mesh = SubResource("BoxMesh_x3d5u")
 
+[node name="DistanceText" type="Label3D" parent="CameraHolder/Scanner" unique_id=1606341753]
+transform = Transform3D(0.49314055, 0, 0, 0, 0.25370574, 0.4228724, 0, -0.4228724, 0.25370574, 0.4748571, -0.1338706, -0.62120146)
+text = "100m"
+
+[node name="TreasureText" type="Label3D" parent="CameraHolder/Scanner" unique_id=779402257]
+transform = Transform3D(0.49314055, 0, 0, 0, 0.25370574, 0.4228724, 0, -0.4228724, 0.25370574, 0.4748571, -0.18392181, -0.54144335)
+text = "1  /  3"
+font_size = 16
+
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=43600432]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4887545, 0)
-light_energy = 0.5
+light_energy = 0.2
 distance_fade_enabled = true
 omni_range = 2.0

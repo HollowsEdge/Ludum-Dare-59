@@ -15,6 +15,7 @@ public partial class PlayerController : CharacterBody3D
     private float currSpeed;
 
     private Node3D carryingTreasure;
+    private Node3D carryingTreasureCollider;
     private bool touchingExit = false;
 
     private Area3D exitArea;
@@ -59,8 +60,10 @@ public partial class PlayerController : CharacterBody3D
                 {
                     carryingTreasure.GlobalPosition = carryingPos.GlobalPosition;
                     carryingTreasure.Reparent(carryingPos);
+                    carryingTreasureCollider = carryingTreasure.GetNode<Node3D>("ColliderHolderBody");
+                    carryingTreasure.RemoveChild(carryingTreasureCollider);
                     carryingTreasure.RotationDegrees = Vector3.Zero;
-                    GD.Print("Picked up : " + carryingTreasure);
+                    //GD.Print("Picked up : " + carryingTreasure);
                 }
                 else
                 {
@@ -73,9 +76,9 @@ public partial class PlayerController : CharacterBody3D
                 if (exitArea.OverlapsBody(GetNode<PlayerController>(GetPath())))
                 {
                     // Drop
-                    carryingTreasure.QueueFree();
-                    ((DropTreasure)exitArea).RecieveTreasure();
+                    ((DropTreasure)exitArea).RecieveTreasure(carryingTreasure);
                     GD.Print("SUCCESS : " + carryingTreasure);
+                    carryingTreasure.QueueFree();
                     carryingTreasure = null;
                 }
                 else
@@ -84,6 +87,8 @@ public partial class PlayerController : CharacterBody3D
                     carryingTreasure.Reparent(GetTree().Root);
                     // TODO: Add some force forward
                     GD.Print("Dropped : " + carryingTreasure);
+                    carryingTreasure.AddChild(carryingTreasureCollider);
+                    carryingTreasureCollider = null;
                     carryingTreasure = null;
                 }      
             }

@@ -2,3 +2,4 @@
 
 [resource]
 shading_mode = 0
+vertex_color_use_as_albedo = true

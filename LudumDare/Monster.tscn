@@ -26,7 +26,7 @@ material = SubResource("ShaderMaterial_ssiii")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5vc1h"]
 
-[node name="Monster" type="CharacterBody3D" unique_id=1139476480]
+[node name="Monster" type="CharacterBody3D" unique_id=1139476480 groups=["Monster"]]
 collision_layer = 8
 collision_mask = 8
 script = ExtResource("1_eupxk")

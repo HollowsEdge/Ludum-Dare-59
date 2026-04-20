@@ -38,6 +38,7 @@ environment = ExtResource("5_bfvw3")
 [node name="Gamemanager" type="Node" parent="." unique_id=1217925287 groups=["GameManager"]]
 script = ExtResource("7_ndu1b")
 gameOverUIScenePath = "res://Scenes/GameOverUI.tscn"
+gameWinUIScenePath = "res://Scenes/GameWinUI.tscn"
 
 [node name="PlayerUI" type="Control" parent="." unique_id=2000826654 node_paths=PackedStringArray("pausedMenu") groups=["UIManager"]]
 process_mode = 3

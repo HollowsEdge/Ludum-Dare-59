@@ -3,18 +3,26 @@
 [ext_resource type="PackedScene" uid="uid://np501tfk2mcw" path="res://Models/TreasureChestNew.glb" id="1_dubxd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dubxd"]
-size = Vector3(1, 0.9851074, 0.59033203)
+size = Vector3(1, 0.529541, 0.5220337)
 
-[node name="Treasure" type="Node3D" unique_id=157711790]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bvcr7"]
+height = 1.0014648
+radius = 0.19873047
+
+[node name="Treasure" type="Node3D" unique_id=157711790 groups=["Treasure"]]
 
 [node name="TreasureChestNew" parent="." unique_id=836612444 instance=ExtResource("1_dubxd")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1022778489]
+[node name="ColliderHolderBody" type="StaticBody3D" parent="." unique_id=1022778489 groups=["Treasure"]]
 collision_layer = 4
 collision_mask = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=464111110]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47943854, 0.0061035156)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderHolderBody" unique_id=464111110 groups=["Treasure"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25165534, -0.002105713)
 shape = SubResource("BoxShape3D_dubxd")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="ColliderHolderBody" unique_id=615552303 groups=["Treasure"]]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.0061035156, 0.4986531, 0.0061035156)
+shape = SubResource("CylinderShape3D_bvcr7")
 
 [editable path="TreasureChestNew"]

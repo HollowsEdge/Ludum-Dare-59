@@ -12,10 +12,10 @@ public partial class DropTreasure : Area3D
         gamemanager = (GameManager)GetTree().GetFirstNodeInGroup("GameManager");
     }
 
-    public void RecieveTreasure()
+    public void RecieveTreasure(Node3D treasure)
     {
         if (gamemanager != null)
-            gamemanager.AddTreasure();
+            gamemanager.AddTreasure(treasure);
         else
             GD.PrintErr("DropTreasure: gamemanager is NULL Fix this!");
     }
