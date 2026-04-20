@@ -36,10 +36,6 @@ environment = ExtResource("6_64643")
 
 [node name="Player" parent="." unique_id=223059442 instance=ExtResource("7_dg1f8")]
 
-[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Player" unique_id=693412661]
-stream = ExtResource("10_y8ckr")
-volume_db = 10.0
-
 [node name="Gamemanager" type="Node" parent="." unique_id=1217925287 groups=["GameManager"]]
 script = ExtResource("8_2hgkg")
 gameOverUIScenePath = "res://Scenes/GameOverUI.tscn"
@@ -56,7 +52,7 @@ grow_vertical = 2
 script = ExtResource("9_720pv")
 mainMenuSceneString = "res://Scenes/MainMenu.tscn"
 pausedMenu = NodePath("PauseMenu")
-audioButtonClick = NodePath("../Player/AudioStreamPlayer3D2")
+audioButtonClick = NodePath("../AudioStreamPlayer")
 
 [node name="PauseMenu" type="Control" parent="PlayerUI" unique_id=1647853109]
 layout_mode = 1
@@ -92,15 +88,14 @@ text = "Paused"
 
 [node name="ButtonHolder" type="VBoxContainer" parent="PlayerUI/PauseMenu" unique_id=1663358980]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -213.0
-offset_top = -144.775
-offset_right = 214.0
-offset_bottom = 291.22583
+anchors_preset = -1
+anchor_left = 0.485
+anchor_right = 0.485
+anchor_bottom = 1.0
+offset_left = -426.40503
+offset_top = 215.225
+offset_right = 0.595459
+offset_bottom = -68.77417
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
@@ -131,12 +126,70 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Quit"
 
+[node name="Tutorial" type="ColorRect" parent="PlayerUI/PauseMenu" unique_id=814585381]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = -111.0
+offset_right = 461.0
+offset_bottom = 306.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.62352943)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PlayerUI/PauseMenu/Tutorial" unique_id=739101354]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 31.0
+offset_bottom = -320.00006
+grow_horizontal = 2
+grow_vertical = 2
+text = "TUTORIAL
+--------
+"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="PlayerUI/PauseMenu/Tutorial" unique_id=1251931135]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 23.0
+offset_top = 81.0
+offset_right = -23.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Controls:
+WASD --- Move
+Mouse --- Look
+E --- Interact
+Left Click --- Scan
+Shift --- Run
+
+
+Objective:
+Find treasure using your scanner and bring it back to the enterance while avoiding the monster. Place the chest on the spawn mat at the enterance."
+fit_content = true
+horizontal_alignment = 1
+
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=330875940]
 navigation_mesh = SubResource("NavigationMesh_dnhx3")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=116105025]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 2.395717, 0)
 visible = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1474148893]
+stream = ExtResource("10_y8ckr")
+volume_db = 10.0
 
 [connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/ResumeButton" to="PlayerUI" method="OnResumeButtonPressed"]
 [connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/MenuButton" to="PlayerUI" method="OnMenuButtonPressed"]

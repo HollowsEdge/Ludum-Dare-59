@@ -6,11 +6,13 @@ public partial class MonsterAI : CharacterBody3D
     [Export] private float chaseSpeed = 150f;
     [Export] private float wanderSpeed = 100f;
     [Export] private float attackDistance = 10f;
+    [Export] private AudioStreamPlayer3D myAudio;
 
     private NavigationAgent3D navAgent;
     private CharacterBody3D player;
     private LevelGenerate levelGenerate;
     private GameManager gameManager;
+    private float originalVol;
 
     public override void _Ready()
     {
@@ -21,6 +23,19 @@ public partial class MonsterAI : CharacterBody3D
 
         navAgent.TargetPosition = player.GlobalPosition;
         GlobalPosition = new Vector3(GlobalPosition.X, 0, GlobalPosition.Y);
+        originalVol = myAudio.VolumeDb;
+    }
+
+    public override void _Process(double delta)
+    {
+        //if (GlobalPosition.DistanceTo(player.GlobalPosition) > 5)
+        //{
+        //    myAudio.VolumeDb = 5;
+        //}
+        //else
+        //{
+        //    myAudio.VolumeDb = originalVol;
+        //}
     }
 
     public override void _PhysicsProcess(double delta)

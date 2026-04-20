@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://4o74jiigko0e" path="res://Scripts/DropTreasure.cs" id="1_jal7x"]
 [ext_resource type="Material" uid="uid://ccx7v7jii6aa7" path="res://Materials/Fabric/Fabric.tres" id="2_yuhrt"]
+[ext_resource type="PackedScene" uid="uid://b4je123osxljp" path="res://cave.glb" id="3_j5asw"]
+[ext_resource type="Material" uid="uid://kpkideeg5njj" path="res://ScanMaterial.tres" id="4_kuowo"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xr358"]
 size = Vector3(3, 5, 3)
@@ -28,3 +30,15 @@ mesh = SubResource("PlaneMesh_jal7x")
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1544062802]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 3, 0)
 shadow_enabled = true
+
+[node name="cave" parent="." unique_id=1355173800 instance=ExtResource("3_j5asw")]
+transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 0, 4.551, 0)
+
+[node name="Plane" parent="cave" index="0" unique_id=1673530964]
+visible = false
+
+[node name="Plane_001" parent="cave" index="1" unique_id=749316575]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 2.09, 0)
+surface_material_override/0 = ExtResource("4_kuowo")
+
+[editable path="cave"]

@@ -2,25 +2,14 @@
 
 [ext_resource type="Script" uid="uid://ds1boheygowj5" path="res://Scripts/MainMenuUi.cs" id="1_65ows"]
 [ext_resource type="Script" uid="uid://bijux4nbtbxq1" path="res://Scenes/OptionsMenu.cs" id="2_ghw46"]
-[ext_resource type="Material" uid="uid://7c7yix6ya8u8" path="res://Materials/Rock/RockMenu.tres" id="3_ooo5j"]
 [ext_resource type="Environment" uid="uid://clqo2cunk6shc" path="res://MainMenuEnv.tres" id="4_gerv3"]
+[ext_resource type="PackedScene" uid="uid://b4je123osxljp" path="res://cave.glb" id="5_8um5k"]
 [ext_resource type="AudioStream" uid="uid://bamqsegbb7m5e" path="res://Sounds/MenuButtons.mp3" id="5_df05h"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rhts7"]
 noise_type = 3
 frequency = 0.0027
 domain_warp_enabled = true
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rhts7"]
-noise = SubResource("FastNoiseLite_rhts7")
-seamless = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_06t4h"]
-albedo_color = Color(0.36226156, 0.30280095, 0.2411376, 1)
-albedo_texture = SubResource("NoiseTexture2D_rhts7")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_7vrkn"]
-material = SubResource("StandardMaterial3D_06t4h")
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_06t4h"]
 noise = SubResource("FastNoiseLite_rhts7")
@@ -117,15 +106,20 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Quit"
 
-[node name="ColorRect" type="ColorRect" parent="MainMenuUI/MainMenu" unique_id=1614129337]
-layout_mode = 0
-offset_left = 673.0
-offset_top = 249.0
-offset_right = 1102.0
-offset_bottom = 666.0
+[node name="Tutorial" type="ColorRect" parent="MainMenuUI/MainMenu" unique_id=1614129337]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 33.0
+offset_top = -111.0
+offset_right = 462.0
+offset_bottom = 306.0
 color = Color(0, 0, 0, 0.62352943)
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MainMenuUI/MainMenu/ColorRect" unique_id=77495456]
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenuUI/MainMenu/Tutorial" unique_id=77495456]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -139,7 +133,7 @@ text = "TUTORIAL
 "
 horizontal_alignment = 1
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="MainMenuUI/MainMenu/ColorRect" unique_id=514267824]
+[node name="RichTextLabel2" type="RichTextLabel" parent="MainMenuUI/MainMenu/Tutorial" unique_id=514267824]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -159,11 +153,10 @@ Shift --- Run
 
 
 Objective:
-Find treasure using your scanner and bring it back to the enterance while avoiding the monster."
+Find treasure using your scanner and bring it back to the enterance while avoiding the monster. Place the chest on the spawn mat at the enterance."
 horizontal_alignment = 1
 
-[node name="OptionsMenu" type="Control" parent="MainMenuUI" unique_id=1917341570 node_paths=PackedStringArray("sensText", "sensSlider")]
-visible = false
+[node name="OptionsMenu" type="Control" parent="MainMenuUI" unique_id=1917341570 node_paths=PackedStringArray("sensText", "sensSlider", "fullscreenButton")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -171,8 +164,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_ghw46")
-sensText = NodePath("Label3")
-sensSlider = NodePath("SensSlider")
+sensText = NodePath("Sens/ColorRect/Label3")
+sensSlider = NodePath("Sens/ColorRect/SensSlider")
+fullscreenButton = NodePath("Sens/ColorRect2/CheckButton")
 
 [node name="Label" type="Label" parent="MainMenuUI/OptionsMenu" unique_id=621410474]
 layout_mode = 1
@@ -189,40 +183,54 @@ text = "Options"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect" type="ColorRect" parent="MainMenuUI/OptionsMenu" unique_id=930914375]
+[node name="Sens" type="Control" parent="MainMenuUI/OptionsMenu" unique_id=200821552]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 358.0
-offset_top = 242.0
-offset_right = -381.0
-offset_bottom = -342.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="MainMenuUI/OptionsMenu/Sens" unique_id=930914375]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.49100003
+anchor_top = 0.5
+anchor_right = 0.49100003
+anchor_bottom = 0.5
+offset_left = -270.48004
+offset_top = -118.0
+offset_right = 270.51996
+offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.2231029, 0.2231029, 0.22310287, 0.40392157)
 
-[node name="Label2" type="Label" parent="MainMenuUI/OptionsMenu" unique_id=2097048480]
+[node name="Label2" type="Label" parent="MainMenuUI/OptionsMenu/Sens/ColorRect" unique_id=2097048480]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -244.39532
-offset_top = 217.0
-offset_right = 244.39532
-offset_bottom = 330.0
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.684
+offset_bottom = -0.024002075
 grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 32
 text = "Sensitivity"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SensSlider" type="HSlider" parent="MainMenuUI/OptionsMenu" unique_id=897405715]
-layout_mode = 0
-offset_left = 366.0
-offset_top = 302.0
-offset_right = 891.0
-offset_bottom = 355.0
+[node name="SensSlider" type="HSlider" parent="MainMenuUI/OptionsMenu/Sens/ColorRect" unique_id=897405715]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.63600004
+anchor_right = 0.5
+anchor_bottom = 0.63600004
+offset_left = -262.5
+offset_top = -26.496002
+offset_right = 262.5
+offset_bottom = 26.503998
 min_value = 0.1
 max_value = 3.0
 step = 0.1
@@ -232,16 +240,53 @@ tick_count = 5
 ticks_on_borders = true
 ticks_position = 2
 
-[node name="Label3" type="Label" parent="MainMenuUI/OptionsMenu" unique_id=2120162858]
-layout_mode = 0
-offset_left = 478.0
-offset_top = 321.0
-offset_right = 779.0
-offset_bottom = 395.0
+[node name="Label3" type="Label" parent="MainMenuUI/OptionsMenu/Sens/ColorRect" unique_id=2120162858]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.85300004
+anchor_right = 0.5
+anchor_bottom = 0.85300004
+offset_left = -150.5
+offset_top = -37.008003
+offset_right = 150.5
+offset_bottom = 36.991997
 theme_override_font_sizes/font_size = 24
 text = "1.5"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ColorRect2" type="ColorRect" parent="MainMenuUI/OptionsMenu/Sens" unique_id=874192950]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.49100003
+anchor_top = 0.5
+anchor_right = 0.49100003
+anchor_bottom = 0.5
+offset_left = -270.48004
+offset_top = 18.0
+offset_right = 270.51996
+offset_bottom = 154.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2231029, 0.2231029, 0.22310287, 0.40392157)
+
+[node name="CheckButton" type="CheckButton" parent="MainMenuUI/OptionsMenu/Sens/ColorRect2" unique_id=1849943207]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -145.5
+offset_top = -46.0
+offset_right = 147.5
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Fullscreen"
+expand_icon = true
 
 [node name="Button" type="Button" parent="MainMenuUI/OptionsMenu" unique_id=1445277727]
 layout_mode = 1
@@ -256,9 +301,11 @@ offset_right = 170.0
 offset_bottom = -130.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_font_sizes/font_size = 40
 text = "Back"
 
 [node name="DifficultySelection" type="Control" parent="MainMenuUI" unique_id=1020554810]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -283,11 +330,16 @@ vertical_alignment = 1
 
 [node name="BackButton" type="Button" parent="MainMenuUI/DifficultySelection" unique_id=677866693]
 custom_minimum_size = Vector2(0, 80)
-layout_mode = 0
-offset_left = 427.0
-offset_top = 600.0
-offset_right = 854.0
-offset_bottom = 680.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -213.0
+offset_top = 240.0
+offset_right = 214.0
+offset_bottom = 320.0
 theme_override_font_sizes/font_size = 40
 text = "Back"
 
@@ -354,6 +406,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 165.0
+offset_top = 18.0
+offset_right = -165.0
 offset_bottom = -144.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -365,9 +420,14 @@ https://freesound.org/people/Entershift/sounds/704134/
 https://freesound.org/people/kwahmah_02/sounds/256116/
 https://freesound.org/people/Ali_6868/sounds/384880/
 https://freesound.org/people/arnicholas12/sounds/702765/
+https://freesound.org/people/joedeshon/sounds/673267/
 
 Textures:
-https://ambientcg.com/"
+https://ambientcg.com/
+
+Other:
+https://www.roguebasin.com/index.php/Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels
+https://paulbourke.net/geometry/polygonise/"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -379,11 +439,12 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -170.0
-offset_top = -137.0
+offset_top = -120.0
 offset_right = 170.0
-offset_bottom = -65.0
+offset_bottom = -48.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_font_sizes/font_size = 40
 text = "Back"
 
 [node name="LoadingMenu" type="Control" parent="MainMenuUI" unique_id=1763098334]
@@ -422,11 +483,6 @@ text = "Loading..."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Ground5" type="MeshInstance3D" parent="." unique_id=1919655030]
-transform = Transform3D(10.901428, 0, 0, 0, 1, 0, 0, 0, 10.901428, 0, 0, -9.064234)
-material_override = ExtResource("3_ooo5j")
-mesh = SubResource("PlaneMesh_7vrkn")
-
 [node name="Ground2" type="MeshInstance3D" parent="." unique_id=1513732035]
 transform = Transform3D(10.901427, 0, 0, 0, 0.8567355, -5.622477, 0, 0.51575595, 9.339641, 0, 4.882015, -19.166927)
 mesh = SubResource("PlaneMesh_fu7sn")
@@ -453,11 +509,14 @@ environment = ExtResource("4_gerv3")
 stream = ExtResource("5_df05h")
 volume_db = 10.0
 
+[node name="cave" parent="." unique_id=1355173800 instance=ExtResource("5_8um5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.92744493, 4.7683716e-07, -6.1563683)
+
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/PlayButton" to="MainMenuUI" method="OnPlayButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/OptionsButton" to="MainMenuUI" method="OnOptionsButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/Credits" to="MainMenuUI" method="OnCreditsButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/QuitButton" to="MainMenuUI" method="OnQuitButtonPressed"]
-[connection signal="value_changed" from="MainMenuUI/OptionsMenu/SensSlider" to="MainMenuUI/OptionsMenu" method="SetSensText"]
+[connection signal="value_changed" from="MainMenuUI/OptionsMenu/Sens/ColorRect/SensSlider" to="MainMenuUI/OptionsMenu" method="SetSensText"]
 [connection signal="pressed" from="MainMenuUI/OptionsMenu/Button" to="MainMenuUI" method="OnMainMenuButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/OptionsMenu/Button" to="MainMenuUI/OptionsMenu" method="OnMainMenuButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/BackButton" to="MainMenuUI" method="OnMainMenuButtonPressed"]

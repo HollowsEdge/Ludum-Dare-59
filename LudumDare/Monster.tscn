@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://comhx732g8jtf" path="res://MonsterShader.tres" id="1_vb3nq"]
 [ext_resource type="CapsuleMesh" uid="uid://cclbp2cf2knsy" path="res://CapsuleMonsterMesh.tres" id="2_qheve"]
 [ext_resource type="Script" uid="uid://j3gnxqrbragb" path="res://MonsterGrabWall.cs" id="2_ssiii"]
+[ext_resource type="AudioStream" uid="uid://bjo7rycjowm5g" path="res://Sounds/Monster.mp3" id="5_ueu8u"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vb3nq"]
 noise_type = 3
@@ -26,12 +27,13 @@ material = SubResource("ShaderMaterial_ssiii")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5vc1h"]
 
-[node name="Monster" type="CharacterBody3D" unique_id=1139476480 groups=["Monster"]]
+[node name="Monster" type="CharacterBody3D" unique_id=1139476480 node_paths=PackedStringArray("myAudio") groups=["Monster"]]
 collision_layer = 8
 collision_mask = 8
 script = ExtResource("1_eupxk")
 chaseSpeed = 95.0
 wanderSpeed = 60.0
+myAudio = NodePath("AudioStreamPlayer3D")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=579899264]
 
@@ -104,3 +106,9 @@ target_position = Vector3(0, -2.5, 0)
 [node name="RayCast3D14" type="RayCast3D" parent="CollisionShape3D" unique_id=1783114091]
 transform = Transform3D(0.70710677, -0.49999985, -0.5, 1.250375e-07, -0.70710665, 0.7071067, -0.7071067, -0.49999997, -0.49999997, -8.4293696e-08, 0, 0)
 target_position = Vector3(0, -2.5, 0)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1735940642]
+stream = ExtResource("5_ueu8u")
+unit_size = 8.0
+autoplay = true
+max_distance = 8.0

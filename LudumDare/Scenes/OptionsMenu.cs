@@ -5,6 +5,7 @@ public partial class OptionsMenu : Control
 {
     [Export] Label sensText;
     [Export] Slider sensSlider;
+    [Export] CheckButton fullscreenButton;
 
     public delegate void OnOptionsChangedEventHandler();
     public event OnOptionsChangedEventHandler OnOptionsChanged;
@@ -22,10 +23,13 @@ public partial class OptionsMenu : Control
         }
 
         sensSlider.Value = (float)config.GetValue("Player", "Sensitivity");
+        fullscreenButton.ButtonPressed = (bool)config.GetValue("Player", "Fullscreen");
+        DisplayServer.WindowSetMode(fullscreenButton.ButtonPressed ? DisplayServer.WindowMode.Fullscreen : DisplayServer.WindowMode.Windowed);
     }
 
     public void OnMainMenuButtonPressed()
     {
+        DisplayServer.WindowSetMode(fullscreenButton.ButtonPressed ? DisplayServer.WindowMode.Fullscreen : DisplayServer.WindowMode.Windowed);
         SaveGame();
         OnOptionsChanged?.Invoke();
     }
@@ -42,6 +46,7 @@ public partial class OptionsMenu : Control
 
         // Store some values.
         config.SetValue("Player", "Sensitivity", sensSlider.Value);
+        config.SetValue("Player", "Fullscreen", fullscreenButton.ButtonPressed);
 
         config.Save("user://settings.cfg");
     }

@@ -20,6 +20,7 @@ public partial class PlayerController : CharacterBody3D
     private Node3D cameraHolder;
     private float currSpeed;
     private float currFootstepDelay;
+    private float stepOriginalVol;
 
     private Node3D carryingTreasure;
     private Node3D carryingTreasureCollider;
@@ -39,7 +40,7 @@ public partial class PlayerController : CharacterBody3D
         Input.MouseMode = Input.MouseModeEnum.Captured;
         uIManger = (UIManger)GetTree().GetFirstNodeInGroup("UIManager");
         levelGenerate = (LevelGenerate)GetTree().GetFirstNodeInGroup("LevelGenerate");
-
+        stepOriginalVol = footstepsAudio.VolumeDb;
         //optionsMenu.OnOptionsChanged -= UpdateOptions;
         UpdateOptions();
     }
@@ -98,6 +99,9 @@ public partial class PlayerController : CharacterBody3D
 
         if (currFootstepDelay <= 0 && input != Vector2.Zero)
         {
+            footstepsAudio.PitchScale = (float)GD.RandRange(0.8, 1.2);
+            footstepsAudio.VolumeDb = (float)GD.RandRange(stepOriginalVol - 1, stepOriginalVol + 1);
+            footstepsAudio.PanningStrength = (float)GD.RandRange(0.9, 1.1);
             footstepsAudio.Play();
             currFootstepDelay = Input.IsActionPressed("sprint") ? footstepDelayRun : footstepDelayWalk;
         }
@@ -135,6 +139,7 @@ public partial class PlayerController : CharacterBody3D
             {
                 scanner.Show();
                 ClearFootsteps();
+                carryingTreasure.GetNode<AudioStreamPlayer3D>("AudioStreamPlayer3D").Play();
                 // Check if standing in recieve zone
                 if (exitArea.OverlapsBody(GetNode<PlayerController>(GetPath())))
                 {
