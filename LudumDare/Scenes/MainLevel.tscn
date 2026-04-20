@@ -10,14 +10,20 @@
 [ext_resource type="Script" uid="uid://bh11ejgxorxgj" path="res://Scripts/UIManger.cs" id="9_i24ni"]
 [ext_resource type="PackedScene" uid="uid://d4gktu0eh13uo" path="res://Monster.tscn" id="9_snxwr"]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_s1b4b"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_dnhx3"]
+geometry_parsed_geometry_type = 1
+geometry_collision_mask = 4294967281
+agent_height = 1.0
+agent_radius = 0.2
 
-[node name="Level" type="Node3D" unique_id=1238649477 node_paths=PackedStringArray("player", "gamemanager")]
+[node name="Level" type="Node3D" unique_id=1238649477 node_paths=PackedStringArray("player", "gamemanager", "navRegion")]
 script = ExtResource("1_wa8mu")
 treasureScene = ExtResource("2_0gyb6")
 exitScene = ExtResource("3_vqjuy")
 player = NodePath("Player")
+monster = ExtResource("9_snxwr")
 gamemanager = NodePath("Gamemanager")
+navRegion = NodePath("NavigationRegion3D")
 mapSize = 55
 middleLayers = 3
 width = 64
@@ -112,10 +118,7 @@ theme_override_font_sizes/font_size = 40
 text = "Quit"
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=330875940]
-navigation_mesh = SubResource("NavigationMesh_s1b4b")
-
-[node name="Monster" parent="." unique_id=1139476480 instance=ExtResource("9_snxwr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23317504, 0, -5.7211103)
+navigation_mesh = SubResource("NavigationMesh_dnhx3")
 
 [connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/ResumeButton" to="PlayerUI" method="OnResumeButtonPressed"]
 [connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/MenuButton" to="PlayerUI" method="OnMenuButtonPressed"]

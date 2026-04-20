@@ -7,10 +7,15 @@ public partial class LevelGenerate : Node3D
     [ExportCategory("Treasure Settings")]
     [Export] private int treasureAmount = 3;
 
+    [ExportCategory("Monster Settings")]
+    [Export] private int ballMonsterCount = 1;
+    [Export] private float minMonsterSpawnDistance = 10f;
+
     [ExportCategory("References")]
     [Export] private PackedScene treasureScene;
     [Export] private PackedScene exitScene;
     [Export] private PlayerController player;
+    [Export] private PackedScene monster;
     [Export] private GameManager gamemanager;
     [Export] private NavigationRegion3D navRegion;
 
@@ -325,9 +330,10 @@ public partial class LevelGenerate : Node3D
     {
         gameMap = new bool[width, height];
         GenerateCave();
-//        navRegion.BakeNavigationMesh();
+        navRegion.BakeNavigationMesh();
         SpawnPlayerAndExit();
         SpawnTreasure();
+        SpawnMonster();
     }
 
     private void GenerateCave()
@@ -462,7 +468,7 @@ public partial class LevelGenerate : Node3D
         st.GenerateNormals();
         st.GenerateTangents();
         ArrayMesh mesh = st.Commit();
-
+        //ResourceSaver.Save(mesh, "res://meshcave.tres");
         MeshInstance3D meshInstance3D = new()
         {
             Mesh = mesh,
@@ -470,7 +476,7 @@ public partial class LevelGenerate : Node3D
             MaterialOverride = rockMaterial
         };
         meshInstance3D.CreateTrimeshCollision();
-        AddChild(meshInstance3D);
+        navRegion.AddChild(meshInstance3D);
 
         if(createDebugSandwich)
             DebugMap();
@@ -628,5 +634,45 @@ public partial class LevelGenerate : Node3D
 
         if (maxLoops <= 0)
             GD.PushWarning($"LevelGenerate: Max loops hit when spawning treasure, breaking loop.");
+    }
+
+    private void SpawnMonster()
+    {
+        float aspectRatio = (float)width / (float)height;
+        Vector2 meshSize = new Vector2(aspectRatio, 1f) * mapSize;
+        float pixelWorldSizeX = meshSize.X / width;
+        float pixelWorldSizeZ = meshSize.Y / height;
+
+        int monstersPlaced = 0;
+        int maxLoops = 10000;
+
+        List<Node3D> previousChests = new();
+
+        while (monstersPlaced < treasureAmount && maxLoops > 0)
+        {
+            int randX = GD.RandRange(1, width - 1);
+            int randZ = GD.RandRange(1, height - 1);
+            // Spawn scene at pos
+            Vector3 pos = new(((float)-mapSize / 2) + (randX * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (randZ * pixelWorldSizeZ));
+            // Check valid spawn location
+            if (!gameMap3D[randX, 1, randZ] && player.GlobalPosition.DistanceTo(pos) > minMonsterSpawnDistance)
+            {
+                // TODO: Distance check the chests
+
+                Node3D monsterNode = monster.Instantiate<Node3D>();
+                monsterNode.Name = "Monster " + monstersPlaced;
+                AddChild(monsterNode);
+                monsterNode.GlobalPosition = pos;
+
+                monstersPlaced++;
+            }
+
+            maxLoops++;
+        }
+
+        gamemanager.SetTotalTreasure(treasureAmount);
+
+        if (maxLoops <= 0)
+            GD.PushWarning($"LevelGenerate: Max loops hit when spawning monsters, breaking loop.");
     }
 }

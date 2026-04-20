@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://d4gktu0eh13uo"]
 
+[ext_resource type="Script" uid="uid://b6uq616tdwqsd" path="res://MonsterAI.cs" id="1_eupxk"]
 [ext_resource type="Shader" uid="uid://comhx732g8jtf" path="res://MonsterShader.tres" id="1_vb3nq"]
 [ext_resource type="CapsuleMesh" uid="uid://cclbp2cf2knsy" path="res://CapsuleMonsterMesh.tres" id="2_qheve"]
 [ext_resource type="Script" uid="uid://j3gnxqrbragb" path="res://MonsterGrabWall.cs" id="2_ssiii"]
@@ -28,6 +29,8 @@ material = SubResource("ShaderMaterial_ssiii")
 [node name="Monster" type="CharacterBody3D" unique_id=1139476480]
 collision_layer = 8
 collision_mask = 8
+script = ExtResource("1_eupxk")
+speed = 150.0
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=579899264]
 
