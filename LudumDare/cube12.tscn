@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cbsfaveuuvhd8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bhmcw"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.43529412, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l5hhc"]
+material = SubResource("StandardMaterial3D_bhmcw")
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="Node3D" type="Node3D" unique_id=2075147780]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1391973113]
+cast_shadow = 0
+mesh = SubResource("BoxMesh_l5hhc")

@@ -1,0 +1,144 @@
+[gd_scene format=3 uid="uid://cfprw0w48nme8"]
+
+[ext_resource type="Script" uid="uid://d6nx87h5xb0m" path="res://Scripts/LevelGenerate.cs" id="1_lw2en"]
+[ext_resource type="PackedScene" uid="uid://d05pes65wrhvr" path="res://Prefabs/Treasure.tscn" id="2_y8ckr"]
+[ext_resource type="PackedScene" uid="uid://brwhupk2n01k6" path="res://Prefabs/PlayerExitDropTrigger.tscn" id="3_7ia7k"]
+[ext_resource type="PackedScene" uid="uid://d4gktu0eh13uo" path="res://Monster.tscn" id="4_y10vs"]
+[ext_resource type="Material" uid="uid://dyod1jbokdtv0" path="res://Materials/Rock/Rock.tres" id="5_5w3xi"]
+[ext_resource type="Environment" uid="uid://cpof8ahuhv7ks" path="res://MainLevelEnv.tres" id="6_64643"]
+[ext_resource type="PackedScene" uid="uid://bhnj61kaacyym" path="res://Prefabs/Player.tscn" id="7_dg1f8"]
+[ext_resource type="Script" uid="uid://cxansgc54xph7" path="res://Scripts/GameManager.cs" id="8_2hgkg"]
+[ext_resource type="Script" uid="uid://bh11ejgxorxgj" path="res://Scripts/UIManger.cs" id="9_720pv"]
+[ext_resource type="AudioStream" uid="uid://bamqsegbb7m5e" path="res://Sounds/MenuButtons.mp3" id="10_y8ckr"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_dnhx3"]
+geometry_parsed_geometry_type = 1
+geometry_collision_mask = 4294967281
+agent_height = 1.0
+agent_radius = 0.2
+
+[node name="Level" type="Node3D" unique_id=1238649477 node_paths=PackedStringArray("player", "gamemanager", "navRegion") groups=["LevelGenerate"]]
+script = ExtResource("1_lw2en")
+treasureScene = ExtResource("2_y8ckr")
+exitScene = ExtResource("3_7ia7k")
+player = NodePath("Player")
+monster = ExtResource("4_y10vs")
+gamemanager = NodePath("Gamemanager")
+navRegion = NodePath("NavigationRegion3D")
+mapSize = 55
+middleLayers = 3
+width = 64
+height = 64
+rockMaterial = ExtResource("5_5w3xi")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1824950699]
+environment = ExtResource("6_64643")
+
+[node name="Player" parent="." unique_id=223059442 instance=ExtResource("7_dg1f8")]
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Player" unique_id=693412661]
+stream = ExtResource("10_y8ckr")
+volume_db = 10.0
+
+[node name="Gamemanager" type="Node" parent="." unique_id=1217925287 groups=["GameManager"]]
+script = ExtResource("8_2hgkg")
+gameOverUIScenePath = "res://Scenes/GameOverUI.tscn"
+gameWinUIScenePath = "res://Scenes/GameWinUI.tscn"
+
+[node name="PlayerUI" type="Control" parent="." unique_id=2000826654 node_paths=PackedStringArray("pausedMenu", "audioButtonClick") groups=["UIManager"]]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_720pv")
+mainMenuSceneString = "res://Scenes/MainMenu.tscn"
+pausedMenu = NodePath("PauseMenu")
+audioButtonClick = NodePath("../Player/AudioStreamPlayer3D2")
+
+[node name="PauseMenu" type="Control" parent="PlayerUI" unique_id=1647853109]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Bg" type="ColorRect" parent="PlayerUI/PauseMenu" unique_id=1492712007]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.27058825)
+
+[node name="Label" type="Label" parent="PlayerUI/PauseMenu" unique_id=1184617372]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -139.0
+offset_top = 48.0
+offset_right = 139.0
+offset_bottom = 157.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 79
+text = "Paused"
+
+[node name="ButtonHolder" type="VBoxContainer" parent="PlayerUI/PauseMenu" unique_id=1663358980]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -213.0
+offset_top = -144.775
+offset_right = 214.0
+offset_bottom = 291.22583
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="PlayerUI/PauseMenu/ButtonHolder" unique_id=67013164]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Resume"
+
+[node name="MenuButton" type="Button" parent="PlayerUI/PauseMenu/ButtonHolder" unique_id=119735172]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Main Menu"
+
+[node name="OptionsButton" type="Button" parent="PlayerUI/PauseMenu/ButtonHolder" unique_id=525225130]
+visible = false
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="PlayerUI/PauseMenu/ButtonHolder" unique_id=1973415227]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Quit"
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=330875940]
+navigation_mesh = SubResource("NavigationMesh_dnhx3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=116105025]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 2.395717, 0)
+visible = false
+
+[connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/ResumeButton" to="PlayerUI" method="OnResumeButtonPressed"]
+[connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/MenuButton" to="PlayerUI" method="OnMenuButtonPressed"]
+[connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/OptionsButton" to="PlayerUI" method="OnOptionsPressed"]
+[connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/QuitButton" to="PlayerUI" method="OnQuitButtonPressed"]

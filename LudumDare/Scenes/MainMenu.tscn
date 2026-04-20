@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://dwu30f7dnl5v5"]
 
 [ext_resource type="Script" uid="uid://ds1boheygowj5" path="res://Scripts/MainMenuUi.cs" id="1_65ows"]
+[ext_resource type="Script" uid="uid://bijux4nbtbxq1" path="res://Scenes/OptionsMenu.cs" id="2_ghw46"]
 [ext_resource type="Material" uid="uid://7c7yix6ya8u8" path="res://Materials/Rock/RockMenu.tres" id="3_ooo5j"]
 [ext_resource type="Environment" uid="uid://clqo2cunk6shc" path="res://MainMenuEnv.tres" id="4_gerv3"]
+[ext_resource type="AudioStream" uid="uid://bamqsegbb7m5e" path="res://Sounds/MenuButtons.mp3" id="5_df05h"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rhts7"]
 noise_type = 3
@@ -33,7 +35,7 @@ material = SubResource("StandardMaterial3D_7vrkn")
 
 [node name="MainMenuScene" type="Node3D" unique_id=1945999567]
 
-[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "loadingMenu", "optionsMenu")]
+[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "loadingMenu", "optionsMenu", "creditsMenu", "difficultySelection", "audioButtonClick")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,9 +47,13 @@ playScenePath = "res://Scenes/MainLevel.tscn"
 mainMenu = NodePath("MainMenu")
 loadingMenu = NodePath("LoadingMenu")
 optionsMenu = NodePath("OptionsMenu")
+creditsMenu = NodePath("Credits")
+difficultySelection = NodePath("DifficultySelection")
+audioButtonClick = NodePath("../AudioStreamPlayer3D")
 metadata/_edit_use_anchors_ = true
 
 [node name="MainMenu" type="Control" parent="MainMenuUI" unique_id=917621942]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -67,7 +73,7 @@ offset_right = 465.0
 offset_bottom = 233.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 66
-text = "NAME GOES HERE"
+text = "Treasures Below"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -78,34 +84,85 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -213.0
-offset_top = -72.0
-offset_right = 214.0
-offset_bottom = 264.0
+offset_left = -426.865
+offset_top = -112.0
+offset_right = 0.13549805
+offset_bottom = 304.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
 alignment = 1
 
 [node name="PlayButton" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=1825381018]
-custom_minimum_size = Vector2(0, 104.36)
+custom_minimum_size = Vector2(0, 95)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = "Play Scene"
+text = "Play"
 
 [node name="OptionsButton" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=1490167389]
-custom_minimum_size = Vector2(0, 104.36)
+custom_minimum_size = Vector2(0, 95)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Options"
 
+[node name="Credits" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=1167275407]
+custom_minimum_size = Vector2(0, 95)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Credits"
+
 [node name="QuitButton" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=507176736]
-custom_minimum_size = Vector2(0, 104.36)
+custom_minimum_size = Vector2(0, 95)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Quit"
 
-[node name="OptionsMenu" type="Control" parent="MainMenuUI" unique_id=1917341570]
+[node name="ColorRect" type="ColorRect" parent="MainMenuUI/MainMenu" unique_id=1614129337]
+layout_mode = 0
+offset_left = 673.0
+offset_top = 249.0
+offset_right = 1102.0
+offset_bottom = 666.0
+color = Color(0, 0, 0, 0.62352943)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenuUI/MainMenu/ColorRect" unique_id=77495456]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 31.0
+offset_bottom = -320.00006
+grow_horizontal = 2
+grow_vertical = 2
+text = "TUTORIAL
+--------
+"
+horizontal_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="MainMenuUI/MainMenu/ColorRect" unique_id=514267824]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 23.0
+offset_top = 81.0
+offset_right = -23.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Controls:
+WASD --- Move
+Mouse --- Look
+E --- Interact
+Left Click --- Scan
+Shift --- Run
+
+
+Objective:
+Find treasure using your scanner and bring it back to the enterance while avoiding the monster."
+horizontal_alignment = 1
+
+[node name="OptionsMenu" type="Control" parent="MainMenuUI" unique_id=1917341570 node_paths=PackedStringArray("sensText", "sensSlider")]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -113,6 +170,221 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_ghw46")
+sensText = NodePath("Label3")
+sensSlider = NodePath("SensSlider")
+
+[node name="Label" type="Label" parent="MainMenuUI/OptionsMenu" unique_id=621410474]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -244.39532
+offset_top = 69.0
+offset_right = 244.39532
+offset_bottom = 182.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 66
+text = "Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="MainMenuUI/OptionsMenu" unique_id=930914375]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 358.0
+offset_top = 242.0
+offset_right = -381.0
+offset_bottom = -342.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2231029, 0.2231029, 0.22310287, 0.40392157)
+
+[node name="Label2" type="Label" parent="MainMenuUI/OptionsMenu" unique_id=2097048480]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -244.39532
+offset_top = 217.0
+offset_right = 244.39532
+offset_bottom = 330.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "Sensitivity"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SensSlider" type="HSlider" parent="MainMenuUI/OptionsMenu" unique_id=897405715]
+layout_mode = 0
+offset_left = 366.0
+offset_top = 302.0
+offset_right = 891.0
+offset_bottom = 355.0
+min_value = 0.1
+max_value = 3.0
+step = 0.1
+value = 2.0
+scrollable = false
+tick_count = 5
+ticks_on_borders = true
+ticks_position = 2
+
+[node name="Label3" type="Label" parent="MainMenuUI/OptionsMenu" unique_id=2120162858]
+layout_mode = 0
+offset_left = 478.0
+offset_top = 321.0
+offset_right = 779.0
+offset_bottom = 395.0
+theme_override_font_sizes/font_size = 24
+text = "1.5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="MainMenuUI/OptionsMenu" unique_id=1445277727]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -170.0
+offset_top = -202.0
+offset_right = 170.0
+offset_bottom = -130.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Back"
+
+[node name="DifficultySelection" type="Control" parent="MainMenuUI" unique_id=1020554810]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="MainMenuUI/DifficultySelection" unique_id=48730603]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -465.0
+offset_top = 18.0
+offset_right = 465.0
+offset_bottom = 233.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 66
+text = "Difficulty"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackButton" type="Button" parent="MainMenuUI/DifficultySelection" unique_id=677866693]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 0
+offset_left = 427.0
+offset_top = 600.0
+offset_right = 854.0
+offset_bottom = 680.0
+theme_override_font_sizes/font_size = 40
+text = "Back"
+
+[node name="ButtonHolder" type="VBoxContainer" parent="MainMenuUI/DifficultySelection" unique_id=1945293056]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -213.0
+offset_top = -172.315
+offset_right = 214.0
+offset_bottom = 183.6853
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="PeacefulButton" type="Button" parent="MainMenuUI/DifficultySelection/ButtonHolder" unique_id=912343606]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Peaceful"
+
+[node name="EasyButton" type="Button" parent="MainMenuUI/DifficultySelection/ButtonHolder" unique_id=1471920348]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Easy"
+
+[node name="MediumButton" type="Button" parent="MainMenuUI/DifficultySelection/ButtonHolder" unique_id=892472523]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Medium"
+
+[node name="HardButton" type="Button" parent="MainMenuUI/DifficultySelection/ButtonHolder" unique_id=1292198725]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Hard"
+
+[node name="Credits" type="Control" parent="MainMenuUI" unique_id=1223875442]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="MainMenuUI/Credits" unique_id=684371322]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenuUI/Credits/ColorRect" unique_id=1073965717]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -144.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 30
+text = "Credits:
+
+Sounds:
+https://freesound.org/people/Entershift/sounds/704134/
+https://freesound.org/people/kwahmah_02/sounds/256116/
+https://freesound.org/people/Ali_6868/sounds/384880/
+https://freesound.org/people/arnicholas12/sounds/702765/
+
+Textures:
+https://ambientcg.com/"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="MainMenuUI/Credits" unique_id=1329709287]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -170.0
+offset_top = -137.0
+offset_right = 170.0
+offset_bottom = -65.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Back"
 
 [node name="LoadingMenu" type="Control" parent="MainMenuUI" unique_id=1763098334]
 visible = false
@@ -177,6 +449,20 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=176566597]
 environment = ExtResource("4_gerv3")
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1362678698]
+stream = ExtResource("5_df05h")
+volume_db = 10.0
+
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/PlayButton" to="MainMenuUI" method="OnPlayButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/OptionsButton" to="MainMenuUI" method="OnOptionsButtonPressed"]
+[connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/Credits" to="MainMenuUI" method="OnCreditsButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/QuitButton" to="MainMenuUI" method="OnQuitButtonPressed"]
+[connection signal="value_changed" from="MainMenuUI/OptionsMenu/SensSlider" to="MainMenuUI/OptionsMenu" method="SetSensText"]
+[connection signal="pressed" from="MainMenuUI/OptionsMenu/Button" to="MainMenuUI" method="OnMainMenuButtonPressed"]
+[connection signal="pressed" from="MainMenuUI/OptionsMenu/Button" to="MainMenuUI/OptionsMenu" method="OnMainMenuButtonPressed"]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/BackButton" to="MainMenuUI" method="OnMainMenuButtonPressed"]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI" method="PlayWithDifficulty" binds= [0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/EasyButton" to="MainMenuUI" method="PlayWithDifficulty" binds= [1]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/MediumButton" to="MainMenuUI" method="PlayWithDifficulty" binds= [2]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/HardButton" to="MainMenuUI" method="PlayWithDifficulty" binds= [3]]
+[connection signal="pressed" from="MainMenuUI/Credits/Button" to="MainMenuUI" method="OnMainMenuButtonPressed"]

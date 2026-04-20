@@ -7,8 +7,9 @@ public partial class ScannerTool : Node3D
     [Export] private float timeBtwScans = 2;
     [Export] private float scanFadeTime = 1.5f;
 
-    //[ExportCategory("References")]
-    
+    [ExportCategory("References")]
+    [Export] private AudioStreamPlayer3D audioButtonBeep;
+
 
     [ExportCategory("Grid")]
     [Export] private int gridY = 50;
@@ -37,6 +38,7 @@ public partial class ScannerTool : Node3D
         GetTree().Root.CallDeferred("add_child", multiMeshInstance3D);
         gameManager = (GameManager)GetTree().GetFirstNodeInGroup("GameManager");
         multiMeshInstance3D.Multimesh = multimesh;
+        multiMeshInstance3D.CastShadow = GeometryInstance3D.ShadowCastingSetting.Off;
         multimesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3D;
         multimesh.Mesh = visualMesh;
         multimesh.UseColors = true;
@@ -57,8 +59,9 @@ public partial class ScannerTool : Node3D
 
     public override void _PhysicsProcess(double delta)
     {
-        if (Input.IsKeyPressed(Key.Q) && currTimeBtwScans <= 0) // TODO: Switch to mouse click
+        if (Input.IsActionPressed("scan") && currTimeBtwScans <= 0) // TODO: Switch to mouse click
         {
+            audioButtonBeep.Play();
             currTimeBtwScans = timeBtwScans;
             multimesh.InstanceCount = gridX * gridY;
             if (debugRaycastPoints)

@@ -4,15 +4,34 @@ public partial class UIManger : Control
 {
     [Export] private string mainMenuSceneString;
     [Export] private Control pausedMenu;
+    //[Export] private Control inGameOptions;
+    [Export] private AudioStreamPlayer3D audioButtonClick;
+
 
     public override void _Ready()
     {
         pausedMenu.Hide();
+        //inGameOptions.Hide();
+    }
+
+    public void OnOptionsPressed()
+    {
+        pausedMenu.Hide();
+        //inGameOptions.Show();
+        audioButtonClick.Play();
+    }
+
+    public void OnOptionsBackPressed()
+    {
+        pausedMenu.Show();
+        //inGameOptions.Hide();
+        audioButtonClick.Play();
     }
 
     public void OnResumeButtonPressed()
     {
         SetPaused(false);
+        audioButtonClick.Play();
     }
 
     public void TogglePaused()
@@ -30,11 +49,14 @@ public partial class UIManger : Control
 
     public void OnMenuButtonPressed()
     {
+        SetPaused(false);
+        audioButtonClick.Play();
         GetTree().ChangeSceneToFile(mainMenuSceneString);
     }
 
     public void OnQuitButtonPressed()
     {
+        audioButtonClick.Play();
         GetTree().Quit();
     }
 }

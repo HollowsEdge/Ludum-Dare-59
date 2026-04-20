@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://brwhupk2n01k6"]
 
 [ext_resource type="Script" uid="uid://4o74jiigko0e" path="res://Scripts/DropTreasure.cs" id="1_jal7x"]
+[ext_resource type="Material" uid="uid://ccx7v7jii6aa7" path="res://Materials/Fabric/Fabric.tres" id="2_yuhrt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xr358"]
 size = Vector3(3, 5, 3)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_jal7x"]
+material = ExtResource("2_yuhrt")
 size = Vector2(3, 3)
 
 [node name="PlayerDropBox" type="Node3D" unique_id=2147074141]

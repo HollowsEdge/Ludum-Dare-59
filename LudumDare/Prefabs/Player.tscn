@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://bhnj61kaacyym"]
 
 [ext_resource type="Script" uid="uid://crqpq0l70kpjl" path="res://Scripts/PlayerController.cs" id="1_xhfnw"]
+[ext_resource type="PackedScene" uid="uid://cbsfaveuuvhd8" path="res://cube12.tscn" id="2_shmu5"]
 [ext_resource type="Script" uid="uid://ct622uvfyxo3c" path="res://Scripts/ScannerTool.cs" id="2_x3d5u"]
 [ext_resource type="PackedScene" uid="uid://dwss30v6di4o4" path="res://Scanner.glb" id="3_b43ah"]
+[ext_resource type="AudioStream" uid="uid://e73jcq05vm8w" path="res://Sounds/Scan-Collect.mp3" id="5_vxq8l"]
+[ext_resource type="AudioStream" uid="uid://b70h2gicaubga" path="res://Sounds/Footstep.mp3" id="6_gg3t4"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
 radius = 0.2
@@ -26,7 +29,7 @@ rings = 4
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x3d5u"]
 shading_mode = 0
 
-[node name="Player" type="CharacterBody3D" unique_id=223059442 node_paths=PackedStringArray("ray", "carryingPos") groups=["Player"]]
+[node name="Player" type="CharacterBody3D" unique_id=223059442 node_paths=PackedStringArray("ray", "carryingPos", "scanner", "footstepsAudio") groups=["Player"]]
 collision_layer = 11
 collision_mask = 3
 script = ExtResource("1_xhfnw")
@@ -35,6 +38,10 @@ sprintSpeed = 200.0
 sensitivity = 1.5
 ray = NodePath("CameraHolder/RayCast3D")
 carryingPos = NodePath("CameraHolder/HoldPos")
+footStepScene = ExtResource("2_shmu5")
+scanner = NodePath("CameraHolder/Scanner")
+footstepsAudio = NodePath("FootstepAudio")
+footstepDelayWalk = 0.6
 
 [node name="Collision" type="CollisionShape3D" parent="." unique_id=614385902]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -62,8 +69,9 @@ collision_mask = 5
 [node name="HoldPos" type="Node3D" parent="CameraHolder" unique_id=1847178746]
 transform = Transform3D(0.99619466, -0.08715573, 0, 0.08715573, 0.99619466, 0, 0, 0, 1, 0.05, -0.791, -0.635)
 
-[node name="Scanner" type="Node3D" parent="CameraHolder" unique_id=111162488]
+[node name="Scanner" type="Node3D" parent="CameraHolder" unique_id=111162488 node_paths=PackedStringArray("audioButtonBeep")]
 script = ExtResource("2_x3d5u")
+audioButtonBeep = NodePath("AudioStreamPlayer3D")
 gridY = 20
 gridX = 30
 spacing = 25
@@ -83,8 +91,16 @@ font_size = 16
 [node name="Scanner" parent="CameraHolder/Scanner" unique_id=1594522325 instance=ExtResource("3_b43ah")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0.70710677, 0.70710677, -3.090862e-08, 0.70710677, -0.70710677, -3.090862e-08, 0.44541425, -0.3978622, -0.36923867)
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CameraHolder/Scanner" unique_id=1051854789]
+stream = ExtResource("5_vxq8l")
+volume_db = -15.0
+
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=43600432]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4887545, 0)
 light_energy = 0.2
 distance_fade_enabled = true
 omni_range = 2.0
+
+[node name="FootstepAudio" type="AudioStreamPlayer3D" parent="." unique_id=34625465]
+stream = ExtResource("6_gg3t4")
+volume_db = -25.0

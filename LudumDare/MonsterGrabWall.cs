@@ -7,11 +7,17 @@ public partial class MonsterGrabWall : CollisionShape3D
     [Export] private Node3D grabHolder;
     [Export] private Mesh grabMesh;
     [Export] private float grabDistance;
+    [Export] private float rotSpeed = 10f;
 
     public override void _Ready()
     {
         foreach (Node raycast in GetChildren())
             grabHolder.AddChild(new MeshInstance3D(){ Mesh = grabMesh });
+    }
+
+    public override void _Process(double delta)
+    {
+        Rotation = new Vector3(Rotation.X + Mathf.DegToRad(rotSpeed) * (float)delta, Rotation.Y, Rotation.Z);
     }
 
     public override void _PhysicsProcess(double delta)

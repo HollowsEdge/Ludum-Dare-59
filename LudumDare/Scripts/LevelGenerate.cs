@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public partial class LevelGenerate : Node3D
 { 
@@ -326,11 +327,52 @@ public partial class LevelGenerate : Node3D
 {0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
 {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};
 
-    public override void _Ready()
+    bool initLevel = false;
+
+    ConfigFile config = new();
+
+    public override async void _Ready()
     {
+        var config = new ConfigFile();
+        // Load data from a file.
+        Error err = config.Load("user://game.cfg");
+
+        // If the file didn't load, ignore it.
+        if (err != Error.Ok)
+        {
+            return;
+        }
+
+        // Setup Difficulty
+        int difficulty = (int)config.GetValue("Game", "Difficulty");
+        switch (difficulty)
+        {
+            case 0: // Peaceful
+                ballMonsterCount = 0;
+                treasureAmount = 3;
+                break;
+            case 1: // Easy
+                ballMonsterCount = 1;
+                treasureAmount = 3;
+                break;
+            case 2: // Medium
+                ballMonsterCount = 2;
+                treasureAmount = 4;
+                break;
+            case 3: // Hard
+                ballMonsterCount = 3;
+                treasureAmount = 4;
+                break;
+            default:
+                break;
+        }
+
         gameMap = new bool[width, height];
         GenerateCave();
         navRegion.BakeNavigationMesh();
+        while (navRegion.IsBaking())
+            await ToSignal(GetTree(), "process_frame");
+
         SpawnPlayerAndExit();
         SpawnTreasure();
         SpawnMonster();
@@ -579,6 +621,7 @@ public partial class LevelGenerate : Node3D
                 AddChild(exitNode);
                 player.SetTouchingArea(exitNode.GetNode<Area3D>("Area3D"));
                 exitNode.GlobalPosition = pos;
+                player.init = true;
                 return;
             }
 
@@ -597,7 +640,7 @@ public partial class LevelGenerate : Node3D
         float pixelWorldSizeZ = meshSize.Y / height;
 
         int treasurePlaced = 0;
-        int maxLoops = 10000;
+        int maxLoops = 1000;
 
         List<Node3D> previousChests = new();
 
@@ -605,6 +648,7 @@ public partial class LevelGenerate : Node3D
         {
             int randX = GD.RandRange(1, width - 1);
             int randZ = GD.RandRange(1, height - 1);
+
             // Check valid spawn location
             if (!gameMap3D[randX, 1, randZ])
             {
@@ -612,9 +656,15 @@ public partial class LevelGenerate : Node3D
                 // Spawn scene at pos + random Y rotation
                 Vector3 pos = new(((float)-mapSize / 2) + (randX * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (randZ * pixelWorldSizeZ));
 
+                Vector3[] path = GetNavigationPath(pos, player.GlobalPosition);
+                if (path.Length != 0)
+                {
+                    //GD.Print("Failed to find path to spawn treasure at location : " + pos);
+                    if (path[^1].DistanceTo(player.GlobalPosition) > 2f)
+                        continue;
+                }
 
                 // TODO: Distance check the chests
-
                 Node3D treasureNode = treasureScene.Instantiate<Node3D>();
                 treasureNode.Name = "Treasure " + treasurePlaced;
                 //treasureNode.GetNode<RigidBody3D>("RigidBody3D").Freeze = true;
@@ -627,7 +677,7 @@ public partial class LevelGenerate : Node3D
                 treasurePlaced++;
             }
 
-            maxLoops++;
+            maxLoops--;
         }
 
         gamemanager.SetTreasureList(previousChests);
@@ -696,5 +746,22 @@ public partial class LevelGenerate : Node3D
         if (maxLoops <= 0)
             GD.PushWarning($"LevelGenerate: Max loops hit when getting monster wander pos, breaking loop.");
         return Vector3.Zero;
+    }
+
+    public Vector3[] GetNavigationPath(Vector3 startPosition, Vector3 targetPosition)
+    {
+        if (!IsInsideTree())
+        {
+            return Array.Empty<Vector3>();
+        }
+
+        Rid defaultMapRid = navRegion.GetNavigationMap();
+        Vector3[] path = NavigationServer3D.MapGetPath(
+            defaultMapRid,
+            startPosition,
+            targetPosition,
+            true
+        );
+        return path;
     }
 }
