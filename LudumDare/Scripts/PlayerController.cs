@@ -23,7 +23,8 @@ public partial class PlayerController : CharacterBody3D
     private float stepOriginalVol;
 
     private Node3D carryingTreasure;
-    private Node3D carryingTreasureCollider;
+    private Node3D carryingTreasureCollider1;
+    private Node3D carryingTreasureCollider2;
     private bool touchingExit = false;
 
     private Area3D exitArea;
@@ -117,15 +118,19 @@ public partial class PlayerController : CharacterBody3D
             {
                 // Pick up
                 GodotObject hitObject = ray.GetCollider();
-                carryingTreasure = ((Node3D)hitObject).GetParent<Node3D>();
+                GD.Print();
+                carryingTreasure = ((Node3D)hitObject);
                 // Check if it is treasure
                 if (carryingTreasure.Name.ToString().Contains("Treasure"))
                 {
                     scanner.Hide();
                     carryingTreasure.GlobalPosition = carryingPos.GlobalPosition;
                     carryingTreasure.Reparent(carryingPos);
-                    carryingTreasureCollider = carryingTreasure.GetNode<Node3D>("ColliderHolderBody");
-                    carryingTreasure.RemoveChild(carryingTreasureCollider);
+                    ((RigidBody3D)carryingTreasure).Freeze = true;
+                    carryingTreasureCollider1 = carryingTreasure.GetNode<Node3D>("CollisionShape3D");
+                    carryingTreasure.RemoveChild(carryingTreasureCollider1);
+                    carryingTreasureCollider2 = carryingTreasure.GetNode<Node3D>("CollisionShape3D2");
+                    carryingTreasure.RemoveChild(carryingTreasureCollider2);
                     carryingTreasure.RotationDegrees = Vector3.Zero;
                     carryingTreasure.GetNode<AudioStreamPlayer3D>("AudioStreamPlayer3D").Play();
                     //GD.Print("Picked up : " + carryingTreasure);
@@ -140,6 +145,7 @@ public partial class PlayerController : CharacterBody3D
                 scanner.Show();
                 ClearFootsteps();
                 carryingTreasure.GetNode<AudioStreamPlayer3D>("AudioStreamPlayer3D").Play();
+                ((RigidBody3D)carryingTreasure).Freeze = false;
                 // Check if standing in recieve zone
                 if (exitArea.OverlapsBody(GetNode<PlayerController>(GetPath())))
                 {
@@ -155,8 +161,10 @@ public partial class PlayerController : CharacterBody3D
                     carryingTreasure.Reparent(GetTree().Root);
                     // TODO: Add some force forward
                     GD.Print("Dropped : " + carryingTreasure);
-                    carryingTreasure.AddChild(carryingTreasureCollider);
-                    carryingTreasureCollider = null;
+                    carryingTreasure.AddChild(carryingTreasureCollider1);
+                    carryingTreasure.AddChild(carryingTreasureCollider2);
+                    carryingTreasureCollider1 = null;
+                    carryingTreasureCollider2 = null;
                     carryingTreasure = null;
                 }      
             }

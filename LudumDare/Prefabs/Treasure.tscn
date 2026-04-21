@@ -10,21 +10,34 @@ size = Vector3(1, 0.529541, 0.5220337)
 height = 1.0014648
 radius = 0.19873047
 
-[node name="Treasure" type="Node3D" unique_id=157711790 groups=["Treasure"]]
-
-[node name="TreasureChestNew" parent="." unique_id=836612444 instance=ExtResource("1_dubxd")]
-
-[node name="ColliderHolderBody" type="StaticBody3D" parent="." unique_id=1022778489 groups=["Treasure"]]
+[node name="Treasure" type="RigidBody3D" unique_id=1346861886 groups=["Treasure"]]
 collision_layer = 4
-collision_mask = 4
+collision_mask = 5
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ColliderHolderBody" unique_id=464111110 groups=["Treasure"]]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=464111110 groups=["Treasure"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25165534, -0.002105713)
 shape = SubResource("BoxShape3D_dubxd")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="ColliderHolderBody" unique_id=615552303 groups=["Treasure"]]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=615552303 groups=["Treasure"]]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.0061035156, 0.4986531, 0.0061035156)
 shape = SubResource("CylinderShape3D_bvcr7")
+
+[node name="TreasureChestNew" parent="." unique_id=836612444 instance=ExtResource("1_dubxd")]
+
+[node name="Chest_001" parent="TreasureChestNew" index="0" unique_id=606974526]
+layers = 4
+
+[node name="ChestMetal_001" parent="TreasureChestNew" index="1" unique_id=366155608]
+layers = 4
+
+[node name="Handle_001" parent="TreasureChestNew" index="2" unique_id=1402529951]
+layers = 4
+
+[node name="Lid_001" parent="TreasureChestNew" index="3" unique_id=1313455917]
+layers = 4
+
+[node name="LidMetal_001" parent="TreasureChestNew" index="4" unique_id=1088580525]
+layers = 4
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=771272958]
 stream = ExtResource("2_45x7a")

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://73nv7up28xrs"]
+
+[ext_resource type="PackedScene" uid="uid://d05pes65wrhvr" path="res://Prefabs/Treasure.tscn" id="1_b16bo"]
+
+[node name="Node3D" type="Node3D" unique_id=1972938599]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=26107622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.5493264)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1208751271]
+transform = Transform3D(1, 0, 0, 0, 0.4921045, 0.87053615, 0, -0.87053615, 0.4921045, 0, 0, 1.9585519)
+
+[node name="Treasure" parent="." unique_id=1346861886 instance=ExtResource("1_b16bo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10522175, -1.1920929e-07, -0.16197824)

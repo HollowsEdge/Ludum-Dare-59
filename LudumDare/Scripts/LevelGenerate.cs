@@ -669,6 +669,7 @@ public partial class LevelGenerate : Node3D
                 treasureNode.Name = "Treasure " + treasurePlaced;
                 //treasureNode.GetNode<RigidBody3D>("RigidBody3D").Freeze = true;
                 AddChild(treasureNode);
+                ((RigidBody3D)treasureNode).Freeze = true;
                 treasureNode.GlobalPosition = pos;
                 treasureNode.RotateY(Mathf.DegToRad(GD.RandRange(0, 360)));
 
