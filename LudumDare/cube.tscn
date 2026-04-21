@@ -170,7 +170,7 @@ grow_vertical = 2
 text = "Controls:
 WASD --- Move
 Mouse --- Look
-E --- Interact
+E --- Interact / Pickup / Drop
 Left Click --- Scan
 Shift --- Run
 

@@ -42,7 +42,6 @@ audioButtonClick = NodePath("../AudioStreamPlayer3D")
 metadata/_edit_use_anchors_ = true
 
 [node name="MainMenu" type="Control" parent="MainMenuUI" unique_id=917621942]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -147,7 +146,7 @@ grow_vertical = 2
 text = "Controls:
 WASD --- Move
 Mouse --- Look
-E --- Interact
+E --- Interact / Pickup / Drop
 Left Click --- Scan
 Shift --- Run
 
@@ -157,6 +156,7 @@ Find treasure using your scanner and bring it back to the enterance while avoidi
 horizontal_alignment = 1
 
 [node name="OptionsMenu" type="Control" parent="MainMenuUI" unique_id=1917341570 node_paths=PackedStringArray("sensText", "sensSlider", "fullscreenButton")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
