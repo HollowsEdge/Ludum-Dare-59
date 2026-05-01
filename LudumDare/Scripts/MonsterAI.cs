@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class MonsterAI : CharacterBody3D
 {
@@ -24,18 +23,6 @@ public partial class MonsterAI : CharacterBody3D
         navAgent.TargetPosition = player.GlobalPosition;
         GlobalPosition = new Vector3(GlobalPosition.X, 0, GlobalPosition.Y);
         originalVol = myAudio.VolumeDb;
-    }
-
-    public override void _Process(double delta)
-    {
-        //if (GlobalPosition.DistanceTo(player.GlobalPosition) > 5)
-        //{
-        //    myAudio.VolumeDb = 5;
-        //}
-        //else
-        //{
-        //    myAudio.VolumeDb = originalVol;
-        //}
     }
 
     public override void _PhysicsProcess(double delta)

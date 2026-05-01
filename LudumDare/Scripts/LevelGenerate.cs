@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public partial class LevelGenerate : Node3D
 { 
@@ -32,9 +31,11 @@ public partial class LevelGenerate : Node3D
     [ExportCategory("Debug")]
     [Export] private bool createDebugSandwich = false;
 
-    private bool[,] gameMap; // Wall are true
-    private bool[,,] gameMap3D; // Wall are true
+    // Game Map - Walls are true
+    private bool[,] gameMap; 
+    private bool[,,] gameMap3D;
 
+    // Tables for Marching Cubes algorithm
     private int[] edgeTable = {
         0x0  , 0x109, 0x203, 0x30a, 0x406, 0x50f, 0x605, 0x70c,
         0x80c, 0x905, 0xa0f, 0xb06, 0xc0a, 0xd03, 0xe09, 0xf00,
@@ -67,8 +68,7 @@ public partial class LevelGenerate : Node3D
         0xe90, 0xf99, 0xc93, 0xd9a, 0xa96, 0xb9f, 0x895, 0x99c,
         0x69c, 0x795, 0x49f, 0x596, 0x29a, 0x393, 0x99 , 0x190,
         0xf00, 0xe09, 0xd03, 0xc0a, 0xb06, 0xa0f, 0x905, 0x80c,
-        0x70c, 0x605, 0x50f, 0x406, 0x30a, 0x203, 0x109, 0x0   };
-    
+        0x70c, 0x605, 0x50f, 0x406, 0x30a, 0x203, 0x109, 0x0   };   
     int[,] triTable =
 {{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
 {0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
@@ -327,14 +327,11 @@ public partial class LevelGenerate : Node3D
 {0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
 {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};
 
-    bool initLevel = false;
-
-    ConfigFile config = new();
-
     public override async void _Ready()
     {
-        var config = new ConfigFile();
-        // Load data from a file.
+        ConfigFile config = new();
+
+        // Load data from game settings file
         Error err = config.Load("user://game.cfg");
 
         // If the file didn't load, ignore it.
@@ -367,12 +364,18 @@ public partial class LevelGenerate : Node3D
                 break;
         }
 
+        // Initialize the gameMap
         gameMap = new bool[width, height];
+
+        // Generate the cave using marching cubes
         GenerateCave();
+
+        // Bake the navigation mesh for the monster, backtrack footsteps, and generation checks
         navRegion.BakeNavigationMesh();
         while (navRegion.IsBaking())
             await ToSignal(GetTree(), "process_frame");
 
+        // Post settup - place player, exit, treasure, and monsters in the maze
         SpawnPlayerAndExit();
         SpawnTreasure();
         SpawnMonster();

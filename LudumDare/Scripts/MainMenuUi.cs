@@ -1,51 +1,69 @@
 using Godot;
-using System;
 
-public partial class MainMenuUi : Control
+public partial class MainMenuUI : Control
 {
+    [ExportCategory("Scene Paths")]
     [Export] private string playScenePath;
+
+    [ExportCategory("UI Nodes")]
     [Export] private Control mainMenu;
     [Export] private Control loadingMenu;
     [Export] private Control optionsMenu;
     [Export] private Control creditsMenu;
-    [Export] private Control difficultySelection;
+    [Export] private Control difficultySelectionMenu;
+
+    [ExportCategory("Audio")]
     [Export] private AudioStreamPlayer3D audioButtonClick;
 
     public override void _Ready()
     {
+        // Show only the main menu
         mainMenu.Show();
         loadingMenu.Hide();
         optionsMenu.Hide();
         creditsMenu.Hide();
-        difficultySelection.Hide();
+        difficultySelectionMenu.Hide();
 
+        // Make sure the mouse is not locked to the screen
         Input.MouseMode = Input.MouseModeEnum.Visible;
     }
 
+    /// <summary>
+    /// Switches the UI to the difficulty selection menu
+    /// </summary>
     public void OnPlayButtonPressed()
     {
         mainMenu.Hide();
-        difficultySelection.Show();
+        difficultySelectionMenu.Show();
         audioButtonClick.Play();
     }
 
+    /// <summary>
+    /// Starts the game with a chosen difficulty level. 0 - Peaceful, 1 - Easy, 2 - Medium, 3 - Hard
+    /// </summary>
     public void PlayWithDifficulty(int difficulty)
     {
         // Create new ConfigFile object.
         var config = new ConfigFile();
 
-        // Store some values.
+        // Store and save difficulty selection
         config.SetValue("Game", "Difficulty", difficulty);
 
         config.Save("user://game.cfg");
 
+        // Show the loading screen
         audioButtonClick.Play();
         mainMenu.Hide();
-        difficultySelection.Hide();
+        difficultySelectionMenu.Hide();
         loadingMenu.Show();
+
+        // Change the scene to the game
         GetTree().ChangeSceneToFile(playScenePath);
     }
 
+    /// <summary>
+    /// Switches the UI to the options menu
+    /// </summary>
     public void OnOptionsButtonPressed()
     {
         mainMenu.Hide();
@@ -53,6 +71,9 @@ public partial class MainMenuUi : Control
         audioButtonClick.Play();
     }
 
+    /// <summary>
+    /// Switches the UI to the credits menu
+    /// </summary>
     public void OnCreditsButtonPressed()
     {
         mainMenu.Hide();
@@ -61,15 +82,21 @@ public partial class MainMenuUi : Control
         audioButtonClick.Play();
     }
 
+    /// <summary>
+    /// Switches the UI to the main menu
+    /// </summary>
     public void OnMainMenuButtonPressed()
     {
         mainMenu.Show();
-        difficultySelection.Hide();
+        difficultySelectionMenu.Hide();
         optionsMenu.Hide();
         creditsMenu.Hide();
         audioButtonClick.Play();
     }
 
+    /// <summary>
+    /// Exits the game.
+    /// </summary>
     public void OnQuitButtonPressed()
     {
         audioButtonClick.Play();

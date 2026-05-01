@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dwu30f7dnl5v5"]
 
-[ext_resource type="Script" uid="uid://ds1boheygowj5" path="res://Scripts/MainMenuUi.cs" id="1_65ows"]
+[ext_resource type="Script" uid="uid://ds1boheygowj5" path="res://Scripts/MainMenuUI.cs" id="1_65ows"]
 [ext_resource type="Script" uid="uid://bijux4nbtbxq1" path="res://Scripts/OptionsMenu.cs" id="2_ghw46"]
 [ext_resource type="Environment" uid="uid://clqo2cunk6shc" path="res://Scenes/Environments/MainMenuEnv.tres" id="4_gerv3"]
 [ext_resource type="PackedScene" uid="uid://b4je123osxljp" path="res://Models/CaveOpening.glb" id="5_8um5k"]
@@ -511,7 +511,7 @@ environment = ExtResource("4_gerv3")
 stream = ExtResource("5_df05h")
 volume_db = 10.0
 
-[node name="cave" parent="." unique_id=42512728 instance=ExtResource("5_8um5k")]
+[node name="cave" parent="." unique_id=840135770 instance=ExtResource("5_8um5k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.92744493, 4.7683716e-07, -6.1563683)
 
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/PlayButton" to="MainMenuUI" method="OnPlayButtonPressed"]
