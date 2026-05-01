@@ -1,8 +1,0 @@
-[gd_resource type="ShaderMaterial" format=3 uid="uid://kpkideeg5njj"]
-
-[ext_resource type="Shader" uid="uid://28wq30c2wmen" path="res://ScanMaterialShader.tres" id="1_bewkl"]
-
-[resource]
-render_priority = 0
-shader = ExtResource("1_bewkl")
-shader_parameter/ColorParameter = Color(1, 1, 1, 1)

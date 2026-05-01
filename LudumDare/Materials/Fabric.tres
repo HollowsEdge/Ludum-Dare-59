@@ -1,0 +1,18 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ccx7v7jii6aa7"]
+
+[ext_resource type="Texture2D" uid="uid://dhsvis0ntjj71" path="res://Materials/Textures/Fabric/Fabric061_2K-JPG_Color.jpg" id="1_wpgrb"]
+[ext_resource type="Texture2D" uid="uid://duum53f8cq4h4" path="res://Materials/Textures/Fabric/Fabric061_2K-JPG_AmbientOcclusion.jpg" id="2_xpgub"]
+[ext_resource type="Texture2D" uid="uid://b8o46rq6vne03" path="res://Materials/Textures/Fabric/Fabric061_2K-JPG_NormalGL.jpg" id="3_l433l"]
+[ext_resource type="Texture2D" uid="uid://bp1qpsnq21c6r" path="res://Materials/Textures/Fabric/Fabric061_2K-JPG_Roughness.jpg" id="4_3veth"]
+
+[resource]
+albedo_color = Color(0.4897036, 0.53024876, 0.10377262, 1)
+albedo_texture = ExtResource("1_wpgrb")
+roughness_texture = ExtResource("4_3veth")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_texture = ExtResource("3_l433l")
+ao_enabled = true
+ao_texture = ExtResource("2_xpgub")
+ao_texture_channel = 4
+uv1_triplanar = true

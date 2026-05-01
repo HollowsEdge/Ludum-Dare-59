@@ -3,12 +3,12 @@
 [ext_resource type="Script" uid="uid://d6nx87h5xb0m" path="res://Scripts/LevelGenerate.cs" id="1_wa8mu"]
 [ext_resource type="PackedScene" uid="uid://d05pes65wrhvr" path="res://Prefabs/Treasure.tscn" id="2_0gyb6"]
 [ext_resource type="PackedScene" uid="uid://brwhupk2n01k6" path="res://Prefabs/PlayerExitDropTrigger.tscn" id="3_vqjuy"]
-[ext_resource type="Material" uid="uid://dyod1jbokdtv0" path="res://Materials/Rock/Rock.tres" id="4_5wso4"]
-[ext_resource type="Environment" uid="uid://cpof8ahuhv7ks" path="res://MainLevelEnv.tres" id="5_bfvw3"]
+[ext_resource type="Material" uid="uid://dyod1jbokdtv0" path="res://Materials/Rock.tres" id="4_5wso4"]
+[ext_resource type="Environment" uid="uid://cpof8ahuhv7ks" path="res://Scenes/Environments/MainLevelEnv.tres" id="5_bfvw3"]
 [ext_resource type="PackedScene" uid="uid://bhnj61kaacyym" path="res://Prefabs/Player.tscn" id="6_gkx6n"]
 [ext_resource type="Script" uid="uid://cxansgc54xph7" path="res://Scripts/GameManager.cs" id="7_ndu1b"]
 [ext_resource type="Script" uid="uid://bh11ejgxorxgj" path="res://Scripts/UIManger.cs" id="9_i24ni"]
-[ext_resource type="PackedScene" uid="uid://d4gktu0eh13uo" path="res://Monster.tscn" id="9_snxwr"]
+[ext_resource type="PackedScene" uid="uid://d4gktu0eh13uo" path="res://Prefabs/Monster.tscn" id="9_snxwr"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_dnhx3"]
 geometry_parsed_geometry_type = 1
