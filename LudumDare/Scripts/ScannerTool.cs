@@ -59,7 +59,7 @@ public partial class ScannerTool : Node3D
 
     public override void _PhysicsProcess(double delta)
     {
-        if (Input.IsActionPressed("scan") && currTimeBtwScans <= 0) // TODO: Switch to mouse click
+        if (Input.IsActionPressed("scan") && currTimeBtwScans <= 0)
         {
             audioButtonBeep.Play();
             currTimeBtwScans = timeBtwScans;
@@ -121,9 +121,6 @@ public partial class ScannerTool : Node3D
                 }
 
             }
-
-            //GD.Print(previousPointMeshes.Count);
         }
-        
     }
 }

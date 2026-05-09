@@ -710,8 +710,6 @@ public partial class LevelGenerate : Node3D
             // Check valid spawn location
             if (!gameMap3D[randX, 1, randZ] && player.GlobalPosition.DistanceTo(pos) > minMonsterSpawnDistance)
             {
-                // TODO: Distance check the chests
-
                 Node3D monsterNode = monster.Instantiate<Node3D>();
                 monsterNode.Name = "Monster " + monstersPlaced;
                 AddChild(monsterNode);
