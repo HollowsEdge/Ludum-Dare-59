@@ -24,7 +24,7 @@ material = SubResource("StandardMaterial3D_7vrkn")
 
 [node name="MainMenuScene" type="Node3D" unique_id=1945999567]
 
-[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "loadingMenu", "optionsMenu", "creditsMenu", "difficultySelection", "audioButtonClick")]
+[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "loadingMenu", "optionsMenu", "creditsMenu", "difficultySelectionMenu", "audioButtonClick")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,7 +37,7 @@ mainMenu = NodePath("MainMenu")
 loadingMenu = NodePath("LoadingMenu")
 optionsMenu = NodePath("OptionsMenu")
 creditsMenu = NodePath("Credits")
-difficultySelection = NodePath("DifficultySelection")
+difficultySelectionMenu = NodePath("DifficultySelection")
 audioButtonClick = NodePath("../AudioStreamPlayer3D")
 metadata/_edit_use_anchors_ = true
 

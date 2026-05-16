@@ -10,7 +10,6 @@ public partial class ScannerTool : Node3D
     [ExportCategory("References")]
     [Export] private AudioStreamPlayer3D audioButtonBeep;
 
-
     [ExportCategory("Grid")]
     [Export] private int gridY = 50;
     [Export] private int gridX = 50;
@@ -21,11 +20,7 @@ public partial class ScannerTool : Node3D
     [Export] private Color monsterColor = new(1, 0, 0);
     [Export] private Color treasureColor = new(0, 1, 0);
 
-    [ExportCategory("Debug")]
-    [Export] private bool debugRaycastPoints = false;
-    [Export] private Material sphereMat;
-
-    private List<Node> previousPointMeshes = new();
+    // Other
     private MultiMeshInstance3D multiMeshInstance3D = new();
     private MultiMesh multimesh = new();
     private Label3D distText;
@@ -35,24 +30,31 @@ public partial class ScannerTool : Node3D
 
     public override void _Ready()
     {
-        GetTree().Root.CallDeferred("add_child", multiMeshInstance3D);
+        // Get the gameManager
         gameManager = (GameManager)GetTree().GetFirstNodeInGroup("GameManager");
+
+        // Add a multimesh to display the dots in the scene
+        GetTree().Root.CallDeferred("add_child", multiMeshInstance3D);
         multiMeshInstance3D.Multimesh = multimesh;
         multiMeshInstance3D.CastShadow = GeometryInstance3D.ShadowCastingSetting.Off;
         multimesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3D;
         multimesh.Mesh = visualMesh;
         multimesh.UseColors = true;
+
+        // Setup the UI on the scanner
         distText = GetNode<Label3D>("DistanceText");
         treasureText = GetNode<Label3D>("TreasureText");
     }
 
     public override void _Process(double delta)
     {
+        // Decrease scan cooldown
         if(currTimeBtwScans > 0)
             currTimeBtwScans -= (float)delta;
 
-        float closestChest = gameManager.GetClosestChestDist();
+        float closestChest = gameManager.GetClosestChestDist(); // Always find the closest chest
 
+        // Set UI on scanner
         distText.Text = closestChest < 0 ? "None" : Mathf.FloorToInt(closestChest) + "m";
         treasureText.Text = (gameManager.GetTotalChests() - gameManager.GetChestsCount()) + "  /  " + gameManager.GetTotalChests();
     }
@@ -64,29 +66,28 @@ public partial class ScannerTool : Node3D
             audioButtonBeep.Play();
             currTimeBtwScans = timeBtwScans;
             multimesh.InstanceCount = gridX * gridY;
-            if (debugRaycastPoints)
-            {
-                foreach (var item in previousPointMeshes)
-                    item.QueueFree();
-                previousPointMeshes.Clear();
-            }
+
             int currIndex = 0;
             for (int x = 0; x < gridX; x++)
             {
                 for (int y = 0; y < gridY; y++)
                 {
+                    // Calculate offset for raycast
+                    int offsetX = (x - gridX / 2) * spacing;
+                    int offsetY = (y - gridY / 2) * spacing;
+
+                    // Get variables for raycast
                     var spaceState = GetWorld3D().DirectSpaceState;
                     var cam = GetNode<Camera3D>("../Camera3D");
                     var mousePos = GetViewport().GetMousePosition();
 
-                    int offsetX = (x - gridX / 2) * spacing;
-                    int offsetY = (y - gridY / 2) * spacing;
-
+                    // Raycast with offset
                     var origin = cam.ProjectRayOrigin(mousePos);
                     var end = origin + cam.ProjectRayNormal(mousePos + new Vector2(offsetX, offsetY)) * 10000;
                     var query = PhysicsRayQueryParameters3D.Create(origin, end, 0b00000000_00000000_00000000_00001101);
                     var result = spaceState.IntersectRay(query);
 
+                    // Set the color of the current point
                     Color newColor = defaultColor;
 
                     if (((Node3D)result["collider"]).IsInGroup("Monster"))
@@ -95,27 +96,9 @@ public partial class ScannerTool : Node3D
                     if (((Node3D)result["collider"]).IsInGroup("Treasure"))
                         newColor = treasureColor;
 
+                    // Setup the multimesh
                     multimesh.SetInstanceColor(currIndex, newColor);
                     multimesh.SetInstanceTransform(currIndex, new Transform3D(Basis.Identity, (Vector3)result["position"]));
-
-                    if (debugRaycastPoints)
-                    {
-                        SphereMesh point = new()
-                        {
-                            Radius = .02f,
-                            Height = .02f * 2
-                        };
-
-                        MeshInstance3D mesh = new()
-                        {
-                            Mesh = point,
-                            Layers = 0b00000000_00000000_10000000_00000000,
-                            MaterialOverride = sphereMat
-                        };
-                        previousPointMeshes.Add(mesh);
-                        GetTree().Root.AddChild(mesh);
-                        mesh.GlobalPosition = (Vector3)result["position"];
-                    }
                     
                     currIndex++;
                 }

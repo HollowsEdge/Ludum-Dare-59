@@ -329,9 +329,8 @@ public partial class LevelGenerate : Node3D
 
     public override async void _Ready()
     {
+        // Load the game settings from save file
         ConfigFile config = new();
-
-        // Load data from game settings file
         Error err = config.Load("user://game.cfg");
 
         // If the file didn't load, ignore it.
@@ -381,6 +380,9 @@ public partial class LevelGenerate : Node3D
         SpawnMonster();
     }
 
+    /// <summary>
+    /// Main function to generate the cave mesh
+    /// </summary>
     private void GenerateCave()
     {
         // Initialize Map with noise
@@ -450,17 +452,20 @@ public partial class LevelGenerate : Node3D
         SurfaceTool st = new();
         st.Begin(Mesh.PrimitiveType.Triangles);
 
+        // Calculations to scale mesh
         float aspectRatio = (float)width / (float)height;
         Vector2 meshSize = new Vector2(aspectRatio, 1f) * mapSize;
         float pixelWorldSizeX = meshSize.X / width;
         float pixelWorldSizeZ = meshSize.Y / height;
 
         for (int x = 0; x < width - 1; x++)
-            for (int y = 0; y < middleLayers + 2 - 1; y++)
+            for (int y = 0; y < middleLayers + 2 - 1; y++) // +2 for top and bottom layers
                 for (int z = 0; z < height - 1; z++)
                 {
+                    // Find the pos for this point in the world
                     Vector3 pos = new(((float)-mapSize / 2) + (x * pixelWorldSizeX), (-pixelWorldSizeZ / 2) + (y * pixelWorldSizeX), ((float)-mapSize / 2) + (z * pixelWorldSizeZ));
 
+                    // Offset the pos by each potential vertex point
                     Vector3[] vertexPoints = [
                         pos + new Vector3(0f,              0f ,             0f              ),
                         pos + new Vector3(pixelWorldSizeX, 0f ,             0f              ),
@@ -472,6 +477,7 @@ public partial class LevelGenerate : Node3D
                         pos + new Vector3(0f,              pixelWorldSizeZ ,pixelWorldSizeZ ),
                         ];
 
+                    // Set each potential vertex to half way on the selected edge
                     Vector3[] lerpedPoints = [
                         vertexPoints[0].Lerp(vertexPoints[1], .5f),
                         vertexPoints[1].Lerp(vertexPoints[2], .5f),
@@ -489,6 +495,7 @@ public partial class LevelGenerate : Node3D
                         vertexPoints[3].Lerp(vertexPoints[7], .5f)
                     ];
 
+                    // Create verticies for mesh
                     for (int i = 0; i < 16; i += 3)
                     {
                         int binaryIndex = marchingCubesMap[x, y, z];
@@ -499,8 +506,7 @@ public partial class LevelGenerate : Node3D
                         int point2 = triTable[binaryIndex, i + 1];
                         int point3 = triTable[binaryIndex, i + 2];
 
-                        //GD.Print("Points : " + point1 + " " + point2 + " " + point3 + " | length : " + vertexPoints.Length);
-
+                        // Add new triangle to mesh
                         st.SetUV(new(0, 0));
                         st.AddVertex(lerpedPoints[point1]);
                         st.SetUV(new(0, 1));
@@ -510,23 +516,32 @@ public partial class LevelGenerate : Node3D
                     }
                     
                 }
+
+        // Finish creating mesh
         st.GenerateNormals();
         st.GenerateTangents();
         ArrayMesh mesh = st.Commit();
-        //ResourceSaver.Save(mesh, "res://meshcave.tres");
+
+        // Add mesh to scene
         MeshInstance3D meshInstance3D = new()
         {
             Mesh = mesh,
             Name = "Caves",
             MaterialOverride = rockMaterial
         };
-        meshInstance3D.CreateTrimeshCollision();
+        meshInstance3D.CreateTrimeshCollision(); // Create collision for mesh
         navRegion.AddChild(meshInstance3D);
 
         if(createDebugSandwich)
             DebugMap();
     }
 
+    /// <summary>
+    /// Gets the amount of alive neighbors around a target cell.
+    /// </summary>
+    /// <param name="targetPos">The position of the center search tile</param>
+    /// <param name="range">How far away from the target tile to search</param>
+    /// <returns>Int - Amount of alive neighbors in a range around the target tile.</returns>
     private int GetNeighbors(Vector2I targetPos, int range)
     {
         int totalAliveNeighbors = 0;
@@ -534,15 +549,17 @@ public partial class LevelGenerate : Node3D
         {
             for (int y = -range; y <= range; y++)
             {
-                if (x == 0 && y == 0)
+                if (x == 0 && y == 0) // Don't count the target tile
                     continue;
 
+                // Add offset to current tile
                 int dx = targetPos.X + x;
                 int dy = targetPos.Y + y;
 
-                if (dx < 0 || dx >= width || dy < 0 || dy >= height)
+                if (dx < 0 || dx >= width || dy < 0 || dy >= height) // Make sure the offset tile is in range
                     continue;
 
+                // Increase counter if tile is alive
                 if (gameMap[dx, dy])
                     totalAliveNeighbors++;
             }
@@ -551,10 +568,14 @@ public partial class LevelGenerate : Node3D
         return totalAliveNeighbors;
     }
 
+    /// <summary>
+    /// Draw a debug map on multiple planes to see what it should look like
+    /// </summary>
     private void DebugMap()
     {
         for (int i = 0; i < middleLayers + 2; i++)
         {
+            // Add plane mesh to sceen
             PlaneMesh groundDebugPlane = new()
             {
                 Size = new(mapSize, mapSize),
@@ -566,16 +587,19 @@ public partial class LevelGenerate : Node3D
             };
             AddChild(meshInstance3D);
 
+            // Create texture where each pixel is a cell
             Image newImage = Image.CreateEmpty(width, height, false, Image.Format.Rgba8);
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
+                    // Set color depending on if tile is a wall
                     Color newColor = gameMap3D[x, i, y] ? new Color(1, 1, 1) : new Color(0, 0, 0);
                     newImage.SetPixel(x, y, newColor);
                 }
             }
 
+            // Set image as new texture
             StandardMaterial3D material = new()
             {
                 AlbedoTexture = ImageTexture.CreateFromImage(newImage),
@@ -586,44 +610,40 @@ public partial class LevelGenerate : Node3D
         
     }
 
+    /// <summary>
+    /// Places the player and exit into the world
+    /// </summary>
     private void SpawnPlayerAndExit()
     {
+        // World scale calculations
         float aspectRatio = (float)width / (float)height;
         Vector2 meshSize = new Vector2(aspectRatio, 1f) * mapSize;
         float pixelWorldSizeX = meshSize.X / width;
         float pixelWorldSizeZ = meshSize.Y / height;
 
-        //for (int x = 0; x < width - 1; x++)
-        //    for (int z = 0; z < height - 1; z++)
-        //    {
-        //        if (!gameMap3D[x, 1, z])
-        //        {
-        //            Vector3 pos = new(((float)-mapSize / 2) + (x * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (z * pixelWorldSizeZ));
-        //            player.GlobalPosition = pos;
-        //            Node3D exitNode = exitScene.Instantiate<Node3D>();
-        //            AddChild(exitNode);
-        //            player.SetTouchingArea(exitNode.GetNode<Area3D>("Area3D"));
-        //            exitNode.GlobalPosition = pos;
-        //            return;
-        //        }
-        //    }
-
         int maxLoops = 10000;
 
+        // Loop until player and exit is placed
         while (maxLoops > 0)
         {
+            // Get random location in map bounds
             int randX = GD.RandRange(1, width - 1);
             int randZ = GD.RandRange(1, height - 1);
-            // Check valid spawn location
+
+            // Check valid spawn location (Not in a wall)
             if (!gameMap3D[randX, 1, randZ])
             {
-
+                // Create and set position
                 Vector3 pos = new(((float)-mapSize / 2) + (randX * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (randZ * pixelWorldSizeZ));
                 player.GlobalPosition = pos;
+                
+                // Add the exit node to the same place
                 Node3D exitNode = exitScene.Instantiate<Node3D>();
                 AddChild(exitNode);
                 player.SetTouchingArea(exitNode.GetNode<Area3D>("Area3D"));
                 exitNode.GlobalPosition = pos;
+
+                // Set the player as finished setup
                 player.init = true;
                 return;
             }
@@ -631,52 +651,60 @@ public partial class LevelGenerate : Node3D
             maxLoops++;
         }
 
+        // Error if max loops reached
         if (maxLoops <= 0)
-            GD.PushWarning($"LevelGenerate: Max loops hit when spawning player, breaking loop.");
+            GD.PushError($"LevelGenerate: Max loops hit when spawning player, breaking loop.");
     }
 
+    /// <summary>
+    /// Places the treasure chests into the world
+    /// </summary>
     private void SpawnTreasure()
     {
+        // World scale calculations
         float aspectRatio = (float)width / (float)height;
         Vector2 meshSize = new Vector2(aspectRatio, 1f) * mapSize;
         float pixelWorldSizeX = meshSize.X / width;
         float pixelWorldSizeZ = meshSize.Y / height;
 
+        // Keep track how many chests were placed
         int treasurePlaced = 0;
         int maxLoops = 1000;
 
         List<Node3D> previousChests = new();
 
+        // Loop until all chests are placed
         while (treasurePlaced < treasureAmount && maxLoops > 0)
         {
+            // Get random location in map bounds
             int randX = GD.RandRange(1, width - 1);
             int randZ = GD.RandRange(1, height - 1);
 
             // Check valid spawn location
             if (!gameMap3D[randX, 1, randZ])
             {
-                
                 // Spawn scene at pos + random Y rotation
                 Vector3 pos = new(((float)-mapSize / 2) + (randX * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (randZ * pixelWorldSizeZ));
 
+                // Check to see if the player can reach the chest
                 Vector3[] path = GetNavigationPath(pos, player.GlobalPosition);
                 if (path.Length != 0)
                 {
-                    //GD.Print("Failed to find path to spawn treasure at location : " + pos);
                     if (path[^1].DistanceTo(player.GlobalPosition) > 2f)
                         continue;
                 }
 
-                // TODO: Distance check the chests
+                // Add the chest to the scene
                 Node3D treasureNode = treasureScene.Instantiate<Node3D>();
                 treasureNode.Name = "Treasure " + treasurePlaced;
-                //treasureNode.GetNode<RigidBody3D>("RigidBody3D").Freeze = true;
                 AddChild(treasureNode);
+
+                // Setup some properties of chest in world
                 ((RigidBody3D)treasureNode).Freeze = true;
                 treasureNode.GlobalPosition = pos;
                 treasureNode.RotateY(Mathf.DegToRad(GD.RandRange(0, 360)));
 
-                previousChests.Add(treasureNode);
+                previousChests.Add(treasureNode); // Keep track of the chest
 
                 treasurePlaced++;
             }
@@ -684,32 +712,44 @@ public partial class LevelGenerate : Node3D
             maxLoops--;
         }
 
+        // Tell GameManager about placed chests
         gamemanager.SetTreasureList(previousChests);
         gamemanager.SetTotalTreasure(treasureAmount);
 
+        // Warn if max loops reached
         if (maxLoops <= 0)
             GD.PushWarning($"LevelGenerate: Max loops hit when spawning treasure, breaking loop.");
     }
 
+    /// <summary>
+    /// Places the monsters into the world
+    /// </summary>
     private void SpawnMonster()
     {
+        // World scale calculations
         float aspectRatio = (float)width / (float)height;
         Vector2 meshSize = new Vector2(aspectRatio, 1f) * mapSize;
         float pixelWorldSizeX = meshSize.X / width;
         float pixelWorldSizeZ = meshSize.Y / height;
 
+        // Keep track how many monsters were placed
         int monstersPlaced = 0;
         int maxLoops = 10000;
 
+        // Loop until all monsters are placed
         while (monstersPlaced < ballMonsterCount && maxLoops > 0)
         {
+            // Get random location in map bounds
             int randX = GD.RandRange(1, width - 1);
             int randZ = GD.RandRange(1, height - 1);
+
             // Spawn scene at pos
             Vector3 pos = new(((float)-mapSize / 2) + (randX * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (randZ * pixelWorldSizeZ));
+
             // Check valid spawn location
             if (!gameMap3D[randX, 1, randZ] && player.GlobalPosition.DistanceTo(pos) > minMonsterSpawnDistance)
             {
+                // Spawn monster into world at selected position
                 Node3D monsterNode = monster.Instantiate<Node3D>();
                 monsterNode.Name = "Monster " + monstersPlaced;
                 AddChild(monsterNode);
@@ -721,12 +761,18 @@ public partial class LevelGenerate : Node3D
             maxLoops++;
         }
 
+        // Warn if max loops reached
         if (maxLoops <= 0)
             GD.PushWarning($"LevelGenerate: Max loops hit when spawning monsters, breaking loop.");
     }
 
+    /// <summary>
+    /// Gets a random point in the cave (which will be on the navmesh)
+    /// </summary>
+    /// <returns>Vector3 - Random point in cave</returns>
     public Vector3 GetRandomPointOnNavmesh()
     {
+        // World scale calculations
         float aspectRatio = (float)width / (float)height;
         Vector2 meshSize = new Vector2(aspectRatio, 1f) * mapSize;
         float pixelWorldSizeX = meshSize.X / width;
@@ -734,10 +780,13 @@ public partial class LevelGenerate : Node3D
 
         int maxLoops = 10000;
 
+        // Loop untill valid point is found (or hit loop limit)
         while (maxLoops > 0)
         {
+            // Get random location in map bounds
             int randX = GD.RandRange(1, width - 1);
             int randZ = GD.RandRange(1, height - 1);
+
             // Check valid spawn location
             if (!gameMap3D[randX, 1, randZ])
                 return new(((float)-mapSize / 2) + (randX * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (randZ * pixelWorldSizeZ));
@@ -745,18 +794,27 @@ public partial class LevelGenerate : Node3D
             maxLoops++;
         }
 
+        // Warn if max loops reached
         if (maxLoops <= 0)
             GD.PushWarning($"LevelGenerate: Max loops hit when getting monster wander pos, breaking loop.");
+
+        // Return found position
         return Vector3.Zero;
     }
 
+    /// <summary>
+    /// Queries the navigation region to create a path between 2 points
+    /// </summary>
+    /// <param name="startPosition">The starting point for the path</param>
+    /// <param name="targetPosition">The finish point for the path</param>
+    /// <returns>A list of points that create a path from the start position to target position</returns>
     public Vector3[] GetNavigationPath(Vector3 startPosition, Vector3 targetPosition)
     {
+        // Make sure this node is in the tree
         if (!IsInsideTree())
-        {
             return Array.Empty<Vector3>();
-        }
 
+        // Calculate the path
         Rid defaultMapRid = navRegion.GetNavigationMap();
         Vector3[] path = NavigationServer3D.MapGetPath(
             defaultMapRid,
@@ -764,6 +822,8 @@ public partial class LevelGenerate : Node3D
             targetPosition,
             true
         );
+
+        // Return the path
         return path;
     }
 }

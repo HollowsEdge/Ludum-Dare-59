@@ -26,9 +26,6 @@ height = 0.04
 radial_segments = 8
 rings = 4
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x3d5u"]
-shading_mode = 0
-
 [node name="Player" type="CharacterBody3D" unique_id=223059442 node_paths=PackedStringArray("ray", "carryingPos", "scanner", "footstepsAudio") groups=["Player"]]
 collision_layer = 2
 collision_mask = 3
@@ -76,20 +73,19 @@ gridY = 20
 gridX = 30
 spacing = 25
 visualMesh = SubResource("SphereMesh_x3d5u")
-sphereMat = SubResource("StandardMaterial3D_x3d5u")
 
 [node name="DistanceText" type="Label3D" parent="CameraHolder/Scanner" unique_id=1606341753]
-transform = Transform3D(0.49314046, 0, 0, 0, 0.4761832, 0.12820783, 0, -0.12820783, 0.4761832, 0.44750184, -0.09904146, -0.53274256)
+transform = Transform3D(0.4639455, 0.043458324, -0.16141076, -3.384429e-09, 0.4761832, 0.12820783, 0.16715877, -0.12061769, 0.4479922, 0.4350275, -0.09904146, -0.5063853)
 text = "100m"
 font_size = 25
 
 [node name="TreasureText" type="Label3D" parent="CameraHolder/Scanner" unique_id=779402257]
-transform = Transform3D(0.49314046, 0, 0, 0, 0.4761832, 0.12820783, 0, -0.12820783, 0.4761832, 0.44981068, -0.19043803, -0.51008844)
+transform = Transform3D(0.4639455, 0.043458324, -0.16141076, -3.384429e-09, 0.4761832, 0.12820783, 0.16715877, -0.12061769, 0.4479922, 0.42952064, -0.19043803, -0.48428974)
 text = "1  /  3"
 font_size = 16
 
 [node name="Scanner" parent="CameraHolder/Scanner" unique_id=224828602 instance=ExtResource("3_b43ah")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0.70710677, 0.70710677, -3.090862e-08, 0.70710677, -0.70710677, -3.090862e-08, 0.44541425, -0.3978622, -0.36923867)
+transform = Transform3D(-0.24184473, 0.24184473, -0.9396926, 0.7071067, 0.7071067, 0, 0.6644629, -0.6644629, -0.34202012, 0.38, -0.398, -0.354)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CameraHolder/Scanner" unique_id=1051854789]
 stream = ExtResource("5_vxq8l")
