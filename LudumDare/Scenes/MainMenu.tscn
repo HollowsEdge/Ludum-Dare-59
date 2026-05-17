@@ -5,6 +5,9 @@
 [ext_resource type="Environment" uid="uid://clqo2cunk6shc" path="res://Scenes/Environments/MainMenuEnv.tres" id="4_gerv3"]
 [ext_resource type="PackedScene" uid="uid://b4je123osxljp" path="res://Models/CaveOpening.glb" id="5_8um5k"]
 [ext_resource type="AudioStream" uid="uid://bamqsegbb7m5e" path="res://Sounds/MenuButtons.mp3" id="5_df05h"]
+[ext_resource type="PackedScene" uid="uid://cejjvv7qyecmo" path="res://UpdatedMesh.glb" id="6_xim88"]
+[ext_resource type="Material" uid="uid://dyod1jbokdtv0" path="res://Materials/Rock.tres" id="7_koqhg"]
+[ext_resource type="Material" uid="uid://7c7yix6ya8u8" path="res://Materials/RockMenu.tres" id="8_koqhg"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rhts7"]
 noise_type = 3
@@ -12,6 +15,7 @@ frequency = 0.0027
 domain_warp_enabled = true
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_06t4h"]
+resource_name = "MainMenu"
 noise = SubResource("FastNoiseLite_rhts7")
 seamless = true
 
@@ -21,6 +25,14 @@ albedo_texture = SubResource("NoiseTexture2D_06t4h")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_fu7sn"]
 material = SubResource("StandardMaterial3D_7vrkn")
+
+[sub_resource type="QuadMesh" id="QuadMesh_cmrfp"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_cmrfp"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_koqhg"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_koqhg"]
 
 [node name="MainMenuScene" type="Node3D" unique_id=1945999567]
 
@@ -417,6 +429,8 @@ grow_vertical = 2
 theme_override_font_sizes/normal_font_size = 30
 text = "Credits:
 
+Made by: Hollows Edge
+
 Sounds:
 https://freesound.org/people/Entershift/sounds/704134/
 https://freesound.org/people/kwahmah_02/sounds/256116/
@@ -487,21 +501,25 @@ vertical_alignment = 1
 
 [node name="Ground2" type="MeshInstance3D" parent="." unique_id=1513732035]
 transform = Transform3D(10.901427, 0, 0, 0, 0.8567355, -5.622477, 0, 0.51575595, 9.339641, 0, 4.882015, -19.166927)
+visible = false
 mesh = SubResource("PlaneMesh_fu7sn")
 
 [node name="Ground3" type="MeshInstance3D" parent="." unique_id=1106702129]
 transform = Transform3D(7.708473, 0.36469454, 6.604123, 0, 0.8567355, -5.622477, -7.708473, 0.36469454, 6.604123, -11, 4.882015, -15.166927)
+visible = false
 mesh = SubResource("PlaneMesh_fu7sn")
 
 [node name="Ground4" type="MeshInstance3D" parent="." unique_id=430880197]
 transform = Transform3D(7.708473, -0.36469454, -6.604123, 2.1860998e-08, 0.8567355, -5.6224766, 7.708473, 0.36469454, 6.604123, 11.359935, 4.8820143, -14.753315)
+visible = false
 mesh = SubResource("PlaneMesh_fu7sn")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1210649752]
-transform = Transform3D(1, 0, 0, 0, 0.86602545, 0.5, 0, -0.5, 0.86602545, 0, 3.70564, -0.905056)
+transform = Transform3D(1, 0, 0, 0, 0.86602545, 0.5, 0, -0.5, 0.86602545, -0.227633, 3.70564, -1.6456069)
+fov = 57.9
 
 [node name="THE SUN" type="DirectionalLight3D" parent="." unique_id=2103286527]
-transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 9.234915, 3.5730615)
+transform = Transform3D(1, 0, 0, 0, -0.5000001, 0.8660254, 0, -0.8660254, -0.5000001, 0, 9.234915, 3.5730615)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=176566597]
@@ -512,7 +530,123 @@ stream = ExtResource("5_df05h")
 volume_db = 10.0
 
 [node name="cave" parent="." unique_id=840135770 instance=ExtResource("5_8um5k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.92744493, 4.7683716e-07, -6.1563683)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9232714, 7.1525574e-07, -6.1589403)
+
+[node name="Plane" parent="cave" index="0" unique_id=138377278]
+transform = Transform3D(0.97012126, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Plane_001" parent="cave" index="1" unique_id=1593947678]
+visible = false
+
+[node name="UpdatedMesh" parent="." unique_id=1795489793 instance=ExtResource("6_xim88")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3096669, -2.277439, -4.4936614)
+
+[node name="Mesh" parent="UpdatedMesh" index="0" unique_id=508250616]
+transform = Transform3D(-0.46431142, 0, -1.3707047, 0, 1, 0, 1.1013767, 0, -0.57785296, 1.6440027, 0, 0.4197917)
+surface_material_override/0 = ExtResource("7_koqhg")
+
+[node name="CaveLightBlock" type="MeshInstance3D" parent="." unique_id=1628130311]
+transform = Transform3D(7.98694, 0, 0, 0, -3.4833127e-07, 1.0000004, 0, -7.9688907, -4.3711402e-08, -0.5009654, 0.11214185, -6.808507)
+cast_shadow = 3
+mesh = SubResource("QuadMesh_cmrfp")
+
+[node name="Rocks" type="Node3D" parent="." unique_id=1819741322]
+
+[node name="Rock" type="MeshInstance3D" parent="Rocks" unique_id=1973568685]
+transform = Transform3D(7.6500263, 0, 0, 0, 2.193444, 0, 0, 0, 6.187973, 5.156372, -0.4125526, -4.3454037)
+mesh = SubResource("SphereMesh_cmrfp")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Rock2" type="MeshInstance3D" parent="Rocks" unique_id=709450151]
+transform = Transform3D(7.6500263, 0, 0, 0, 1.4019336, 0, 0, 0, 6.187973, -2.9827757, -0.12976968, -11.309418)
+mesh = SubResource("SphereMesh_cmrfp")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Rock3" type="MeshInstance3D" parent="Rocks" unique_id=119092181]
+transform = Transform3D(4.2556252, 0.3949491, 0, -0.90399176, 1.734956, -0.6819266, -0.24197017, 0.46439317, 2.5476525, -4.496185, -0.91316485, -9.251665)
+mesh = SubResource("BoxMesh_koqhg")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Rock4" type="MeshInstance3D" parent="Rocks" unique_id=1425616282]
+transform = Transform3D(4.1957755, -0.4454698, 0.31300855, 1.1502223, 1.7226763, -0.60584617, -0.24197014, 0.46439317, 2.5476525, 2.6679993, -0.91316485, -11.299554)
+mesh = SubResource("BoxMesh_koqhg")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Rock5" type="MeshInstance3D" parent="Rocks" unique_id=1909739275]
+transform = Transform3D(12.946659, 0, 1.977089, 0, 2.193444, 0, -4.365335, 0, 5.863628, -8.619565, -0.59467006, -6.4628015)
+mesh = SubResource("SphereMesh_cmrfp")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Rock6" type="MeshInstance3D" parent="Rocks" unique_id=1508762398]
+transform = Transform3D(22.298046, 0, -1.8971035, 0, 2.1934438, 0, 17.896074, 0, 2.3637416, 8.278331, -0.5946696, -8.070827)
+mesh = SubResource("SphereMesh_cmrfp")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Cliff" type="Node3D" parent="." unique_id=1562657468]
+
+[node name="CliffShadow" type="MeshInstance3D" parent="Cliff" unique_id=1156655462]
+transform = Transform3D(29.828423, 0, 0, 0, 6.228707, 0, 0, 0, 10.905082, -1.2786531, 9.687662, -17.278328)
+cast_shadow = 3
+mesh = SubResource("SphereMesh_cmrfp")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="CliffShadow2" type="MeshInstance3D" parent="Cliff" unique_id=312454258]
+transform = Transform3D(5.7536345, 1.6647588, -2.548044e-07, 1.5958406, -6.0021133, 9.186706e-07, 0, -5.4453085e-07, -10.905082, 0.9706588, 12.725091, -14.923439)
+cast_shadow = 3
+mesh = SubResource("QuadMesh_koqhg")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="CliffShadow3" type="MeshInstance3D" parent="Cliff" unique_id=383978757]
+transform = Transform3D(5.7987266, -1.4808462, 0.18894339, -1.3659582, -5.662853, 3.794955, -0.39994407, -2.1297867, -10.221713, -3.834526, 12.725091, -15.939205)
+cast_shadow = 3
+mesh = SubResource("QuadMesh_koqhg")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="CliffShadow4" type="MeshInstance3D" parent="Cliff" unique_id=2066151922]
+transform = Transform3D(5.6463976, -0.7642579, 3.2836823, -1.3659583, -5.662853, 3.7949548, 1.3796282, -2.478872, -9.681764, -1.5390134, 12.725091, -15.41049)
+cast_shadow = 3
+mesh = SubResource("QuadMesh_koqhg")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Cliff" type="MeshInstance3D" parent="Cliff" unique_id=1091762827]
+transform = Transform3D(7.6500273, 0, 0, 0, 1.632043, -4.134298, 0, 1.4654802, 4.6041927, -6.6118455, 1.2192497, -13.96969)
+mesh = SubResource("SphereMesh_cmrfp")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Cliff2" type="MeshInstance3D" parent="Cliff" unique_id=1362378366]
+transform = Transform3D(11.905876, -0.70860225, 2.7033095, -2.387671, -0.75844324, -5.3665314, -11.763226, -0.56324863, 3.8253782, -7.3543057, 0.23399687, -9.366662)
+mesh = SubResource("BoxMesh_koqhg")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Cliff3" type="MeshInstance3D" parent="Cliff" unique_id=525581268]
+transform = Transform3D(16.541622, 0.17538215, 1.0229934, 3.4747794, -0.74325806, -5.3383474, 0.35352266, -0.90078336, 4.603975, -0.30958796, 0.23399734, -12.210423)
+mesh = SubResource("BoxMesh_koqhg")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Cliff4" type="MeshInstance3D" parent="Cliff" unique_id=1917617701]
+transform = Transform3D(7.7143493, 0.029460771, -0.08961051, -0.079949185, -2.0586586, -3.1904309, 0.1613562, -2.4285305, 2.7034311, -5.539941, 3.0106094, -16.643562)
+mesh = SubResource("BoxMesh_koqhg")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Cliff5" type="MeshInstance3D" parent="Cliff" unique_id=1140076531]
+transform = Transform3D(2.6596868, -2.287129, 2.5275593, -0.079949185, -2.0586586, -3.1904309, -7.2431545, -0.81711084, 0.963336, -10.636092, 3.0106094, -12.847069)
+mesh = SubResource("BoxMesh_koqhg")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Cliff6" type="MeshInstance3D" parent="Cliff" unique_id=1932269037]
+transform = Transform3D(7.330409, 0.09633407, -1.3002806, -1.7149413, -2.0180361, -3.098775, 1.6934255, -2.4606817, 2.4904387, 1.9509845, 2.5904787, -16.643562)
+mesh = SubResource("BoxMesh_koqhg")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Cliff7" type="MeshInstance3D" parent="Cliff" unique_id=1313159272]
+transform = Transform3D(-3.1253812, -1.4830896, 3.2907457, 2.977297, -2.7609763, -1.3168044, -6.3961935, -0.5604947, -2.2209072, 8.627559, 0.637547, -10.042096)
+mesh = SubResource("BoxMesh_koqhg")
+surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="Cliff8" type="MeshInstance3D" parent="Cliff" unique_id=411570249]
+transform = Transform3D(-5.943533, 2.0170107, 0.30681014, -2.8595903, -1.713549, 3.1662135, -4.0050907, -1.769779, -2.7159462, 6.292922, 1.92451, -13.239854)
+mesh = SubResource("BoxMesh_koqhg")
+surface_material_override/0 = ExtResource("8_koqhg")
 
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/PlayButton" to="MainMenuUI" method="OnPlayButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/OptionsButton" to="MainMenuUI" method="OnOptionsButtonPressed"]
@@ -527,3 +661,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.92744493, 4.7683716e-07, -
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/MediumButton" to="MainMenuUI" method="PlayWithDifficulty" binds= [2]]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/HardButton" to="MainMenuUI" method="PlayWithDifficulty" binds= [3]]
 [connection signal="pressed" from="MainMenuUI/Credits/Button" to="MainMenuUI" method="OnMainMenuButtonPressed"]
+
+[editable path="cave"]
+[editable path="UpdatedMesh"]

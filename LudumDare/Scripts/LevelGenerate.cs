@@ -532,6 +532,8 @@ public partial class LevelGenerate : Node3D
         meshInstance3D.CreateTrimeshCollision(); // Create collision for mesh
         navRegion.AddChild(meshInstance3D);
 
+        ResourceSaver.Save(mesh, "res://mesh.tres");
+
         if(createDebugSandwich)
             DebugMap();
     }
