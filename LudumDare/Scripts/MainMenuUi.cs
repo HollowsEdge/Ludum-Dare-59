@@ -41,7 +41,7 @@ public partial class MainMenuUI : Control
     /// <summary>
     /// Starts the game with a chosen difficulty level. 0 - Peaceful, 1 - Easy, 2 - Medium, 3 - Hard
     /// </summary>
-    public void PlayWithDifficulty(int difficulty)
+    public async void PlayWithDifficulty(int difficulty)
     {
         // Create new ConfigFile object.
         var config = new ConfigFile();
@@ -56,6 +56,10 @@ public partial class MainMenuUI : Control
         mainMenu.Hide();
         difficultySelectionMenu.Hide();
         loadingMenu.Show();
+
+        // Make sure to show the load menu (Setup proper level load async later)
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
         // Change the scene to the game
         GetTree().ChangeSceneToFile(playScenePath);
