@@ -9,6 +9,9 @@ public partial class ScannerTool : Node3D
 
     [ExportCategory("References")]
     [Export] private AudioStreamPlayer3D audioButtonBeep;
+    [Export] private Label3D distText;
+    [Export] private Label3D treasureText;
+    [Export] private ProgressBar cooldownUIBar;
 
     [ExportCategory("Grid")]
     [Export] private int gridY = 50;
@@ -23,8 +26,6 @@ public partial class ScannerTool : Node3D
     // Other
     private MultiMeshInstance3D multiMeshInstance3D = new();
     private MultiMesh multimesh = new();
-    private Label3D distText;
-    private Label3D treasureText;
     private GameManager gameManager;
     private float currTimeBtwScans = 0;
 
@@ -34,16 +35,13 @@ public partial class ScannerTool : Node3D
         gameManager = (GameManager)GetTree().GetFirstNodeInGroup("GameManager");
 
         // Add a multimesh to display the dots in the scene
-        GetTree().Root.CallDeferred("add_child", multiMeshInstance3D);
+        GetTree().CurrentScene.CallDeferred("add_child", multiMeshInstance3D);
+        multiMeshInstance3D.Name = "ScannerMultiMesh";
         multiMeshInstance3D.Multimesh = multimesh;
         multiMeshInstance3D.CastShadow = GeometryInstance3D.ShadowCastingSetting.Off;
         multimesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3D;
         multimesh.Mesh = visualMesh;
         multimesh.UseColors = true;
-
-        // Setup the UI on the scanner
-        distText = GetNode<Label3D>("DistanceText");
-        treasureText = GetNode<Label3D>("TreasureText");
     }
 
     public override void _Process(double delta)
@@ -57,6 +55,7 @@ public partial class ScannerTool : Node3D
         // Set UI on scanner
         distText.Text = closestChest < 0 ? "None" : Mathf.FloorToInt(closestChest) + "m";
         treasureText.Text = (gameManager.GetTotalChests() - gameManager.GetChestsCount()) + "  /  " + gameManager.GetTotalChests();
+        cooldownUIBar.Value = (currTimeBtwScans / timeBtwScans) * 100;
     }
 
     public override void _PhysicsProcess(double delta)

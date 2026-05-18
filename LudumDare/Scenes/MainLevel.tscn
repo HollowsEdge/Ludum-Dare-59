@@ -40,7 +40,7 @@ script = ExtResource("7_ndu1b")
 gameOverUIScenePath = "res://Scenes/GameOverUI.tscn"
 gameWinUIScenePath = "res://Scenes/GameWinUI.tscn"
 
-[node name="PlayerUI" type="Control" parent="." unique_id=2000826654 node_paths=PackedStringArray("pausedMenu") groups=["UIManager"]]
+[node name="PlayerUI" type="Control" parent="." unique_id=2000826654 node_paths=PackedStringArray("pausedMenu", "audioButtonClick") groups=["UIManager"]]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -51,6 +51,7 @@ grow_vertical = 2
 script = ExtResource("9_i24ni")
 mainMenuSceneString = "res://Scenes/MainMenu.tscn"
 pausedMenu = NodePath("PauseMenu")
+audioButtonClick = NodePath("AudioStreamPlayer")
 
 [node name="PauseMenu" type="Control" parent="PlayerUI" unique_id=1647853109]
 layout_mode = 1
@@ -117,6 +118,8 @@ custom_minimum_size = Vector2(0, 104.36)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayerUI" unique_id=872927170]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=330875940]
 navigation_mesh = SubResource("NavigationMesh_dnhx3")
