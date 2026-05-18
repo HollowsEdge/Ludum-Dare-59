@@ -5,7 +5,7 @@
 [ext_resource type="Environment" uid="uid://clqo2cunk6shc" path="res://Scenes/Environments/MainMenuEnv.tres" id="4_gerv3"]
 [ext_resource type="PackedScene" uid="uid://b4je123osxljp" path="res://Models/CaveOpening.glb" id="5_8um5k"]
 [ext_resource type="AudioStream" uid="uid://bamqsegbb7m5e" path="res://Sounds/MenuButtons.mp3" id="5_df05h"]
-[ext_resource type="PackedScene" uid="uid://cejjvv7qyecmo" path="res://UpdatedMesh.glb" id="6_xim88"]
+[ext_resource type="PackedScene" uid="uid://cejjvv7qyecmo" path="res://Models/MainMenuCaveMesh.glb" id="6_xim88"]
 [ext_resource type="Material" uid="uid://dyod1jbokdtv0" path="res://Materials/Rock.tres" id="7_koqhg"]
 [ext_resource type="Material" uid="uid://7c7yix6ya8u8" path="res://Materials/RockMenu.tres" id="8_koqhg"]
 
@@ -538,10 +538,10 @@ transform = Transform3D(0.97012126, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 [node name="Plane_001" parent="cave" index="1" unique_id=1593947678]
 visible = false
 
-[node name="UpdatedMesh" parent="." unique_id=1795489793 instance=ExtResource("6_xim88")]
+[node name="UpdatedMesh" parent="." unique_id=1177057046 instance=ExtResource("6_xim88")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3096669, -2.277439, -4.4936614)
 
-[node name="Mesh" parent="UpdatedMesh" index="0" unique_id=508250616]
+[node name="Mesh" parent="UpdatedMesh" index="0" unique_id=1273783301]
 transform = Transform3D(-0.46431142, 0, -1.3707047, 0, 1, 0, 1.1013767, 0, -0.57785296, 1.6440027, 0, 0.4197917)
 surface_material_override/0 = ExtResource("7_koqhg")
 

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cejjvv7qyecmo"
-path="res://.godot/imported/UpdatedMesh.glb-a872cc47d80d51d100a91a77882b887d.scn"
+path="res://.godot/imported/MainMenuCaveMesh.glb-151488243135fc8ab368fe61d2e10f60.scn"
 
 [deps]
 
-source_file="res://UpdatedMesh.glb"
-dest_files=["res://.godot/imported/UpdatedMesh.glb-a872cc47d80d51d100a91a77882b887d.scn"]
+source_file="res://Models/MainMenuCaveMesh.glb"
+dest_files=["res://.godot/imported/MainMenuCaveMesh.glb-151488243135fc8ab368fe61d2e10f60.scn"]
 
 [params]
 
