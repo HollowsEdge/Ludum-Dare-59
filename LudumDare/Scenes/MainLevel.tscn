@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://cxansgc54xph7" path="res://Scripts/GameManager.cs" id="7_ndu1b"]
 [ext_resource type="Script" uid="uid://bh11ejgxorxgj" path="res://Scripts/UIManger.cs" id="9_i24ni"]
 [ext_resource type="PackedScene" uid="uid://d4gktu0eh13uo" path="res://Prefabs/Monster.tscn" id="9_snxwr"]
+[ext_resource type="PackedScene" uid="uid://bn3euhsuwowed" path="res://Scenes/OptionsMenu.tscn" id="10_b2f5p"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_dnhx3"]
 geometry_parsed_geometry_type = 1
@@ -33,14 +34,15 @@ rockMaterial = ExtResource("4_5wso4")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1824950699]
 environment = ExtResource("5_bfvw3")
 
-[node name="Player" parent="." unique_id=223059442 instance=ExtResource("6_gkx6n")]
+[node name="Player" parent="." unique_id=223059442 node_paths=PackedStringArray("optionsMenu") instance=ExtResource("6_gkx6n")]
+optionsMenu = NodePath("../PlayerUI/PauseMenuRoot/OptionsMenu")
 
 [node name="Gamemanager" type="Node" parent="." unique_id=1217925287 groups=["GameManager"]]
 script = ExtResource("7_ndu1b")
 gameOverUIScenePath = "res://Scenes/GameOverUI.tscn"
 gameWinUIScenePath = "res://Scenes/GameWinUI.tscn"
 
-[node name="PlayerUI" type="Control" parent="." unique_id=2000826654 node_paths=PackedStringArray("pausedMenu", "audioButtonClick") groups=["UIManager"]]
+[node name="PlayerUI" type="Control" parent="." unique_id=2000826654 node_paths=PackedStringArray("pausedMenuRoot", "pausedMenu", "optionsMenu", "audioButtonClick") groups=["UIManager"]]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -50,10 +52,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_i24ni")
 mainMenuSceneString = "res://Scenes/MainMenu.tscn"
-pausedMenu = NodePath("PauseMenu")
+pausedMenuRoot = NodePath("PauseMenuRoot")
+pausedMenu = NodePath("PauseMenuRoot/PauseMenuUI")
+optionsMenu = NodePath("PauseMenuRoot/OptionsMenu")
 audioButtonClick = NodePath("AudioStreamPlayer")
 
-[node name="PauseMenu" type="Control" parent="PlayerUI" unique_id=1647853109]
+[node name="PauseMenuRoot" type="Control" parent="PlayerUI" unique_id=1647853109]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -63,7 +67,7 @@ offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Bg" type="ColorRect" parent="PlayerUI/PauseMenu" unique_id=1492712007]
+[node name="Bg" type="ColorRect" parent="PlayerUI/PauseMenuRoot" unique_id=1492712007]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,7 +76,15 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.27058825)
 
-[node name="Label" type="Label" parent="PlayerUI/PauseMenu" unique_id=1184617372]
+[node name="PauseMenuUI" type="Control" parent="PlayerUI/PauseMenuRoot" unique_id=1133797266]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PlayerUI/PauseMenuRoot/PauseMenuUI" unique_id=1184617372]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -85,7 +97,7 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 79
 text = "Paused"
 
-[node name="ButtonHolder" type="VBoxContainer" parent="PlayerUI/PauseMenu" unique_id=1663358980]
+[node name="ButtonHolder" type="VBoxContainer" parent="PlayerUI/PauseMenuRoot/PauseMenuUI" unique_id=1663358980]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -93,37 +105,52 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -213.0
-offset_top = -145.0
+offset_top = -162.0
 offset_right = 214.0
-offset_bottom = 173.5
+offset_bottom = 290.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="ResumeButton" type="Button" parent="PlayerUI/PauseMenu/ButtonHolder" unique_id=67013164]
+[node name="ResumeButton" type="Button" parent="PlayerUI/PauseMenuRoot/PauseMenuUI/ButtonHolder" unique_id=67013164]
 custom_minimum_size = Vector2(0, 104.36)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Resume"
 
-[node name="MenuButton" type="Button" parent="PlayerUI/PauseMenu/ButtonHolder" unique_id=119735172]
+[node name="OptionsButton" type="Button" parent="PlayerUI/PauseMenuRoot/PauseMenuUI/ButtonHolder" unique_id=1018742505]
+custom_minimum_size = Vector2(0, 104.36)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Options"
+
+[node name="MenuButton" type="Button" parent="PlayerUI/PauseMenuRoot/PauseMenuUI/ButtonHolder" unique_id=119735172]
 custom_minimum_size = Vector2(0, 104.36)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Main Menu"
 
-[node name="QuitButton" type="Button" parent="PlayerUI/PauseMenu/ButtonHolder" unique_id=1973415227]
+[node name="QuitButton" type="Button" parent="PlayerUI/PauseMenuRoot/PauseMenuUI/ButtonHolder" unique_id=1973415227]
 custom_minimum_size = Vector2(0, 104.36)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Quit"
+
+[node name="OptionsMenu" parent="PlayerUI/PauseMenuRoot" unique_id=430232927 instance=ExtResource("10_b2f5p")]
+layout_mode = 1
+offset_left = -1.0
+offset_right = -1.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayerUI" unique_id=872927170]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=330875940]
 navigation_mesh = SubResource("NavigationMesh_dnhx3")
 
-[connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/ResumeButton" to="PlayerUI" method="OnResumeButtonPressed"]
-[connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/MenuButton" to="PlayerUI" method="OnMenuButtonPressed"]
-[connection signal="pressed" from="PlayerUI/PauseMenu/ButtonHolder/QuitButton" to="PlayerUI" method="OnQuitButtonPressed"]
+[connection signal="pressed" from="PlayerUI/PauseMenuRoot/PauseMenuUI/ButtonHolder/ResumeButton" to="PlayerUI" method="OnResumeButtonPressed"]
+[connection signal="pressed" from="PlayerUI/PauseMenuRoot/PauseMenuUI/ButtonHolder/OptionsButton" to="PlayerUI" method="OnOptionsPressed"]
+[connection signal="pressed" from="PlayerUI/PauseMenuRoot/PauseMenuUI/ButtonHolder/MenuButton" to="PlayerUI" method="OnMenuButtonPressed"]
+[connection signal="pressed" from="PlayerUI/PauseMenuRoot/PauseMenuUI/ButtonHolder/QuitButton" to="PlayerUI" method="OnQuitButtonPressed"]
+[connection signal="pressed" from="PlayerUI/PauseMenuRoot/OptionsMenu/Button" to="PlayerUI" method="OnOptionsBackPressed"]
+
+[editable path="PlayerUI/PauseMenuRoot/OptionsMenu"]

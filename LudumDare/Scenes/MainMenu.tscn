@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dwu30f7dnl5v5"]
 
 [ext_resource type="Script" uid="uid://ds1boheygowj5" path="res://Scripts/MainMenuUI.cs" id="1_65ows"]
-[ext_resource type="Script" uid="uid://bijux4nbtbxq1" path="res://Scripts/OptionsMenu.cs" id="2_ghw46"]
+[ext_resource type="PackedScene" uid="uid://bn3euhsuwowed" path="res://Scenes/OptionsMenu.tscn" id="2_koqhg"]
 [ext_resource type="Environment" uid="uid://clqo2cunk6shc" path="res://Scenes/Environments/MainMenuEnv.tres" id="4_gerv3"]
 [ext_resource type="PackedScene" uid="uid://b4je123osxljp" path="res://Models/CaveOpening.glb" id="5_8um5k"]
 [ext_resource type="AudioStream" uid="uid://bamqsegbb7m5e" path="res://Sounds/MenuButtons.mp3" id="5_df05h"]
@@ -47,7 +47,7 @@ script = ExtResource("1_65ows")
 playScenePath = "res://Scenes/MainLevel.tscn"
 mainMenu = NodePath("MainMenu")
 loadingMenu = NodePath("LoadingMenu")
-optionsMenu = NodePath("OptionsMenu")
+optionsMenu = NodePath("")
 creditsMenu = NodePath("Credits")
 difficultySelectionMenu = NodePath("DifficultySelection")
 audioButtonClick = NodePath("../AudioStreamPlayer3D")
@@ -167,154 +167,8 @@ Objective:
 Find treasure using your scanner and bring it back to the enterance while avoiding the monster. Place the chest on the spawn mat at the enterance."
 horizontal_alignment = 1
 
-[node name="OptionsMenu" type="Control" parent="MainMenuUI" unique_id=1917341570 node_paths=PackedStringArray("sensText", "sensSlider", "fullscreenButton")]
-visible = false
+[node name="OptionsMenu" parent="MainMenuUI" unique_id=430232927 instance=ExtResource("2_koqhg")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("2_ghw46")
-sensText = NodePath("Sens/ColorRect/Label3")
-sensSlider = NodePath("Sens/ColorRect/SensSlider")
-fullscreenButton = NodePath("Sens/ColorRect2/CheckButton")
-
-[node name="Label" type="Label" parent="MainMenuUI/OptionsMenu" unique_id=621410474]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -244.39532
-offset_top = 69.0
-offset_right = 244.39532
-offset_bottom = 182.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 66
-text = "Options"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sens" type="Control" parent="MainMenuUI/OptionsMenu" unique_id=200821552]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="ColorRect" type="ColorRect" parent="MainMenuUI/OptionsMenu/Sens" unique_id=930914375]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.49100003
-anchor_top = 0.5
-anchor_right = 0.49100003
-anchor_bottom = 0.5
-offset_left = -270.48004
-offset_top = -118.0
-offset_right = 270.51996
-offset_bottom = 18.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.2231029, 0.2231029, 0.22310287, 0.40392157)
-
-[node name="Label2" type="Label" parent="MainMenuUI/OptionsMenu/Sens/ColorRect" unique_id=2097048480]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 0.684
-offset_bottom = -0.024002075
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 32
-text = "Sensitivity"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SensSlider" type="HSlider" parent="MainMenuUI/OptionsMenu/Sens/ColorRect" unique_id=897405715]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.63600004
-anchor_right = 0.5
-anchor_bottom = 0.63600004
-offset_left = -262.5
-offset_top = -26.496002
-offset_right = 262.5
-offset_bottom = 26.503998
-min_value = 0.1
-max_value = 3.0
-step = 0.1
-value = 2.0
-scrollable = false
-tick_count = 5
-ticks_on_borders = true
-ticks_position = 2
-
-[node name="Label3" type="Label" parent="MainMenuUI/OptionsMenu/Sens/ColorRect" unique_id=2120162858]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.85300004
-anchor_right = 0.5
-anchor_bottom = 0.85300004
-offset_left = -150.5
-offset_top = -37.008003
-offset_right = 150.5
-offset_bottom = 36.991997
-theme_override_font_sizes/font_size = 24
-text = "1.5"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorRect2" type="ColorRect" parent="MainMenuUI/OptionsMenu/Sens" unique_id=874192950]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.49100003
-anchor_top = 0.5
-anchor_right = 0.49100003
-anchor_bottom = 0.5
-offset_left = -270.48004
-offset_top = 18.0
-offset_right = 270.51996
-offset_bottom = 154.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.2231029, 0.2231029, 0.22310287, 0.40392157)
-
-[node name="CheckButton" type="CheckButton" parent="MainMenuUI/OptionsMenu/Sens/ColorRect2" unique_id=1849943207]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -145.5
-offset_top = -46.0
-offset_right = 147.5
-offset_bottom = 49.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 32
-text = "Fullscreen"
-expand_icon = true
-
-[node name="Button" type="Button" parent="MainMenuUI/OptionsMenu" unique_id=1445277727]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -170.0
-offset_top = -202.0
-offset_right = 170.0
-offset_bottom = -130.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 40
-text = "Back"
 
 [node name="DifficultySelection" type="Control" parent="MainMenuUI" unique_id=1020554810]
 visible = false
@@ -652,9 +506,6 @@ surface_material_override/0 = ExtResource("8_koqhg")
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/OptionsButton" to="MainMenuUI" method="OnOptionsButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/Credits" to="MainMenuUI" method="OnCreditsButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/QuitButton" to="MainMenuUI" method="OnQuitButtonPressed"]
-[connection signal="value_changed" from="MainMenuUI/OptionsMenu/Sens/ColorRect/SensSlider" to="MainMenuUI/OptionsMenu" method="SetSensText"]
-[connection signal="pressed" from="MainMenuUI/OptionsMenu/Button" to="MainMenuUI" method="OnMainMenuButtonPressed"]
-[connection signal="pressed" from="MainMenuUI/OptionsMenu/Button" to="MainMenuUI/OptionsMenu" method="OnMainMenuButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/BackButton" to="MainMenuUI" method="OnMainMenuButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI" method="PlayWithDifficulty" binds= [0]]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/EasyButton" to="MainMenuUI" method="PlayWithDifficulty" binds= [1]]

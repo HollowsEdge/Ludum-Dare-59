@@ -62,4 +62,12 @@ public partial class OptionsMenu : Control
         // Save to file
         config.Save("user://settings.cfg");
     }
+
+    /// <summary>
+    /// Returns the current value of the player sensitivity slider.
+    /// </summary>
+    public double GetSensitivityValue()
+    {
+        return sensSlider.Value;
+    }
 }

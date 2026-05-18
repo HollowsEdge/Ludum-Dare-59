@@ -4,15 +4,17 @@ public partial class UIManger : Control
 {
     [ExportCategory("References")]
     [Export] private string mainMenuSceneString;
+    [Export] private Control pausedMenuRoot;
     [Export] private Control pausedMenu;
-    //[Export] private Control inGameOptions;
+    [Export] private Control optionsMenu;
     [Export] private AudioStreamPlayer audioButtonClick;
 
     public override void _Ready()
     {
         // Hide the pause menu when the game loads
-        pausedMenu.Hide();
-        //inGameOptions.Hide();
+        pausedMenuRoot.Hide();
+        pausedMenu.Show();
+        optionsMenu.Hide();
     }
 
     /// <summary>
@@ -22,7 +24,7 @@ public partial class UIManger : Control
     {
         // Switch UI to show options menu
         pausedMenu.Hide();
-        //inGameOptions.Show();
+        optionsMenu.Show();
         audioButtonClick?.Play();
     }
 
@@ -33,7 +35,7 @@ public partial class UIManger : Control
     {
         // Switch UI to show pause menu
         pausedMenu.Show();
-        //inGameOptions.Hide();
+        optionsMenu.Hide();
         audioButtonClick?.Play();
     }
 
@@ -61,7 +63,7 @@ public partial class UIManger : Control
     public void SetPaused(bool setPaused)
     {
         GetTree().Paused = setPaused;
-        pausedMenu.Visible = setPaused;
+        pausedMenuRoot.Visible = setPaused;
 
         Input.MouseMode = setPaused ? Input.MouseModeEnum.Visible : Input.MouseModeEnum.Captured;
     }

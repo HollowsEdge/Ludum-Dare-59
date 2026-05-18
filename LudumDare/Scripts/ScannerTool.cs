@@ -60,7 +60,7 @@ public partial class ScannerTool : Node3D
 
     public override void _PhysicsProcess(double delta)
     {
-        if (Input.IsActionPressed("scan") && currTimeBtwScans <= 0)
+        if (Input.IsActionJustPressed("scan") && currTimeBtwScans <= 0)
         {
             audioButtonBeep.Play();
             currTimeBtwScans = timeBtwScans;
