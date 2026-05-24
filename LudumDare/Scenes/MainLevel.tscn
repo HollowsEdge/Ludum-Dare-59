@@ -11,6 +11,42 @@
 [ext_resource type="PackedScene" uid="uid://d4gktu0eh13uo" path="res://Prefabs/Monster.tscn" id="9_snxwr"]
 [ext_resource type="PackedScene" uid="uid://bn3euhsuwowed" path="res://Scenes/OptionsMenu.tscn" id="10_b2f5p"]
 
+[sub_resource type="Animation" id="Animation_b2f5p"]
+resource_name = "FadeIn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeInOut:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dnhx3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeInOut:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7g1pw"]
+_data = {
+&"FadeIn": SubResource("Animation_b2f5p"),
+&"RESET": SubResource("Animation_dnhx3")
+}
+
 [sub_resource type="NavigationMesh" id="NavigationMesh_dnhx3"]
 geometry_parsed_geometry_type = 1
 geometry_collision_mask = 4294967281
@@ -143,6 +179,20 @@ offset_left = -1.0
 offset_right = -1.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayerUI" unique_id=872927170]
+
+[node name="FadeInOut" type="ColorRect" parent="PlayerUI" unique_id=422052161]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerUI" unique_id=895229858]
+libraries/ = SubResource("AnimationLibrary_7g1pw")
+autoplay = &"FadeIn"
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=330875940]
 navigation_mesh = SubResource("NavigationMesh_dnhx3")

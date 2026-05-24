@@ -339,29 +339,8 @@ public partial class LevelGenerate : Node3D
             return;
         }
 
-        // Setup Difficulty
-        int difficulty = (int)config.GetValue("Game", "Difficulty");
-        switch (difficulty)
-        {
-            case 0: // Peaceful
-                ballMonsterCount = 0;
-                treasureAmount = 3;
-                break;
-            case 1: // Easy
-                ballMonsterCount = 1;
-                treasureAmount = 3;
-                break;
-            case 2: // Medium
-                ballMonsterCount = 2;
-                treasureAmount = 4;
-                break;
-            case 3: // Hard
-                ballMonsterCount = 3;
-                treasureAmount = 4;
-                break;
-            default:
-                break;
-        }
+        ballMonsterCount = (int)config.GetValue("Game", "MonsterCount");
+        treasureAmount = (int)config.GetValue("Game", "TreasureAmount");
 
         // Initialize the gameMap
         gameMap = new bool[width, height];

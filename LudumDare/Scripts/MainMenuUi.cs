@@ -12,11 +12,17 @@ public partial class MainMenuUI : Control
     [Export] private Control creditsMenu;
     [Export] private Control difficultySelectionMenu;
 
+    [Export] private SpinBox seedSpinBox;
+    [Export] private SpinBox chestNumSpinBox;
+    [Export] private SpinBox monsterNumSpinBox;
+
     [ExportCategory("Audio")]
     [Export] private AudioStreamPlayer3D audioButtonClick;
 
     public override void _Ready()
     {
+        GD.Randomize();
+
         // Show only the main menu
         mainMenu.Show();
         loadingMenu.Hide();
@@ -36,18 +42,44 @@ public partial class MainMenuUI : Control
         mainMenu.Hide();
         difficultySelectionMenu.Show();
         audioButtonClick.Play();
+
+        // Load the game settings from save file
+        ConfigFile config = new();
+        Error err = config.Load("user://game.cfg");
+
+        // If the file didn't load, ignore it.
+        if (err == Error.Ok)
+        {
+            seedSpinBox.SetValueNoSignal((int)config.GetValue("Game", "LastSeed", 0));
+            chestNumSpinBox.SetValueNoSignal((int)config.GetValue("Game", "TreasureAmount", 3));
+            monsterNumSpinBox.SetValueNoSignal((int)config.GetValue("Game", "MonsterCount", 1));
+        }
     }
 
     /// <summary>
-    /// Starts the game with a chosen difficulty level. 0 - Peaceful, 1 - Easy, 2 - Medium, 3 - Hard
+    /// Starts the game with a chosen difficulty settings
     /// </summary>
-    public async void PlayWithDifficulty(int difficulty)
+    public async void PlayGame()
     {
         // Create new ConfigFile object.
         var config = new ConfigFile();
 
         // Store and save difficulty selection
-        config.SetValue("Game", "Difficulty", difficulty);
+        config.SetValue("Game", "TreasureAmount", (int)chestNumSpinBox.Value);
+        config.SetValue("Game", "MonsterCount", (int)monsterNumSpinBox.Value);
+
+        int targetSeed = (int)seedSpinBox.Value;
+        if (targetSeed != 0)
+        {
+            GD.Seed((ulong)targetSeed);
+        }
+        else
+        {
+            GD.Randomize();
+            targetSeed = GD.RandRange(1, int.MaxValue);
+        }
+
+        config.SetValue("Game", "LastSeed", targetSeed);
 
         config.Save("user://game.cfg");
 

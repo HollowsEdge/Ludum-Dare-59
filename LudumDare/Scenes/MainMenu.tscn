@@ -36,7 +36,7 @@ material = SubResource("StandardMaterial3D_7vrkn")
 
 [node name="MainMenuScene" type="Node3D" unique_id=1945999567]
 
-[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "loadingMenu", "optionsMenu", "creditsMenu", "difficultySelectionMenu", "audioButtonClick")]
+[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "loadingMenu", "optionsMenu", "creditsMenu", "difficultySelectionMenu", "seedSpinBox", "chestNumSpinBox", "monsterNumSpinBox", "audioButtonClick")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,6 +50,9 @@ loadingMenu = NodePath("LoadingMenu")
 optionsMenu = NodePath("OptionsMenu")
 creditsMenu = NodePath("Credits")
 difficultySelectionMenu = NodePath("DifficultySelection")
+seedSpinBox = NodePath("DifficultySelection/Selection/VBoxContainer/Seed/SeedBox")
+chestNumSpinBox = NodePath("DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox")
+monsterNumSpinBox = NodePath("DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox")
 audioButtonClick = NodePath("../AudioStreamPlayer3D")
 metadata/_edit_use_anchors_ = true
 
@@ -185,9 +188,8 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -465.0
-offset_top = 18.0
 offset_right = 465.0
-offset_bottom = 233.0
+offset_bottom = 173.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 66
 text = "Difficulty"
@@ -218,14 +220,21 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -213.0
+offset_left = -448.0
 offset_top = -172.315
-offset_right = 214.0
+offset_right = -21.0
 offset_bottom = 183.6853
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
 alignment = 1
+
+[node name="LabelPresets" type="Label" parent="MainMenuUI/DifficultySelection/ButtonHolder" unique_id=890501825]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Presets"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PeacefulButton" type="Button" parent="MainMenuUI/DifficultySelection/ButtonHolder" unique_id=912343606]
 custom_minimum_size = Vector2(0, 80)
@@ -233,23 +242,122 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Peaceful"
 
-[node name="EasyButton" type="Button" parent="MainMenuUI/DifficultySelection/ButtonHolder" unique_id=1471920348]
+[node name="EasyButton" type="Button" parent="MainMenuUI/DifficultySelection/ButtonHolder" unique_id=1296899027]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Easy"
 
-[node name="MediumButton" type="Button" parent="MainMenuUI/DifficultySelection/ButtonHolder" unique_id=892472523]
+[node name="MediumButton" type="Button" parent="MainMenuUI/DifficultySelection/ButtonHolder" unique_id=585078612]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Medium"
 
-[node name="HardButton" type="Button" parent="MainMenuUI/DifficultySelection/ButtonHolder" unique_id=1292198725]
+[node name="HardButton" type="Button" parent="MainMenuUI/DifficultySelection/ButtonHolder" unique_id=1545750108]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Hard"
+
+[node name="Selection" type="ColorRect" parent="MainMenuUI/DifficultySelection" unique_id=785887232]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -138.0
+offset_right = 454.0
+offset_bottom = 159.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.78431374)
+
+[node name="LabelPresets" type="Label" parent="MainMenuUI/DifficultySelection/Selection" unique_id=1669778219]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuUI/DifficultySelection/Selection" unique_id=127609026]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="Seed" type="HBoxContainer" parent="MainMenuUI/DifficultySelection/Selection/VBoxContainer" unique_id=1203751097]
+layout_mode = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="SeedLabel" type="Label" parent="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed" unique_id=1034343289]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Seed (0 for random) :"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SeedBox" type="SpinBox" parent="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed" unique_id=857533325]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+max_value = 2147483646.0
+rounded = true
+alignment = 1
+
+[node name="ChestAmount" type="HBoxContainer" parent="MainMenuUI/DifficultySelection/Selection/VBoxContainer" unique_id=620069157]
+layout_mode = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="ChestAmountLabel" type="Label" parent="MainMenuUI/DifficultySelection/Selection/VBoxContainer/ChestAmount" unique_id=849192390]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Chest Amount:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChestAmountBox" type="SpinBox" parent="MainMenuUI/DifficultySelection/Selection/VBoxContainer/ChestAmount" unique_id=939773424]
+layout_mode = 2
+min_value = 1.0
+value = 3.0
+rounded = true
+alignment = 1
+
+[node name="MonsterAmount" type="HBoxContainer" parent="MainMenuUI/DifficultySelection/Selection/VBoxContainer" unique_id=900544615]
+layout_mode = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="MonsterAmountLabel" type="Label" parent="MainMenuUI/DifficultySelection/Selection/VBoxContainer/MonsterAmount" unique_id=797285223]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Monster Amount:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MonsterAmountBox" type="SpinBox" parent="MainMenuUI/DifficultySelection/Selection/VBoxContainer/MonsterAmount" unique_id=1166441577]
+layout_mode = 2
+max_value = 10.0
+value = 1.0
+rounded = true
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="MainMenuUI/DifficultySelection/Selection/VBoxContainer" unique_id=1918521527]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 40
+text = "Play"
 
 [node name="Credits" type="Control" parent="MainMenuUI" unique_id=1223875442]
 visible = false
@@ -506,12 +614,23 @@ surface_material_override/0 = ExtResource("8_koqhg")
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/OptionsButton" to="MainMenuUI" method="OnOptionsButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/Credits" to="MainMenuUI" method="OnCreditsButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/QuitButton" to="MainMenuUI" method="OnQuitButtonPressed"]
+[connection signal="pressed" from="MainMenuUI/OptionsMenu/Button" to="MainMenuUI" method="OnMainMenuButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/BackButton" to="MainMenuUI" method="OnMainMenuButtonPressed"]
-[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI" method="PlayWithDifficulty" binds= [0]]
-[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/EasyButton" to="MainMenuUI" method="PlayWithDifficulty" binds= [1]]
-[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/MediumButton" to="MainMenuUI" method="PlayWithDifficulty" binds= [2]]
-[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/HardButton" to="MainMenuUI" method="PlayWithDifficulty" binds= [3]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox" method="set_value_no_signal" binds= [3.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox" method="set_value_no_signal" binds= [0.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/EasyButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox" method="set_value_no_signal" binds= [3.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/EasyButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox" method="set_value_no_signal" binds= [1.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/EasyButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/MediumButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox" method="set_value_no_signal" binds= [4.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/MediumButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox" method="set_value_no_signal" binds= [2.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/MediumButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/HardButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox" method="set_value_no_signal" binds= [4.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/HardButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox" method="set_value_no_signal" binds= [3.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/HardButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/Selection/VBoxContainer/PlayButton" to="MainMenuUI" method="PlayGame"]
 [connection signal="pressed" from="MainMenuUI/Credits/Button" to="MainMenuUI" method="OnMainMenuButtonPressed"]
 
+[editable path="MainMenuUI/OptionsMenu"]
 [editable path="cave"]
 [editable path="UpdatedMesh"]
