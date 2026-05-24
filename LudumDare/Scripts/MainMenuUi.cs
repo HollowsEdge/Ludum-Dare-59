@@ -17,7 +17,7 @@ public partial class MainMenuUI : Control
     [Export] private SpinBox monsterNumSpinBox;
 
     [ExportCategory("Audio")]
-    [Export] private AudioStreamPlayer3D audioButtonClick;
+    [Export] private AudioStreamPlayer audioButtonClick;
 
     public override void _Ready()
     {

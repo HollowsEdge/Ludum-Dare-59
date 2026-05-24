@@ -53,7 +53,7 @@ difficultySelectionMenu = NodePath("DifficultySelection")
 seedSpinBox = NodePath("DifficultySelection/Selection/VBoxContainer/Seed/SeedBox")
 chestNumSpinBox = NodePath("DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox")
 monsterNumSpinBox = NodePath("DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox")
-audioButtonClick = NodePath("../AudioStreamPlayer3D")
+audioButtonClick = NodePath("AudioStreamPlayer")
 metadata/_edit_use_anchors_ = true
 
 [node name="MainMenu" type="Control" parent="MainMenuUI" unique_id=917621942]
@@ -461,6 +461,9 @@ text = "Loading..."
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="MainMenuUI" unique_id=2055886134]
+stream = ExtResource("5_df05h")
+
 [node name="Ground2" type="MeshInstance3D" parent="." unique_id=1513732035]
 transform = Transform3D(10.901427, 0, 0, 0, 0.8567355, -5.622477, 0, 0.51575595, 9.339641, 0, 4.882015, -19.166927)
 visible = false
@@ -486,10 +489,6 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=176566597]
 environment = ExtResource("4_gerv3")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1362678698]
-stream = ExtResource("5_df05h")
-volume_db = 10.0
 
 [node name="cave" parent="." unique_id=840135770 instance=ExtResource("5_8um5k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9232714, 7.1525574e-07, -6.1589403)
@@ -616,18 +615,25 @@ surface_material_override/0 = ExtResource("8_koqhg")
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/QuitButton" to="MainMenuUI" method="OnQuitButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/OptionsMenu/Button" to="MainMenuUI" method="OnMainMenuButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/BackButton" to="MainMenuUI" method="OnMainMenuButtonPressed"]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox" method="set_value_no_signal" binds= [3.0]]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox" method="set_value_no_signal" binds= [0.0]]
-[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI/AudioStreamPlayer" method="play" binds= [0.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/EasyButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/EasyButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox" method="set_value_no_signal" binds= [3.0]]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/EasyButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox" method="set_value_no_signal" binds= [1.0]]
-[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/EasyButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/EasyButton" to="MainMenuUI/AudioStreamPlayer" method="play" binds= [0.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/MediumButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/MediumButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox" method="set_value_no_signal" binds= [4.0]]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/MediumButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox" method="set_value_no_signal" binds= [2.0]]
-[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/MediumButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/MediumButton" to="MainMenuUI/AudioStreamPlayer" method="play" binds= [0.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/HardButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/HardButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox" method="set_value_no_signal" binds= [4.0]]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/HardButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox" method="set_value_no_signal" binds= [3.0]]
-[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/HardButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/HardButton" to="MainMenuUI/AudioStreamPlayer" method="play" binds= [0.0]]
+[connection signal="value_changed" from="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" to="MainMenuUI/AudioStreamPlayer" method="play" unbinds=1 binds= [0.0]]
+[connection signal="value_changed" from="MainMenuUI/DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox" to="MainMenuUI/AudioStreamPlayer" method="play" unbinds=1 binds= [0.0]]
+[connection signal="value_changed" from="MainMenuUI/DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox" to="MainMenuUI/AudioStreamPlayer" method="play" unbinds=1 binds= [0.0]]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/Selection/VBoxContainer/PlayButton" to="MainMenuUI" method="PlayGame"]
 [connection signal="pressed" from="MainMenuUI/Credits/Button" to="MainMenuUI" method="OnMainMenuButtonPressed"]
 

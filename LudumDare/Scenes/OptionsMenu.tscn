@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://bn3euhsuwowed"]
 
 [ext_resource type="Script" uid="uid://bijux4nbtbxq1" path="res://Scripts/OptionsMenu.cs" id="1_jrbyj"]
+[ext_resource type="AudioStream" uid="uid://bamqsegbb7m5e" path="res://Sounds/MenuButtons.mp3" id="2_1jju4"]
 
-[node name="OptionsMenu" type="Control" unique_id=430232927 node_paths=PackedStringArray("sensText", "sensSlider", "fullscreenButton")]
+[node name="OptionsMenu" type="Control" unique_id=430232927 node_paths=PackedStringArray("sensText", "sensSlider", "fullscreenButton", "audioButtonClick")]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -14,6 +15,7 @@ script = ExtResource("1_jrbyj")
 sensText = NodePath("Sens/ColorRect/Label3")
 sensSlider = NodePath("Sens/ColorRect/SensSlider")
 fullscreenButton = NodePath("Sens/ColorRect2/CheckButton")
+audioButtonClick = NodePath("AudioStreamPlayer")
 
 [node name="Label" type="Label" parent="." unique_id=1098438684]
 layout_mode = 1
@@ -150,6 +152,9 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 40
 text = "Back"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=551612539]
+stream = ExtResource("2_1jju4")
 
 [connection signal="value_changed" from="Sens/ColorRect/SensSlider" to="." method="SetSensText"]
 [connection signal="pressed" from="Button" to="." method="OnMainMenuButtonPressed"]

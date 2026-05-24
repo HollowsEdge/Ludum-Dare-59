@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://bh11ejgxorxgj" path="res://Scripts/UIManger.cs" id="9_i24ni"]
 [ext_resource type="PackedScene" uid="uid://d4gktu0eh13uo" path="res://Prefabs/Monster.tscn" id="9_snxwr"]
 [ext_resource type="PackedScene" uid="uid://bn3euhsuwowed" path="res://Scenes/OptionsMenu.tscn" id="10_b2f5p"]
+[ext_resource type="AudioStream" uid="uid://bamqsegbb7m5e" path="res://Sounds/MenuButtons.mp3" id="11_dnhx3"]
 
 [sub_resource type="Animation" id="Animation_b2f5p"]
 resource_name = "FadeIn"
@@ -179,6 +180,7 @@ offset_left = -1.0
 offset_right = -1.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayerUI" unique_id=872927170]
+stream = ExtResource("11_dnhx3")
 
 [node name="FadeInOut" type="ColorRect" parent="PlayerUI" unique_id=422052161]
 layout_mode = 1

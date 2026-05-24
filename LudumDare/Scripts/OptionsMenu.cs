@@ -7,6 +7,9 @@ public partial class OptionsMenu : Control
     [Export] private Slider sensSlider;
     [Export] private CheckButton fullscreenButton;
 
+    [ExportCategory("Audio")]
+    [Export] private AudioStreamPlayer audioButtonClick;
+
     // Events
     public delegate void OnOptionsChangedEventHandler();
     public event OnOptionsChangedEventHandler OnOptionsChanged;
@@ -45,6 +48,8 @@ public partial class OptionsMenu : Control
     public void SetSensText(float newSens)
     {
         sensText.Text = newSens.ToString();
+        audioButtonClick?.Stop();
+        audioButtonClick?.Play();
     }
 
     /// <summary>
