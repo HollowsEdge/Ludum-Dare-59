@@ -155,6 +155,7 @@ text = "Back"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=551612539]
 stream = ExtResource("2_1jju4")
+volume_db = -5.0
 
 [connection signal="value_changed" from="Sens/ColorRect/SensSlider" to="." method="SetSensText"]
 [connection signal="pressed" from="Button" to="." method="OnMainMenuButtonPressed"]
