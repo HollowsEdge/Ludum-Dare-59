@@ -36,7 +36,7 @@ material = SubResource("StandardMaterial3D_7vrkn")
 
 [node name="MainMenuScene" type="Node3D" unique_id=1945999567]
 
-[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "loadingMenu", "optionsMenu", "creditsMenu", "difficultySelectionMenu", "seedSpinBox", "chestNumSpinBox", "monsterNumSpinBox", "audioButtonClick")]
+[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "mainMenuFocusButton", "loadingMenu", "optionsMenu", "optionsFocusButton", "creditsMenu", "creditsFocusButton", "difficultySelectionMenu", "difficultySelectionFocusButton", "seedSpinBox", "chestNumSpinBox", "monsterNumSpinBox", "audioButtonClick")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,10 +46,14 @@ grow_vertical = 2
 script = ExtResource("1_65ows")
 playScenePath = "res://Scenes/MainLevel.tscn"
 mainMenu = NodePath("MainMenu")
+mainMenuFocusButton = NodePath("MainMenu/ButtonHolder/PlayButton")
 loadingMenu = NodePath("LoadingMenu")
 optionsMenu = NodePath("OptionsMenu")
+optionsFocusButton = NodePath("OptionsMenu/Sens/ColorRect/SensSlider")
 creditsMenu = NodePath("Credits")
+creditsFocusButton = NodePath("Credits/Button")
 difficultySelectionMenu = NodePath("DifficultySelection")
+difficultySelectionFocusButton = NodePath("DifficultySelection/ButtonHolder/PeacefulButton")
 seedSpinBox = NodePath("DifficultySelection/Selection/VBoxContainer/Seed/SeedBox")
 chestNumSpinBox = NodePath("DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox")
 monsterNumSpinBox = NodePath("DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox")
@@ -99,24 +103,30 @@ alignment = 1
 [node name="PlayButton" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=1825381018]
 custom_minimum_size = Vector2(0, 95)
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../OptionsButton")
 theme_override_font_sizes/font_size = 40
 text = "Play"
 
 [node name="OptionsButton" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=1490167389]
 custom_minimum_size = Vector2(0, 95)
 layout_mode = 2
+focus_neighbor_top = NodePath("../PlayButton")
+focus_neighbor_bottom = NodePath("../Credits")
 theme_override_font_sizes/font_size = 40
 text = "Options"
 
 [node name="Credits" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=1167275407]
 custom_minimum_size = Vector2(0, 95)
 layout_mode = 2
+focus_neighbor_top = NodePath("../OptionsButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
 theme_override_font_sizes/font_size = 40
 text = "Credits"
 
 [node name="QuitButton" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=507176736]
 custom_minimum_size = Vector2(0, 95)
 layout_mode = 2
+focus_neighbor_top = NodePath("../Credits")
 theme_override_font_sizes/font_size = 40
 text = "Quit"
 
@@ -171,10 +181,10 @@ Find treasure using your scanner and bring it back to the enterance while avoidi
 horizontal_alignment = 1
 
 [node name="OptionsMenu" parent="MainMenuUI" unique_id=430232927 instance=ExtResource("2_koqhg")]
-visible = true
 layout_mode = 1
 
 [node name="DifficultySelection" type="Control" parent="MainMenuUI" unique_id=1020554810]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

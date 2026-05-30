@@ -116,7 +116,7 @@ public partial class PlayerController : CharacterBody3D
         if (!init) return;
 
         // Check if player tried to pause the game
-        if (Input.IsKeyPressed(Key.Escape))
+        if (Input.IsActionJustPressed("pause"))
             uIManger.TogglePaused();
 
         // Get player input in vector2 and convert into world direction
@@ -145,6 +145,19 @@ public partial class PlayerController : CharacterBody3D
             footstepsAudio.Play();
             currFootstepAudioDelay = Input.IsActionPressed("sprint") ? footstepDelayRun : footstepDelayWalk;
         }
+
+        // Camera - controller
+        Vector2 controllerCamera = Input.GetVector("look_left", "look_right", "look_down", "look_up").Normalized();
+        if (controllerCamera != Vector2.Zero)
+        {
+            Vector2 mouseInput = controllerCamera * sensitivity * 1.5f;
+
+            xRot += mouseInput.Y;
+            xRot = Mathf.Clamp(xRot, -90, 90);
+
+            cameraHolder.RotationDegrees = Vector3.Right * xRot;
+            RotationDegrees -= Vector3.Up * mouseInput.X;
+        }
     }
 
     public override void _Input(InputEvent @event)
@@ -159,6 +172,8 @@ public partial class PlayerController : CharacterBody3D
             {
                 // Pick up
                 carryingTreasure = (Node3D)ray.GetCollider();
+                if (carryingTreasure == null)
+                    return;
                 // Check if it is treasure
                 if (carryingTreasure.Name.ToString().Contains("Treasure"))
                 {
@@ -208,7 +223,7 @@ public partial class PlayerController : CharacterBody3D
             }
         }
 
-        // Camera
+        // Camera Mouse
         if (@event is InputEventMouseMotion mouseDelta)
         {
             Vector2 mouseInput = mouseDelta.Relative * sensitivity * 0.03f;

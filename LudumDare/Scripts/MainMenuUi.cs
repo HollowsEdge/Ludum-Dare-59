@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public partial class MainMenuUI : Control
 {
@@ -7,10 +8,14 @@ public partial class MainMenuUI : Control
 
     [ExportCategory("UI Nodes")]
     [Export] private Control mainMenu;
+    [Export] private Control mainMenuFocusButton;
     [Export] private Control loadingMenu;
     [Export] private Control optionsMenu;
+    [Export] private Control optionsFocusButton;
     [Export] private Control creditsMenu;
+    [Export] private Control creditsFocusButton;
     [Export] private Control difficultySelectionMenu;
+    [Export] private Control difficultySelectionFocusButton;
 
     [Export] private SpinBox seedSpinBox;
     [Export] private SpinBox chestNumSpinBox;
@@ -32,6 +37,8 @@ public partial class MainMenuUI : Control
 
         // Make sure the mouse is not locked to the screen
         Input.MouseMode = Input.MouseModeEnum.Visible;
+
+        mainMenuFocusButton.GrabFocus();
     }
 
     /// <summary>
@@ -42,6 +49,7 @@ public partial class MainMenuUI : Control
         mainMenu.Hide();
         difficultySelectionMenu.Show();
         audioButtonClick.Play();
+        difficultySelectionFocusButton.GrabFocus();
 
         // Load the game settings from save file
         ConfigFile config = new();
@@ -105,6 +113,7 @@ public partial class MainMenuUI : Control
         mainMenu.Hide();
         optionsMenu.Show();
         audioButtonClick.Play();
+        optionsFocusButton.GrabFocus();
     }
 
     /// <summary>
@@ -116,6 +125,7 @@ public partial class MainMenuUI : Control
         optionsMenu.Hide();
         creditsMenu.Show();
         audioButtonClick.Play();
+        creditsFocusButton.GrabFocus();
     }
 
     /// <summary>
@@ -128,6 +138,7 @@ public partial class MainMenuUI : Control
         optionsMenu.Hide();
         creditsMenu.Hide();
         audioButtonClick.Play();
+        mainMenuFocusButton.GrabFocus();
     }
 
     /// <summary>
