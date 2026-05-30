@@ -171,10 +171,10 @@ Find treasure using your scanner and bring it back to the enterance while avoidi
 horizontal_alignment = 1
 
 [node name="OptionsMenu" parent="MainMenuUI" unique_id=430232927 instance=ExtResource("2_koqhg")]
+visible = true
 layout_mode = 1
 
 [node name="DifficultySelection" type="Control" parent="MainMenuUI" unique_id=1020554810]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -204,14 +204,32 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -213.0
-offset_top = 240.0
-offset_right = 214.0
-offset_bottom = 320.0
+offset_left = -448.0
+offset_top = 230.0
+offset_right = -21.0
+offset_bottom = 310.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Back"
+
+[node name="PlayButton" type="Button" parent="MainMenuUI/DifficultySelection" unique_id=1918521527]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 33.0
+offset_top = 230.0
+offset_right = 460.0
+offset_bottom = 310.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 40
+text = "Play"
 
 [node name="ButtonHolder" type="VBoxContainer" parent="MainMenuUI/DifficultySelection" unique_id=1945293056]
 layout_mode = 1
@@ -267,9 +285,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_top = -138.0
-offset_right = 454.0
-offset_bottom = 159.0
+offset_left = 19.0
+offset_top = -119.00003
+offset_right = 473.00024
+offset_bottom = 119.00003
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.78431374)
@@ -278,7 +297,9 @@ color = Color(0, 0, 0, 0.78431374)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 64.0
+offset_left = 63.000244
+offset_right = -63.000244
+offset_bottom = 77.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 40
 text = "Settings"
@@ -294,6 +315,7 @@ offset_top = 68.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 14
+alignment = 1
 
 [node name="Seed" type="HBoxContainer" parent="MainMenuUI/DifficultySelection/Selection/VBoxContainer" unique_id=1203751097]
 layout_mode = 2
@@ -351,13 +373,6 @@ max_value = 10.0
 value = 1.0
 rounded = true
 alignment = 1
-
-[node name="PlayButton" type="Button" parent="MainMenuUI/DifficultySelection/Selection/VBoxContainer" unique_id=1918521527]
-custom_minimum_size = Vector2(400, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 40
-text = "Play"
 
 [node name="Credits" type="Control" parent="MainMenuUI" unique_id=1223875442]
 visible = false
@@ -615,6 +630,7 @@ surface_material_override/0 = ExtResource("8_koqhg")
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/QuitButton" to="MainMenuUI" method="OnQuitButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/OptionsMenu/Button" to="MainMenuUI" method="OnMainMenuButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/BackButton" to="MainMenuUI" method="OnMainMenuButtonPressed"]
+[connection signal="pressed" from="MainMenuUI/DifficultySelection/PlayButton" to="MainMenuUI" method="PlayGame"]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox" method="set_value_no_signal" binds= [3.0]]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox" method="set_value_no_signal" binds= [0.0]]
@@ -634,7 +650,6 @@ surface_material_override/0 = ExtResource("8_koqhg")
 [connection signal="value_changed" from="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" to="MainMenuUI/AudioStreamPlayer" method="play" unbinds=1 binds= [0.0]]
 [connection signal="value_changed" from="MainMenuUI/DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox" to="MainMenuUI/AudioStreamPlayer" method="play" unbinds=1 binds= [0.0]]
 [connection signal="value_changed" from="MainMenuUI/DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox" to="MainMenuUI/AudioStreamPlayer" method="play" unbinds=1 binds= [0.0]]
-[connection signal="pressed" from="MainMenuUI/DifficultySelection/Selection/VBoxContainer/PlayButton" to="MainMenuUI" method="PlayGame"]
 [connection signal="pressed" from="MainMenuUI/Credits/Button" to="MainMenuUI" method="OnMainMenuButtonPressed"]
 
 [editable path="MainMenuUI/OptionsMenu"]
