@@ -782,6 +782,48 @@ public partial class LevelGenerate : Node3D
     }
 
     /// <summary>
+    /// Gets a random point in the cave (which will be on the navmesh) that is close to the player.
+    /// </summary>
+    /// <param name="radius">Maximum radius that point is within</param>
+    /// <returns>Vector3 - Random point in cave</returns>
+    public Vector3 GetRandomPointOnNavmeshNearPlayer(float radius)
+    {
+        // World scale calculations
+        float aspectRatio = (float)width / (float)height;
+        Vector2 meshSize = new Vector2(aspectRatio, 1f) * mapSize;
+        float pixelWorldSizeX = meshSize.X / width;
+        float pixelWorldSizeZ = meshSize.Y / height;
+
+        int maxLoops = 10000;
+
+        // Loop untill valid point is found (or hit loop limit)
+        while (maxLoops > 0)
+        {
+            // Get random location in map bounds
+            int randX = GD.RandRange(1, width - 1);
+            int randZ = GD.RandRange(1, height - 1);
+
+            // Check valid spawn location
+            if (!gameMap3D[randX, 1, randZ])
+            {
+                Vector3 targetPoint = new(((float)-mapSize / 2) + (randX * pixelWorldSizeX), 0, ((float)-mapSize / 2) + (randZ * pixelWorldSizeZ));
+                if (targetPoint.DistanceTo(player.GlobalPosition) < radius)
+                    return targetPoint;
+            }
+
+            maxLoops++;
+        }
+
+        // Warn if max loops reached
+        if (maxLoops <= 0)
+            GD.PushWarning($"LevelGenerate: Max loops hit when getting monster wander pos, breaking loop.");
+
+        // Return found position
+        return Vector3.Zero;
+    }
+
+
+    /// <summary>
     /// Queries the navigation region to create a path between 2 points
     /// </summary>
     /// <param name="startPosition">The starting point for the path</param>
