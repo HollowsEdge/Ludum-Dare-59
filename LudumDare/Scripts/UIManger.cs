@@ -6,15 +6,28 @@ public partial class UIManger : Control
     [Export] private string mainMenuSceneString;
     [Export] private Control pausedMenuRoot;
     [Export] private Control pausedMenu;
+    [Export] private Control mainMenuFocusButton;
     [Export] private Control optionsMenu;
+    [Export] private Control optionsMenuFocusButton;
     [Export] private AudioStreamPlayer audioButtonClick;
+
+    enum CurrentMenu
+    {
+        Main,
+        Options
+    }
+    private CurrentMenu currentMenu;
 
     public override void _Ready()
     {
+        currentMenu = CurrentMenu.Main;
+
         // Hide the pause menu when the game loads
         pausedMenuRoot.Hide();
         pausedMenu.Show();
         optionsMenu.Hide();
+
+        mainMenuFocusButton.GrabFocus();
     }
 
     /// <summary>
@@ -22,10 +35,15 @@ public partial class UIManger : Control
     /// </summary>
     public void OnOptionsPressed()
     {
+        currentMenu = CurrentMenu.Options;
+
         // Switch UI to show options menu
         pausedMenu.Hide();
         optionsMenu.Show();
         audioButtonClick?.Play();
+
+        if (LevelLoader.usingController)
+            optionsMenuFocusButton.GrabFocus();
     }
 
     /// <summary>
@@ -33,10 +51,15 @@ public partial class UIManger : Control
     /// </summary>
     public void OnOptionsBackPressed()
     {
+        currentMenu = CurrentMenu.Main;
+
         // Switch UI to show pause menu
         pausedMenu.Show();
         optionsMenu.Hide();
         audioButtonClick?.Play();
+
+        if(LevelLoader.usingController)
+            mainMenuFocusButton.GrabFocus();
     }
 
     /// <summary>
@@ -64,8 +87,14 @@ public partial class UIManger : Control
     {
         GetTree().Paused = setPaused;
         pausedMenuRoot.Visible = setPaused;
-
+           
         Input.MouseMode = setPaused ? Input.MouseModeEnum.Visible : Input.MouseModeEnum.Captured;
+
+        if (LevelLoader.usingController && setPaused)
+        {
+            optionsMenuFocusButton.GrabFocus();
+            Input.MouseMode = Input.MouseModeEnum.Hidden;
+        }
     }
 
     /// <summary>
@@ -85,5 +114,58 @@ public partial class UIManger : Control
     {
         audioButtonClick?.Play();
         GetTree().Quit();
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        bool originalUsingGamepad = LevelLoader.usingController;
+        // Check if the event is part of a controller
+        if (@event is InputEventJoypadButton joyEvent)
+        {
+            if (joyEvent.Pressed && !LevelLoader.usingController)
+                LevelLoader.usingController = true;
+        }
+        else if (@event is InputEventJoypadMotion)
+        {
+            if (!LevelLoader.usingController)
+                LevelLoader.usingController = true;
+        }
+        else if (@event is InputEventMouseMotion)
+        {
+            LevelLoader.usingController = false;
+        }
+        else if (@event is InputEventMouseButton mouseButton)
+        {
+            if (mouseButton.Pressed)
+                LevelLoader.usingController = false;
+        }
+        else if (@event is InputEventKey keyButton)
+        {
+            if (keyButton.Pressed)
+                LevelLoader.usingController = false;
+        }
+
+        if (originalUsingGamepad != LevelLoader.usingController)
+        {
+            if (LevelLoader.usingController)
+            {
+                switch (currentMenu)
+                {
+                    case CurrentMenu.Main:
+                        mainMenuFocusButton.GrabFocus();
+                        break;
+                    case CurrentMenu.Options:
+                        optionsMenuFocusButton.GrabFocus();
+                        break;
+                }
+                Input.MouseMode = Input.MouseModeEnum.Hidden;
+            }
+            else
+            {
+                // release focus of any up item currently focused
+                GetViewport().GuiReleaseFocus();
+                Input.MouseMode = Input.MouseModeEnum.Visible;
+            }
+        }
     }
 }

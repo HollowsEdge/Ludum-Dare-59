@@ -3,13 +3,9 @@ using System;
 
 public partial class MainMenuUI : Control
 {
-    [ExportCategory("Scene Paths")]
-    [Export] private string playScenePath;
-
     [ExportCategory("UI Nodes")]
     [Export] private Control mainMenu;
     [Export] private Control mainMenuFocusButton;
-    [Export] private Control loadingMenu;
     [Export] private Control optionsMenu;
     [Export] private Control optionsFocusButton;
     [Export] private Control creditsMenu;
@@ -24,32 +20,46 @@ public partial class MainMenuUI : Control
     [ExportCategory("Audio")]
     [Export] private AudioStreamPlayer audioButtonClick;
 
+    // References
+    private LevelLoader levelLoader;
+
+    enum CurrentMenu
+    {
+        Main,
+        Options,
+        Credits,
+        Difficulty
+    }
+    private CurrentMenu currentMenu;
+
     public override void _Ready()
     {
+        currentMenu = CurrentMenu.Main;
         GD.Randomize();
 
         // Show only the main menu
         mainMenu.Show();
-        loadingMenu.Hide();
         optionsMenu.Hide();
         creditsMenu.Hide();
         difficultySelectionMenu.Hide();
 
         // Make sure the mouse is not locked to the screen
         Input.MouseMode = Input.MouseModeEnum.Visible;
-
-        mainMenuFocusButton.GrabFocus();
+        levelLoader = GetTree().Root.GetNode<LevelLoader>("LevelLoader");
     }
 
     /// <summary>
     /// Switches the UI to the difficulty selection menu
     /// </summary>
-    public void OnPlayButtonPressed()
+    public void OnDifficultyButtonPressed()
     {
+        currentMenu = CurrentMenu.Difficulty;
+
         mainMenu.Hide();
         difficultySelectionMenu.Show();
         audioButtonClick.Play();
-        difficultySelectionFocusButton.GrabFocus();
+        if (LevelLoader.usingController)
+            difficultySelectionFocusButton.GrabFocus();
 
         // Load the game settings from save file
         ConfigFile config = new();
@@ -91,18 +101,10 @@ public partial class MainMenuUI : Control
 
         config.Save("user://game.cfg");
 
-        // Show the loading screen
         audioButtonClick.Play();
-        mainMenu.Hide();
-        difficultySelectionMenu.Hide();
-        loadingMenu.Show();
-
-        // Make sure to show the load menu (Setup proper level load async later)
-        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 
         // Change the scene to the game
-        GetTree().ChangeSceneToFile(playScenePath);
+        levelLoader.LoadGame();
     }
 
     /// <summary>
@@ -110,10 +112,14 @@ public partial class MainMenuUI : Control
     /// </summary>
     public void OnOptionsButtonPressed()
     {
+        currentMenu = CurrentMenu.Options;
+
         mainMenu.Hide();
         optionsMenu.Show();
         audioButtonClick.Play();
-        optionsFocusButton.GrabFocus();
+
+        if(LevelLoader.usingController)
+            optionsFocusButton.GrabFocus();
     }
 
     /// <summary>
@@ -121,11 +127,15 @@ public partial class MainMenuUI : Control
     /// </summary>
     public void OnCreditsButtonPressed()
     {
+        currentMenu = CurrentMenu.Credits;
+
         mainMenu.Hide();
         optionsMenu.Hide();
         creditsMenu.Show();
         audioButtonClick.Play();
-        creditsFocusButton.GrabFocus();
+
+        if (LevelLoader.usingController)
+            creditsFocusButton.GrabFocus();
     }
 
     /// <summary>
@@ -133,12 +143,15 @@ public partial class MainMenuUI : Control
     /// </summary>
     public void OnMainMenuButtonPressed()
     {
+        currentMenu = CurrentMenu.Main;
+
         mainMenu.Show();
         difficultySelectionMenu.Hide();
         optionsMenu.Hide();
         creditsMenu.Hide();
         audioButtonClick.Play();
-        mainMenuFocusButton.GrabFocus();
+        if (LevelLoader.usingController)
+            mainMenuFocusButton.GrabFocus();
     }
 
     /// <summary>
@@ -148,5 +161,64 @@ public partial class MainMenuUI : Control
     {
         audioButtonClick.Play();
         GetTree().Quit();
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        bool originalUsingGamepad = LevelLoader.usingController;
+        // Check if the event is part of a controller
+        if (@event is InputEventJoypadButton joyEvent)
+        {
+            if (joyEvent.Pressed && !LevelLoader.usingController)
+                LevelLoader.usingController = true;
+        }
+        else if(@event is InputEventJoypadMotion)
+        {
+            if (!LevelLoader.usingController)
+                LevelLoader.usingController = true;
+        }
+        else if (@event is InputEventMouseMotion)
+        {
+            LevelLoader.usingController = false;
+        }
+        else if (@event is InputEventMouseButton mouseButton)
+        {
+            if(mouseButton.Pressed)
+                LevelLoader.usingController = false;
+        }
+        else if (@event is InputEventKey keyButton)
+        {
+            if (keyButton.Pressed)
+                LevelLoader.usingController = false;
+        }
+
+        if(originalUsingGamepad != LevelLoader.usingController)
+        {
+            if (LevelLoader.usingController)
+            {
+                switch (currentMenu)
+                {
+                    case CurrentMenu.Main:
+                        mainMenuFocusButton.GrabFocus();
+                        break;
+                    case CurrentMenu.Options:
+                        optionsFocusButton.GrabFocus();
+                        break;
+                    case CurrentMenu.Credits:
+                        creditsFocusButton.GrabFocus();
+                        break;
+                    case CurrentMenu.Difficulty:
+                        difficultySelectionFocusButton.GrabFocus();
+                        break;
+                }
+                Input.MouseMode = Input.MouseModeEnum.Hidden;
+            }
+            else
+            {
+                // release focus of any up item currently focused
+                GetViewport().GuiReleaseFocus();
+                Input.MouseMode = Input.MouseModeEnum.Visible;
+            }
+        }
     }
 }

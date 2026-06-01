@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://bcrcry52jx11f"]
+
+[ext_resource type="Script" uid="uid://p8i047flseia" path="res://Scripts/LevelLoader.cs" id="1_15w05"]
+
+[node name="LevelLoader" type="Node" unique_id=1031804148 node_paths=PackedStringArray("loadingMenu", "progressBar")]
+script = ExtResource("1_15w05")
+gameScenePath = "res://Scenes/MainLevel.tscn"
+loadingMenu = NodePath("LoadingMenu")
+progressBar = NodePath("LoadingMenu/ProgressBar")
+
+[node name="LoadingMenu" type="Control" parent="." unique_id=131431161]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="LoadingMenu" unique_id=1438022677]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="LoadingMenu" unique_id=1017753463]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -465.0
+offset_top = -107.5
+offset_right = 465.0
+offset_bottom = 107.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 66
+text = "Loading..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="LoadingMenu" unique_id=1540223705]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = 60.0
+offset_right = 280.0
+offset_bottom = 87.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -45,13 +45,10 @@ public partial class PlayerController : CharacterBody3D
     private UIManger uIManger;
 
     // Other
-    public bool init = false;
+    private bool init = false;
 
     public override void _Ready()
     {
-        // Hide and lock the cursor to the center of the screen
-        Input.MouseMode = Input.MouseModeEnum.Captured;
-
         // Find References
         cameraHolder = GetNode<Node3D>("CameraHolder");
         uIManger = (UIManger)GetTree().GetFirstNodeInGroup("UIManager");
@@ -75,13 +72,26 @@ public partial class PlayerController : CharacterBody3D
         sensitivity = (float)config.GetValue("Player", "Sensitivity", sensitivity);
     }
 
+    /// <summary>
+    /// Runs when the player is initialized
+    /// </summary>
+    public void SpawnPlayer()
+    {
+        // Hide and lock the cursor to the center of the screen
+        Input.MouseMode = Input.MouseModeEnum.Captured;
+        init = true;
+    }
+
     public override void _Process(double delta)
     {
         // Don't run if not initialized (most likely level not finished generating)
         if (!init) return;
 
+        // Make sure game isn't still loading
+        if (LevelLoader.isLoading) return;
+
         // Check if carrying treasure
-        if(carryingTreasure != null)
+        if (carryingTreasure != null)
         {
             // Place visible path back to exit based on navmesh
             ClearFootsteps();
@@ -114,6 +124,9 @@ public partial class PlayerController : CharacterBody3D
     {
         // Don't run if not initialized (most likely level not finished generating)
         if (!init) return;
+
+        // Make sure game isn't still loading
+        if (LevelLoader.isLoading) return;
 
         // Check if player tried to pause the game
         if (Input.IsActionJustPressed("pause"))
@@ -148,7 +161,7 @@ public partial class PlayerController : CharacterBody3D
 
         // Camera - controller
         Vector2 controllerCamera = Input.GetVector("look_left", "look_right", "look_down", "look_up").Normalized();
-        if (controllerCamera != Vector2.Zero)
+        if (!controllerCamera.IsZeroApprox())
         {
             Vector2 mouseInput = controllerCamera * sensitivity * 1.5f;
 
@@ -164,6 +177,9 @@ public partial class PlayerController : CharacterBody3D
     {
         // Don't run if not initialized (most likely level not finished generating)
         if (!init) return;
+
+        // Make sure game isn't still loading
+        if (LevelLoader.isLoading) return;
 
         // Check if the player pressed the interact button
         if (@event.IsActionPressed("interact"))

@@ -79,7 +79,7 @@ script = ExtResource("7_ndu1b")
 gameOverUIScenePath = "res://Scenes/GameOverUI.tscn"
 gameWinUIScenePath = "res://Scenes/GameWinUI.tscn"
 
-[node name="PlayerUI" type="Control" parent="." unique_id=2000826654 node_paths=PackedStringArray("pausedMenuRoot", "pausedMenu", "optionsMenu", "audioButtonClick") groups=["UIManager"]]
+[node name="PlayerUI" type="Control" parent="." unique_id=2000826654 node_paths=PackedStringArray("pausedMenuRoot", "pausedMenu", "mainMenuFocusButton", "optionsMenu", "optionsMenuFocusButton", "audioButtonClick") groups=["UIManager"]]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -91,7 +91,9 @@ script = ExtResource("9_i24ni")
 mainMenuSceneString = "res://Scenes/MainMenu.tscn"
 pausedMenuRoot = NodePath("PauseMenuRoot")
 pausedMenu = NodePath("PauseMenuRoot/PauseMenuUI")
+mainMenuFocusButton = NodePath("PauseMenuRoot/PauseMenuUI/ButtonHolder/ResumeButton")
 optionsMenu = NodePath("PauseMenuRoot/OptionsMenu")
+optionsMenuFocusButton = NodePath("PauseMenuRoot/OptionsMenu/Sens/ColorRect/SensSlider")
 audioButtonClick = NodePath("AudioStreamPlayer")
 
 [node name="PauseMenuRoot" type="Control" parent="PlayerUI" unique_id=1647853109]

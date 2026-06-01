@@ -30,12 +30,18 @@ public partial class MonsterAI : CharacterBody3D
 
     public override void _Process(double delta)
     {
-        if(currSawPlayerCooldown > 0)
+        // Make sure game isn't still loading
+        if (LevelLoader.isLoading) return;
+
+        if (currSawPlayerCooldown > 0)
             currSawPlayerCooldown -= (float)delta;
     }
 
     public override void _PhysicsProcess(double delta)
     {
+        // Make sure game isn't still loading
+        if (LevelLoader.isLoading) return;
+
         // Check if the monster finished it's last path
         if (navAgent.IsNavigationFinished())
         {

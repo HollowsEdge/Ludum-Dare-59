@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public partial class LevelGenerate : Node3D
 { 
@@ -327,6 +328,10 @@ public partial class LevelGenerate : Node3D
 {0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
 {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};
 
+    public delegate void LoadPrecentChangedEventHandler(int currentPrecent);
+    public event LoadPrecentChangedEventHandler OnLoadPrecentChanged;
+    int currentPrecent;
+
     public override async void _Ready()
     {
         // Load the game settings from save file
@@ -345,30 +350,55 @@ public partial class LevelGenerate : Node3D
         // Initialize the gameMap
         gameMap = new bool[width, height];
 
+        currentPrecent = 5;
+        OnLoadPrecentChanged?.Invoke(currentPrecent);
+        await ToSignal(GetTree(), "process_frame");
         // Generate the cave using marching cubes
-        GenerateCave();
+        await GenerateCave();
+        currentPrecent = 60;
+        OnLoadPrecentChanged?.Invoke(currentPrecent);
+        await ToSignal(GetTree(), "process_frame");
 
         // Bake the navigation mesh for the monster, backtrack footsteps, and generation checks
         navRegion.BakeNavigationMesh();
         while (navRegion.IsBaking())
             await ToSignal(GetTree(), "process_frame");
 
+        currentPrecent = 70;
+        OnLoadPrecentChanged?.Invoke(currentPrecent);
+        await ToSignal(GetTree(), "process_frame");
+
         // Post settup - place player, exit, treasure, and monsters in the maze
         SpawnPlayerAndExit();
+        currentPrecent = 80;
+        OnLoadPrecentChanged?.Invoke(currentPrecent);
+        await ToSignal(GetTree(), "process_frame");
+
         SpawnTreasure();
+        currentPrecent = 90;
+        OnLoadPrecentChanged?.Invoke(currentPrecent);
+        await ToSignal(GetTree(), "process_frame");
+
         SpawnMonster();
+        currentPrecent = 100;
+        OnLoadPrecentChanged?.Invoke(currentPrecent);
     }
 
     /// <summary>
     /// Main function to generate the cave mesh
     /// </summary>
-    private void GenerateCave()
+    private async Task GenerateCave()
     {
+        currentPrecent = 5;
+        OnLoadPrecentChanged?.Invoke(currentPrecent);
         // Initialize Map with noise
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
                 gameMap[x, y] = GD.RandRange(0, 99) < initialWallPer;
 
+        currentPrecent = 10;
+        OnLoadPrecentChanged?.Invoke(currentPrecent);
+        await ToSignal(GetTree(), "process_frame");
         // Cellular Automata cave generation
         for (int i = 0; i < generationIter; i++)
         {
@@ -378,6 +408,9 @@ public partial class LevelGenerate : Node3D
                     newGameMap[x, y] = (GetNeighbors(new(x, y), 1) >= 5) || (GetNeighbors(new(x, y), 2) <= 1);
             gameMap = newGameMap;
         }
+        currentPrecent = 20;
+        OnLoadPrecentChanged?.Invoke(currentPrecent);
+        await ToSignal(GetTree(), "process_frame");
 
         // Pad the map
         // Initiaze
@@ -394,6 +427,10 @@ public partial class LevelGenerate : Node3D
             for (int x = 1; x < width - 1; x++)
                 for (int z = 1; z < height - 1; z++)
                     gameMap3D[x, y, z] = gameMap[x - 1, z - 1];
+
+        currentPrecent = 30;
+        OnLoadPrecentChanged?.Invoke(currentPrecent);
+        await ToSignal(GetTree(), "process_frame");
 
         // Buld the meshindex
         int[,,] marchingCubesMap = new int[width - 1, middleLayers + 2 - 1, height - 1];
@@ -426,6 +463,10 @@ public partial class LevelGenerate : Node3D
 
                     marchingCubesMap[x, y, z] = binaryIndex;
                 }
+
+        currentPrecent = 40;
+        OnLoadPrecentChanged?.Invoke(currentPrecent);
+        await ToSignal(GetTree(), "process_frame");
 
         // Generate the mesh
         SurfaceTool st = new();
@@ -495,6 +536,9 @@ public partial class LevelGenerate : Node3D
                     }
                     
                 }
+        currentPrecent = 55;
+        OnLoadPrecentChanged?.Invoke(currentPrecent);
+        await ToSignal(GetTree(), "process_frame");
 
         // Finish creating mesh
         st.GenerateNormals();
@@ -513,6 +557,9 @@ public partial class LevelGenerate : Node3D
 
         if(createDebugSandwich)
             DebugMap();
+        currentPrecent = 60;
+        OnLoadPrecentChanged?.Invoke(currentPrecent);
+        await ToSignal(GetTree(), "process_frame");
     }
 
     /// <summary>
@@ -623,7 +670,7 @@ public partial class LevelGenerate : Node3D
                 exitNode.GlobalPosition = pos;
 
                 // Set the player as finished setup
-                player.init = true;
+                player.SpawnPlayer();
                 return;
             }
 

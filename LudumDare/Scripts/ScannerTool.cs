@@ -29,8 +29,13 @@ public partial class ScannerTool : Node3D
     private GameManager gameManager;
     private float currTimeBtwScans = 0;
 
-    public override void _Ready()
+    bool init = false;
+
+    public override async void _Ready()
     {
+        // Wait until level is finished loading
+        while (LevelLoader.isLoading) await ToSignal(GetTree(), "process_frame");
+
         // Get the gameManager
         gameManager = (GameManager)GetTree().GetFirstNodeInGroup("GameManager");
 
@@ -42,12 +47,19 @@ public partial class ScannerTool : Node3D
         multimesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3D;
         multimesh.Mesh = visualMesh;
         multimesh.UseColors = true;
+        init = true;
     }
 
     public override void _Process(double delta)
     {
+        // Make sure ready function ran first
+        if (!init) return;
+
+        // Make sure game isn't still loading
+        if (LevelLoader.isLoading) return;
+
         // Decrease scan cooldown
-        if(currTimeBtwScans > 0)
+        if (currTimeBtwScans > 0)
             currTimeBtwScans -= (float)delta;
 
         float closestChest = gameManager.GetClosestChestDist(); // Always find the closest chest
@@ -60,6 +72,9 @@ public partial class ScannerTool : Node3D
 
     public override void _PhysicsProcess(double delta)
     {
+        // Make sure game isn't still loading
+        if (LevelLoader.isLoading) return;
+
         if (Input.IsActionJustPressed("scan") && currTimeBtwScans <= 0)
         {
             audioButtonBeep.Play();
