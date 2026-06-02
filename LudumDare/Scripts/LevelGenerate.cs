@@ -382,6 +382,8 @@ public partial class LevelGenerate : Node3D
         SpawnMonster();
         currentPrecent = 100;
         OnLoadPrecentChanged?.Invoke(currentPrecent);
+
+        GD.Randomize();
     }
 
     /// <summary>
