@@ -92,7 +92,7 @@ public partial class ScannerTool : Node3D
 
                     // Get variables for raycast
                     var spaceState = GetWorld3D().DirectSpaceState;
-                    var cam = GetNode<Camera3D>("../Camera3D");
+                    var cam = GetNode<Camera3D>("../../Camera3D");
                     var mousePos = GetViewport().GetMousePosition();
 
                     // Raycast with offset

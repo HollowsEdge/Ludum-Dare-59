@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://crqpq0l70kpjl" path="res://Scripts/PlayerController.cs" id="1_xhfnw"]
 [ext_resource type="PackedScene" uid="uid://cbsfaveuuvhd8" path="res://Prefabs/TrackingFootstep.tscn" id="2_shmu5"]
 [ext_resource type="Script" uid="uid://ct622uvfyxo3c" path="res://Scripts/ScannerTool.cs" id="2_x3d5u"]
+[ext_resource type="Script" uid="uid://bisjofncc6b1r" path="res://Prefabs/CameraItemLag.cs" id="3_3ygst"]
 [ext_resource type="PackedScene" uid="uid://dwss30v6di4o4" path="res://Models/Scanner.glb" id="3_b43ah"]
 [ext_resource type="Environment" uid="uid://cpof8ahuhv7ks" path="res://Scenes/Environments/MainLevelEnv.tres" id="5_javds"]
 [ext_resource type="AudioStream" uid="uid://e73jcq05vm8w" path="res://Sounds/Scan-Collect.mp3" id="5_vxq8l"]
@@ -47,7 +48,7 @@ shadow_size = 1
 bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_javds"]
-viewport_path = NodePath("CameraHolder/Scanner/ScannerModel/SubViewport")
+viewport_path = NodePath("CameraHolder/CameraItemLag/Scanner/ScannerModel/SubViewport")
 
 [node name="Player" type="CharacterBody3D" unique_id=223059442 node_paths=PackedStringArray("ray", "carryingPos", "scanner", "footstepsAudio") groups=["Player"]]
 collision_layer = 2
@@ -57,9 +58,9 @@ walkSpeed = 125.0
 sprintSpeed = 200.0
 sensitivity = 1.5
 ray = NodePath("CameraHolder/RayCast3D")
-carryingPos = NodePath("CameraHolder/HoldPos")
+carryingPos = NodePath("CameraHolder/CameraItemLag/HoldPos")
 footStepScene = ExtResource("2_shmu5")
-scanner = NodePath("CameraHolder/Scanner")
+scanner = NodePath("CameraHolder/CameraItemLag/Scanner")
 footstepsAudio = NodePath("FootstepAudio")
 footstepDelayWalk = 0.6
 
@@ -87,10 +88,13 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -
 target_position = Vector3(0, -5, 0)
 collision_mask = 5
 
-[node name="HoldPos" type="Node3D" parent="CameraHolder" unique_id=1847178746]
-transform = Transform3D(0.99619466, -0.08715573, 0, 0.08715573, 0.99619466, 0, 0, 0, 1, 0.05, -0.791, -0.635)
+[node name="CameraItemLag" type="Node3D" parent="CameraHolder" unique_id=931231337 node_paths=PackedStringArray("camera")]
+script = ExtResource("3_3ygst")
+camera = NodePath("../Camera3D")
+SwayStrength = 0.2
+ReturnSpeed = 15.0
 
-[node name="Scanner" type="Node3D" parent="CameraHolder" unique_id=111162488 node_paths=PackedStringArray("audioButtonBeep", "distText", "treasureText", "cooldownUIBar")]
+[node name="Scanner" type="Node3D" parent="CameraHolder/CameraItemLag" unique_id=111162488 node_paths=PackedStringArray("audioButtonBeep", "distText", "treasureText", "cooldownUIBar")]
 script = ExtResource("2_x3d5u")
 audioButtonBeep = NodePath("AudioStreamPlayer3D")
 distText = NodePath("ScannerModel/DistanceText")
@@ -101,25 +105,25 @@ gridX = 30
 spacing = 25
 visualMesh = SubResource("SphereMesh_x3d5u")
 
-[node name="ScannerModel" parent="CameraHolder/Scanner" unique_id=224828602 instance=ExtResource("3_b43ah")]
+[node name="ScannerModel" parent="CameraHolder/CameraItemLag/Scanner" unique_id=224828602 instance=ExtResource("3_b43ah")]
 transform = Transform3D(-0.24184471, 0.24184471, -0.93969256, 0.7071067, 0.7071067, 0, 0.6644629, -0.6644629, -0.3420201, 0.38, -0.398, -0.354)
 
-[node name="DistanceText" type="Label3D" parent="CameraHolder/Scanner/ScannerModel" unique_id=1606341753]
+[node name="DistanceText" type="Label3D" parent="CameraHolder/CameraItemLag/Scanner/ScannerModel" unique_id=1606341753]
 transform = Transform3D(-2.174351e-08, 0.23907945, 0.4313107, -3.3853986e-10, 0.4313108, -0.2390794, -0.49314064, -1.0837565e-08, -1.8853187e-08, 0.10137713, 0.33271348, 0.0027903318)
 text = "100m"
 font_size = 25
 
-[node name="TreasureText" type="Label3D" parent="CameraHolder/Scanner/ScannerModel" unique_id=779402257]
+[node name="TreasureText" type="Label3D" parent="CameraHolder/CameraItemLag/Scanner/ScannerModel" unique_id=779402257]
 transform = Transform3D(-2.174351e-08, 0.23907945, 0.4313107, -3.3853986e-10, 0.4313108, -0.2390794, -0.4931407, -1.0837565e-08, -1.8853187e-08, 0.066703916, 0.27074373, 0.000407964)
 text = "1  /  3"
 font_size = 16
 
-[node name="SubViewport" type="SubViewport" parent="CameraHolder/Scanner/ScannerModel" unique_id=712356362]
+[node name="SubViewport" type="SubViewport" parent="CameraHolder/CameraItemLag/Scanner/ScannerModel" unique_id=712356362]
 world_3d = SubResource("World3D_3ygst")
 transparent_bg = true
 size = Vector2i(350, 475)
 
-[node name="ProgressBar" type="ProgressBar" parent="CameraHolder/Scanner/ScannerModel/SubViewport" unique_id=514924719]
+[node name="ProgressBar" type="ProgressBar" parent="CameraHolder/CameraItemLag/Scanner/ScannerModel/SubViewport" unique_id=514924719]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -136,13 +140,16 @@ theme_override_styles/background = SubResource("StyleBoxFlat_javds")
 theme_override_styles/fill = SubResource("StyleBoxFlat_3ygst")
 show_percentage = false
 
-[node name="3DUISprite" type="Sprite3D" parent="CameraHolder/Scanner/ScannerModel" unique_id=221651996]
+[node name="3DUISprite" type="Sprite3D" parent="CameraHolder/CameraItemLag/Scanner/ScannerModel" unique_id=221651996]
 transform = Transform3D(-2.1855697e-09, 0.024240479, 0.04373099, 0, 0.04373099, -0.024240479, -0.050000012, -1.059585e-09, -1.911542e-09, 0.07544637, 0.28616667, 0)
 texture = SubResource("ViewportTexture_javds")
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CameraHolder/Scanner" unique_id=1051854789]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CameraHolder/CameraItemLag/Scanner" unique_id=1051854789]
 stream = ExtResource("5_vxq8l")
 volume_db = -20.0
+
+[node name="HoldPos" type="Node3D" parent="CameraHolder/CameraItemLag" unique_id=1847178746]
+transform = Transform3D(0.99619466, -0.08715573, 0, 0.08715573, 0.99619466, 0, 0, 0, 1, 0.05, -0.791, -0.635)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=43600432]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4887545, 0)
