@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cejjvv7qyecmo" path="res://Models/MainMenuCaveMesh.glb" id="6_xim88"]
 [ext_resource type="Material" uid="uid://dyod1jbokdtv0" path="res://Materials/Rock.tres" id="7_koqhg"]
 [ext_resource type="Material" uid="uid://7c7yix6ya8u8" path="res://Materials/RockMenu.tres" id="8_koqhg"]
+[ext_resource type="Material" uid="uid://ccx7v7jii6aa7" path="res://Materials/Fabric.tres" id="9_cmrfp"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rhts7"]
 noise_type = 3
@@ -34,9 +35,74 @@ material = SubResource("StandardMaterial3D_7vrkn")
 
 [sub_resource type="QuadMesh" id="QuadMesh_koqhg"]
 
+[sub_resource type="Animation" id="Animation_koqhg"]
+resource_name = "Intro"
+length = 2.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.93333334, 1.1222264, 1.5333334, 1.7, 2.1932337, 2.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.227633, 3.70564, -1.6456069), Vector3(-0.228, 3.706, -4.831), Vector3(-0.228, 3.706, -4.831), Vector3(-0.228, 2.236, -4.831), Vector3(-0.228, 2.236, -4.831), Vector3(-0.228, 2.236, -5.251), Vector3(-0.228, 0.101, -5.421)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.93333334, 1.1222264),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.52359873, 0, 0), Vector3(-1.0506883, 0, 0), Vector3(-1.0506883, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_cmrfp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.227633, 3.70564, -1.6456069)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.52359873, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_loo7a"]
+_data = {
+&"Intro": SubResource("Animation_koqhg"),
+&"RESET": SubResource("Animation_cmrfp")
+}
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jal7x"]
+material = ExtResource("9_cmrfp")
+size = Vector2(3, 3)
+
 [node name="MainMenuScene" type="Node3D" unique_id=1945999567]
 
-[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "mainMenuFocusButton", "optionsMenu", "optionsFocusButton", "creditsMenu", "creditsFocusButton", "difficultySelectionMenu", "difficultySelectionFocusButton", "seedSpinBox", "chestNumSpinBox", "monsterNumSpinBox", "audioButtonClick")]
+[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "mainMenuFocusButton", "optionsMenu", "optionsFocusButton", "creditsMenu", "creditsFocusButton", "difficultySelectionMenu", "difficultySelectionFocusButton", "seedSpinBox", "chestNumSpinBox", "monsterNumSpinBox", "audioButtonClick", "introCameraAnimation")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,6 +122,7 @@ seedSpinBox = NodePath("DifficultySelection/Selection/VBoxContainer/Seed/SeedBox
 chestNumSpinBox = NodePath("DifficultySelection/Selection/VBoxContainer/ChestAmount/ChestAmountBox")
 monsterNumSpinBox = NodePath("DifficultySelection/Selection/VBoxContainer/MonsterAmount/MonsterAmountBox")
 audioButtonClick = NodePath("AudioStreamPlayer")
+introCameraAnimation = NodePath("../AnimationPlayer")
 metadata/_edit_use_anchors_ = true
 
 [node name="MainMenu" type="Control" parent="MainMenuUI" unique_id=917621942]
@@ -467,7 +534,7 @@ visible = false
 mesh = SubResource("PlaneMesh_fu7sn")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1210649752]
-transform = Transform3D(1, 0, 0, 0, 0.86602545, 0.5, 0, -0.5, 0.86602545, -0.227633, 3.70564, -1.6456069)
+transform = Transform3D(1, 0, 0, 0, 0.86602545, 0.49999997, 0, -0.49999997, 0.86602545, -0.227633, 3.70564, -1.6456069)
 fov = 57.9
 
 [node name="THE SUN" type="DirectionalLight3D" parent="." unique_id=2103286527]
@@ -595,6 +662,19 @@ surface_material_override/0 = ExtResource("8_koqhg")
 transform = Transform3D(-5.943533, 2.0170107, 0.30681014, -2.8595903, -1.713549, 3.1662135, -4.0050907, -1.769779, -2.7159462, 6.292922, 1.92451, -13.239854)
 mesh = SubResource("BoxMesh_koqhg")
 surface_material_override/0 = ExtResource("8_koqhg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=649664971]
+libraries/ = SubResource("AnimationLibrary_loo7a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=216420242]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, -2.2627468, -6.0429277)
+mesh = SubResource("PlaneMesh_jal7x")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1892945973]
+transform = Transform3D(1, 0, 0, 0, -0.32127422, 0.9469862, 0, -0.9469862, -0.32127422, 0, 0.06487328, -6.2405343)
+light_energy = 3.0
+shadow_enabled = true
+spot_range = 10.0
 
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/PlayButton" to="MainMenuUI" method="OnDifficultyButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/OptionsButton" to="MainMenuUI" method="OnOptionsButtonPressed"]

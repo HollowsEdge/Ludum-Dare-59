@@ -20,6 +20,9 @@ public partial class MainMenuUI : Control
     [ExportCategory("Audio")]
     [Export] private AudioStreamPlayer audioButtonClick;
 
+    [ExportCategory("Animation")]
+    [Export] private AnimationPlayer introCameraAnimation;
+
     // References
     private LevelLoader levelLoader;
 
@@ -102,6 +105,11 @@ public partial class MainMenuUI : Control
         config.Save("user://game.cfg");
 
         audioButtonClick.Play();
+
+        // Play intro animation and wait for it to finish (but cut slightly short so camera is still "Falling")
+        difficultySelectionMenu.Hide();
+        introCameraAnimation.Play("Intro");
+        await ToSignal(GetTree().CreateTimer(introCameraAnimation.CurrentAnimationLength - 0.1f), SceneTreeTimer.SignalName.Timeout);
 
         // Change the scene to the game
         levelLoader.LoadGame();
