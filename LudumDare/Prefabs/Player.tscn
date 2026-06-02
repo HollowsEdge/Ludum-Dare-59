@@ -54,8 +54,8 @@ viewport_path = NodePath("CameraHolder/CameraItemLag/Scanner/ScannerModel/SubVie
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_xhfnw")
-walkSpeed = 125.0
-sprintSpeed = 200.0
+walkSpeed = 2.0
+sprintSpeed = 3.2
 sensitivity = 1.5
 ray = NodePath("CameraHolder/RayCast3D")
 carryingPos = NodePath("CameraHolder/CameraItemLag/HoldPos")
@@ -88,11 +88,15 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -
 target_position = Vector3(0, -5, 0)
 collision_mask = 5
 
-[node name="CameraItemLag" type="Node3D" parent="CameraHolder" unique_id=931231337 node_paths=PackedStringArray("camera")]
+[node name="CameraItemLag" type="Node3D" parent="CameraHolder" unique_id=931231337 node_paths=PackedStringArray("camera", "player")]
 script = ExtResource("3_3ygst")
 camera = NodePath("../Camera3D")
-SwayStrength = 0.2
-ReturnSpeed = 15.0
+player = NodePath("../..")
+IdleBobSpeed = 0.5
+WalkBobSpeed = 1.0
+SprintBobSpeed = 3.0
+WalkBobAmount = 0.015
+SprintBobAmount = 0.02
 
 [node name="Scanner" type="Node3D" parent="CameraHolder/CameraItemLag" unique_id=111162488 node_paths=PackedStringArray("audioButtonBeep", "distText", "treasureText", "cooldownUIBar")]
 script = ExtResource("2_x3d5u")

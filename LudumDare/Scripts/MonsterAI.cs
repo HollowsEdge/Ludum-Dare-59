@@ -77,7 +77,7 @@ public partial class MonsterAI : CharacterBody3D
 
             // Set the Velocity to follow the path
             Vector3 dir = GlobalPosition.DirectionTo(nextPathPoint);
-            Velocity = dir * chaseSpeed * (float)delta;
+            Velocity = dir * chaseSpeed;
         }
         else
         {
@@ -87,7 +87,7 @@ public partial class MonsterAI : CharacterBody3D
 
             // Set the Velocity to follow the path
             Vector3 dir = GlobalPosition.DirectionTo(nextPathPoint);
-            Velocity = dir * wanderSpeed * (float)delta;
+            Velocity = dir * wanderSpeed;
         }
 
         MoveAndSlide();

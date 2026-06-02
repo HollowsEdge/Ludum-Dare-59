@@ -141,7 +141,7 @@ public partial class PlayerController : CharacterBody3D
         currSpeed *= carryingTreasure != null ? carryingMulti : 1;
 
         // Move the player
-        Velocity = direction * currSpeed * (float)delta;
+        Velocity = direction * currSpeed;
         MoveAndSlide();
 
         // Restart footstep audio if player starts sprinting
@@ -250,6 +250,24 @@ public partial class PlayerController : CharacterBody3D
             cameraHolder.RotationDegrees = Vector3.Right * xRot;
             RotationDegrees -= Vector3.Up * mouseInput.X;
         }
+    }
+
+    /// <summary>
+    /// Gets the max speed the player can move. Include reduction on carrying treasure.
+    /// </summary>
+    /// <returns>Max speed the player can currently move</returns>
+    public float GetMaxSpeed()
+    {
+        return sprintSpeed * (carryingTreasure != null ? carryingMulti : 1);
+    }
+
+    /// <summary>
+    /// Gets the current speed the player is moveint.
+    /// </summary>
+    /// <returns>Current speed of the player</returns>
+    public float GetCurrentSpeed()
+    {
+        return currSpeed;
     }
 
     /// <summary>
