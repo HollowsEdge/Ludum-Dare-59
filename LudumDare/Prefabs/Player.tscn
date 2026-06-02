@@ -92,11 +92,6 @@ collision_mask = 5
 script = ExtResource("3_3ygst")
 camera = NodePath("../Camera3D")
 player = NodePath("../..")
-IdleBobSpeed = 0.5
-WalkBobSpeed = 1.0
-SprintBobSpeed = 3.0
-WalkBobAmount = 0.015
-SprintBobAmount = 0.02
 
 [node name="Scanner" type="Node3D" parent="CameraHolder/CameraItemLag" unique_id=111162488 node_paths=PackedStringArray("audioButtonBeep", "distText", "treasureText", "cooldownUIBar")]
 script = ExtResource("2_x3d5u")
@@ -113,7 +108,7 @@ visualMesh = SubResource("SphereMesh_x3d5u")
 transform = Transform3D(-0.24184471, 0.24184471, -0.93969256, 0.7071067, 0.7071067, 0, 0.6644629, -0.6644629, -0.3420201, 0.38, -0.398, -0.354)
 
 [node name="DistanceText" type="Label3D" parent="CameraHolder/CameraItemLag/Scanner/ScannerModel" unique_id=1606341753]
-transform = Transform3D(-2.174351e-08, 0.23907945, 0.4313107, -3.3853986e-10, 0.4313108, -0.2390794, -0.49314064, -1.0837565e-08, -1.8853187e-08, 0.10137713, 0.33271348, 0.0027903318)
+transform = Transform3D(-1.4901161e-08, 0.23907945, 0.4313107, 0, 0.4313108, -0.23907946, -0.49314064, -1.1175871e-08, -1.4901161e-08, 0.095828, 0.3316748, 0.0015047938)
 text = "100m"
 font_size = 25
 
@@ -164,3 +159,5 @@ omni_range = 2.0
 [node name="FootstepAudio" type="AudioStreamPlayer3D" parent="." unique_id=34625465]
 stream = ExtResource("6_gg3t4")
 volume_db = -25.0
+
+[editable path="CameraHolder/CameraItemLag/Scanner/ScannerModel"]

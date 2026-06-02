@@ -8,6 +8,7 @@ public partial class ScannerTool : Node3D
     [Export] private float scanFadeTime = 1.5f;
 
     [ExportCategory("References")]
+    [Export] private Camera3D camera;
     [Export] private AudioStreamPlayer3D audioButtonBeep;
     [Export] private Label3D distText;
     [Export] private Label3D treasureText;
@@ -92,12 +93,11 @@ public partial class ScannerTool : Node3D
 
                     // Get variables for raycast
                     var spaceState = GetWorld3D().DirectSpaceState;
-                    var cam = GetNode<Camera3D>("../../Camera3D");
                     var mousePos = GetViewport().GetMousePosition();
 
                     // Raycast with offset
-                    var origin = cam.ProjectRayOrigin(mousePos);
-                    var end = origin + cam.ProjectRayNormal(mousePos + new Vector2(offsetX, offsetY)) * 10000;
+                    var origin = camera.ProjectRayOrigin(mousePos);
+                    var end = origin + camera.ProjectRayNormal(mousePos + new Vector2(offsetX, offsetY)) * 10000;
                     var query = PhysicsRayQueryParameters3D.Create(origin, end, 0b00000000_00000000_00000000_00001101);
                     var result = spaceState.IntersectRay(query);
 
