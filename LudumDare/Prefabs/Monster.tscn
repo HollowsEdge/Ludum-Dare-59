@@ -29,7 +29,7 @@ material = SubResource("ShaderMaterial_ssiii")
 
 [node name="Monster" type="CharacterBody3D" unique_id=1139476480 node_paths=PackedStringArray("myAudio", "visionRaycaseStartPos") groups=["Monster"]]
 collision_layer = 8
-collision_mask = 11
+collision_mask = 3
 script = ExtResource("1_eupxk")
 chaseSpeed = 95.0
 wanderSpeed = 60.0

@@ -4,7 +4,7 @@ public partial class MonsterGrabWall : CollisionShape3D
 {
     [ExportCategory("References")]
     [Export] private Node3D grabHolder;
-    [Export] private Mesh grabMesh;
+    [Export] private CapsuleMesh grabMesh;
 
     [ExportCategory("Stats")]
     [Export] private float grabDistance;
@@ -14,7 +14,20 @@ public partial class MonsterGrabWall : CollisionShape3D
     {
         // Create all grab meshes and set as children
         foreach (Node raycast in GetChildren())
-            grabHolder.AddChild(new MeshInstance3D(){ Mesh = grabMesh });
+        {
+            MeshInstance3D grabMeshNode = new() { Mesh = grabMesh };
+            grabHolder.AddChild(grabMeshNode);
+
+            // Setup collisions - collision doesn't interact with world (only for scanner dots)
+            StaticBody3D staticBody = new()
+            {
+                CollisionLayer = 0b00000000_00000000_00000000_00001000,
+                CollisionMask = 0b00000000_00000000_00000000_00000000
+            };
+            grabMeshNode.AddChild(staticBody);
+            staticBody.AddToGroup("Monster");
+            staticBody.AddChild(new CollisionShape3D() { Shape = new CapsuleShape3D() { Radius = grabMesh.Radius, Height = grabMesh.Height } });
+        }
     }
 
     public override void _Process(double delta)
