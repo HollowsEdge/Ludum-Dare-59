@@ -1,17 +1,51 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://dyod1jbokdtv0"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dyod1jbokdtv0"]
 
 [ext_resource type="Texture2D" uid="uid://bqej5xhj2e23r" path="res://Materials/Textures/Rock/Rock060_4K-JPG_Color.jpg" id="1_70ngi"]
+[ext_resource type="Shader" uid="uid://b2x56jxklr1lv" path="res://Materials/Shaders/CaveRockShader.tres" id="1_m8bjp"]
 [ext_resource type="Texture2D" uid="uid://bg1jdkvt28ivb" path="res://Materials/Textures/Rock/Rock060_4K-JPG_AmbientOcclusion.jpg" id="2_22q3x"]
 [ext_resource type="Texture2D" uid="uid://c0ayjd0stb2bs" path="res://Materials/Textures/Rock/Rock060_4K-JPG_NormalGL.jpg" id="3_e4rkm"]
+[ext_resource type="Texture2D" uid="uid://3rhpqp6v270w" path="res://Materials/Textures/Rock050/Rock050_4K-JPG_Color.jpg" id="3_wt1uo"]
 [ext_resource type="Texture2D" uid="uid://dl10awk337u5m" path="res://Materials/Textures/Rock/Rock060_4K-JPG_Roughness.jpg" id="4_tyutn"]
+[ext_resource type="Texture2D" uid="uid://djfv7cfqy4y6l" path="res://Materials/Textures/Rock050/Rock050_4K-JPG_AmbientOcclusion.jpg" id="5_7p0oa"]
+[ext_resource type="Texture2D" uid="uid://rxx41e5i0buc" path="res://Materials/Textures/Rock050/Rock050_4K-JPG_NormalGL.jpg" id="7_a8fxn"]
+[ext_resource type="Texture2D" uid="uid://curecl23p25rb" path="res://Materials/Textures/Rock050/Rock050_4K-JPG_Roughness.jpg" id="9_8yil8"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_055xf"]
+noise_type = 3
+seed = 15
+frequency = 0.0044
+fractal_lacunarity = 1.945
+fractal_gain = 0.43
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8w4om"]
+noise = SubResource("FastNoiseLite_055xf")
+seamless = true
+seamless_blend_skirt = 0.5
 
 [resource]
-albedo_texture = ExtResource("1_70ngi")
-roughness_texture = ExtResource("4_tyutn")
-normal_enabled = true
-normal_texture = ExtResource("3_e4rkm")
-ao_enabled = true
-ao_texture = ExtResource("2_22q3x")
-uv1_scale = Vector3(0.5, 0.5, 0.5)
-uv1_triplanar = true
-uv1_world_triplanar = true
+render_priority = 0
+shader = ExtResource("1_m8bjp")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("1_70ngi")
+shader_parameter/texture_normal = ExtResource("3_e4rkm")
+shader_parameter/texture_roughness = ExtResource("4_tyutn")
+shader_parameter/texture_ambient_occlusion = ExtResource("2_22q3x")
+shader_parameter/texture_albedo_2 = ExtResource("3_wt1uo")
+shader_parameter/texture_normal_2 = ExtResource("7_a8fxn")
+shader_parameter/texture_roughness_2 = ExtResource("9_8yil8")
+shader_parameter/texture_ambient_occlusion_2 = ExtResource("5_7p0oa")
+shader_parameter/texture_noise = SubResource("NoiseTexture2D_8w4om")
+shader_parameter/blend_threshold = 0.550000026125
+shader_parameter/blend_softness = 0.0870000041325
+shader_parameter/roughness = 1.0
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/normal_scale = 1.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/ao_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/ao_light_affect = 0.0
+shader_parameter/uv1_blend_sharpness = 1.0
+shader_parameter/uv1_scale = Vector3(0.5, 0.5, 0.5)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)

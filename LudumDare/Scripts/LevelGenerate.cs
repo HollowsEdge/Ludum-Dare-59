@@ -27,7 +27,7 @@ public partial class LevelGenerate : Node3D
     [Export] private int height = 32;
     [Export] private int initialWallPer = 40;
     [Export] private int generationIter = 5;
-    [Export] private StandardMaterial3D rockMaterial;
+    [Export] private ShaderMaterial rockMaterial;
 
     [ExportCategory("Debug")]
     [Export] private bool createDebugSandwich = false;
