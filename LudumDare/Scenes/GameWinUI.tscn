@@ -2,6 +2,58 @@
 
 [ext_resource type="Script" uid="uid://dksdq8np2hi3i" path="res://Scripts/GameOverUIManager.cs" id="1_ibw4g"]
 
+[sub_resource type="Animation" id="Animation_lvt8e"]
+resource_name = "FadeOutGameOver"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ibw4g"]
+resource_name = "FadeOutGameWin"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qp84s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_npijn"]
+_data = {
+&"FadeOutGameOver": SubResource("Animation_lvt8e"),
+&"FadeOutGameWin": SubResource("Animation_ibw4g"),
+&"RESET": SubResource("Animation_qp84s")
+}
+
 [node name="GameWinUI" type="Control" unique_id=1968407630]
 layout_mode = 3
 anchors_preset = 15
@@ -12,15 +64,17 @@ grow_vertical = 2
 script = ExtResource("1_ibw4g")
 mainMenuScenePath = "res://Scenes/MainMenu.tscn"
 
-[node name="Panel" type="Panel" parent="." unique_id=1289718697]
+[node name="ColorRect3" type="ColorRect" parent="." unique_id=71776535]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+color = Color(0.2977428, 0.399679, 0.44601756, 1)
 
-[node name="Label" type="Label" parent="Panel" unique_id=393783894]
+[node name="Label" type="Label" parent="ColorRect3" unique_id=393783894]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -44,9 +98,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -213.0
-offset_top = -104.0
+offset_top = -87.0
 offset_right = 214.0
-offset_bottom = 214.5
+offset_bottom = 231.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
@@ -63,6 +117,20 @@ custom_minimum_size = Vector2(0, 104.36)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Quit"
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=360155796]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=652143755]
+libraries/ = SubResource("AnimationLibrary_npijn")
+autoplay = &"FadeOutGameWin"
 
 [connection signal="pressed" from="ButtonHolder/MenuButton" to="." method="OnMenuButtonPressed"]
 [connection signal="pressed" from="ButtonHolder/QuitButton" to="." method="OnQuitButtonPressed"]

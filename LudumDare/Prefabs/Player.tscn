@@ -93,8 +93,9 @@ script = ExtResource("3_3ygst")
 camera = NodePath("../Camera3D")
 player = NodePath("../..")
 
-[node name="Scanner" type="Node3D" parent="CameraHolder/CameraItemLag" unique_id=111162488 node_paths=PackedStringArray("audioButtonBeep", "distText", "treasureText", "cooldownUIBar")]
+[node name="Scanner" type="Node3D" parent="CameraHolder/CameraItemLag" unique_id=111162488 node_paths=PackedStringArray("camera", "audioButtonBeep", "distText", "treasureText", "cooldownUIBar")]
 script = ExtResource("2_x3d5u")
+camera = NodePath("../../Camera3D")
 audioButtonBeep = NodePath("AudioStreamPlayer3D")
 distText = NodePath("ScannerModel/DistanceText")
 treasureText = NodePath("ScannerModel/TreasureText")

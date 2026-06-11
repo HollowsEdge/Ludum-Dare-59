@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public partial class PlayerController : CharacterBody3D
 {
@@ -46,6 +47,7 @@ public partial class PlayerController : CharacterBody3D
 
     // Other
     private bool init = false;
+    private bool freezePlayer = false;
 
     public override void _Ready()
     {
@@ -90,6 +92,9 @@ public partial class PlayerController : CharacterBody3D
         // Make sure game isn't still loading
         if (LevelLoader.isLoading) return;
 
+        // Check if player should be frozen
+        if (freezePlayer) return;
+
         // Check if carrying treasure
         if (carryingTreasure != null)
         {
@@ -127,6 +132,9 @@ public partial class PlayerController : CharacterBody3D
 
         // Make sure game isn't still loading
         if (LevelLoader.isLoading) return;
+
+        // Check if player should be frozen
+        if (freezePlayer) return;
 
         // Check if player tried to pause the game
         if (Input.IsActionJustPressed("pause"))
@@ -180,6 +188,9 @@ public partial class PlayerController : CharacterBody3D
 
         // Make sure game isn't still loading
         if (LevelLoader.isLoading) return;
+
+        // Check if player should be frozen
+        if (freezePlayer) return;
 
         // Check if the player pressed the interact button
         if (@event.IsActionPressed("interact"))
@@ -300,5 +311,29 @@ public partial class PlayerController : CharacterBody3D
     {
         // Unsubscribe from the options update event when this node leavs the tree
         optionsMenu.OnOptionsChanged -= UpdateOptions;
+    }
+
+    /// <summary>
+    /// Setup the player so fthe cameras match for the exit animation.
+    /// </summary>
+    public async Task SetupExitAnim()
+    {
+        freezePlayer = true;
+
+        cameraHolder.GetNode<Node3D>("CameraItemLag").Hide();
+
+        // Tween position and rotation of player camera to match exit
+        Camera3D targetNode = GetTree().GetFirstNodeInGroup("GameExit").GetNode<Camera3D>("../Camera3D");
+        float animTime = 1f;
+        Tween tween = GetTree().CreateTween();
+        tween.SetParallel(true);
+        tween.TweenProperty(cameraHolder.GetNode<Camera3D>("Camera3D"), "global_position", targetNode.GlobalPosition, animTime).SetTrans(Tween.TransitionType.Sine);
+        tween.TweenProperty(cameraHolder.GetNode<Camera3D>("Camera3D"), "global_basis", targetNode.GlobalBasis, animTime).SetTrans(Tween.TransitionType.Sine);
+
+        // Wait for animation to finish
+        await ToSignal(GetTree().CreateTimer(animTime + 0.25f), SceneTreeTimer.SignalName.Timeout);
+
+        // Disable player camera
+        cameraHolder.Hide();
     }
 }

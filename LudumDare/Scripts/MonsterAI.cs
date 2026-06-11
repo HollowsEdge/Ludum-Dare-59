@@ -15,7 +15,10 @@ public partial class MonsterAI : CharacterBody3D
     private CharacterBody3D player;
     private LevelGenerate levelGenerate;
     private GameManager gameManager;
-    [Export] private float currSawPlayerCooldown;
+    private float currSawPlayerCooldown;
+
+    public bool freezeAI = false;
+
 
     public override void _Ready()
     {
@@ -33,6 +36,9 @@ public partial class MonsterAI : CharacterBody3D
         // Make sure game isn't still loading
         if (LevelLoader.isLoading) return;
 
+        // Check if monster is frozen
+        if (freezeAI) return;
+
         if (currSawPlayerCooldown > 0)
             currSawPlayerCooldown -= (float)delta;
     }
@@ -41,6 +47,9 @@ public partial class MonsterAI : CharacterBody3D
     {
         // Make sure game isn't still loading
         if (LevelLoader.isLoading) return;
+
+        // Check if monster is frozen
+        if (freezeAI) return;
 
         // Check if the monster finished it's last path
         if (navAgent.IsNavigationFinished())

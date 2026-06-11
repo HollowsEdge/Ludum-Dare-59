@@ -1,13 +1,16 @@
 using Godot;
+using System.Threading.Tasks;
 
 public partial class DropTreasure : Area3D
 {
     [Export] private PackedScene treasureScene;
     [Export] private MeshInstance3D floorMeshNode;
+    [Export] private AnimationPlayer animationPlayer;
 
     // References
     private PlayerController player;
     private GameManager gameManager;
+
     private int treasurePlaced;
 
     public override void _Ready()
@@ -15,6 +18,7 @@ public partial class DropTreasure : Area3D
         // Find references in scene
         player = (PlayerController)GetTree().GetFirstNodeInGroup("Player");
         gameManager = (GameManager)GetTree().GetFirstNodeInGroup("GameManager");
+        
     }
 
     /// <summary>
@@ -44,5 +48,23 @@ public partial class DropTreasure : Area3D
     {
         // Check if player is touching this exit area
         player.SetTouchingExit(OverlapsBody(player));
+    }
+
+    /// <summary>
+    /// Play the animation for the player exiting the cave
+    /// </summary>
+    public async Task PlayExitAnimation()
+    {
+        // setup player
+        await player.SetupExitAnim();
+
+        // Enable exit animation camera
+        Camera3D cam = GetNode<Camera3D>("../Camera3D");
+        cam.Show();
+        cam.Current = true;
+
+        // Play animation
+        animationPlayer.Play("CameraExit");
+        await ToSignal(GetTree().CreateTimer(animationPlayer.CurrentAnimationLength + 0.1f), SceneTreeTimer.SignalName.Timeout);
     }
 }

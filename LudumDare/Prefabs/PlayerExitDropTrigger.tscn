@@ -13,14 +13,100 @@ size = Vector3(3, 5, 3)
 material = ExtResource("2_yuhrt")
 size = Vector2(3, 3)
 
+[sub_resource type="Animation" id="Animation_kuowo"]
+resource_name = "CameraExit"
+length = 3.5333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.56666666, 0.89666665, 1.1633333, 1.2966666, 1.5866666, 1.9200001, 2.456667, 3.2633333, 3.5066667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 0.1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 1.7, 0), Vector3(0, 1.7, 0), Vector3(0, 1.6, 0), Vector3(-0.13290071, 2.224104, -0.23136684), Vector3(-0.13290071, 2.224104, -0.23136684), Vector3(-0.13290071, 2.107079, -0.23136684), Vector3(-0.13290071, 2.107079, -0.23136684), Vector3(-0.13290071, 2.107079, -0.23136684), Vector3(-0.13290071, 2.3736904, -0.23136684), Vector3(-0.13290071, 2.3736904, -0.23136684)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.2422905, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:fov")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3.0099998, 3.2533336),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [75.0, 75.0, 30.0]
+}
+
+[sub_resource type="Animation" id="Animation_0nnm2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.7, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:fov")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [30.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3cmoo"]
+_data = {
+&"CameraExit": SubResource("Animation_kuowo"),
+&"RESET": SubResource("Animation_0nnm2")
+}
+
 [node name="PlayerDropBox" type="Node3D" unique_id=2147074141]
 
-[node name="Area3D" type="Area3D" parent="." unique_id=1621386024 node_paths=PackedStringArray("floorMeshNode")]
+[node name="Area3D" type="Area3D" parent="." unique_id=1621386024 node_paths=PackedStringArray("floorMeshNode", "animationPlayer") groups=["GameExit"]]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_jal7x")
 treasureScene = ExtResource("2_kuowo")
 floorMeshNode = NodePath("../MeshInstance3D")
+animationPlayer = NodePath("../AnimationPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1972711876]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -43,5 +129,13 @@ visible = false
 [node name="Plane_001" parent="cave" index="1" unique_id=1593947678]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 2.09, 0)
 surface_material_override/0 = ExtResource("4_kuowo")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1815645686]
+root_node = NodePath("../Camera3D")
+libraries/ = SubResource("AnimationLibrary_3cmoo")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1492156893]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+fov = 30.0
 
 [editable path="cave"]

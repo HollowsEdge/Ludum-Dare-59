@@ -2,6 +2,42 @@
 
 [ext_resource type="Script" uid="uid://dksdq8np2hi3i" path="res://Scripts/GameOverUIManager.cs" id="1_186eu"]
 
+[sub_resource type="Animation" id="Animation_lvt8e"]
+resource_name = "FadeOutGameOver"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qp84s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7w0tf"]
+_data = {
+&"FadeOutGameOver": SubResource("Animation_lvt8e"),
+&"RESET": SubResource("Animation_qp84s")
+}
+
 [node name="GameOverUI" type="Control" unique_id=1968407630]
 layout_mode = 3
 anchors_preset = 15
@@ -12,25 +48,27 @@ grow_vertical = 2
 script = ExtResource("1_186eu")
 mainMenuScenePath = "res://Scenes/MainMenu.tscn"
 
-[node name="Panel" type="Panel" parent="." unique_id=1289718697]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=153186753]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
-[node name="Label" type="Label" parent="Panel" unique_id=393783894]
+[node name="Label" type="Label" parent="ColorRect" unique_id=393783894]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -465.0
+offset_top = 32.0
 offset_right = 465.0
-offset_bottom = 215.0
+offset_bottom = 280.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 66
-text = "GAME OVER :("
+text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -42,9 +80,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -213.0
-offset_top = -145.0
+offset_top = -87.0
 offset_right = 214.0
-offset_bottom = 173.5
+offset_bottom = 231.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
@@ -61,6 +99,20 @@ custom_minimum_size = Vector2(0, 104.36)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Quit"
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=76739537]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=742963684]
+libraries/ = SubResource("AnimationLibrary_7w0tf")
+autoplay = &"FadeOutGameOver"
 
 [connection signal="pressed" from="ButtonHolder/MenuButton" to="." method="OnMenuButtonPressed"]
 [connection signal="pressed" from="ButtonHolder/QuitButton" to="." method="OnQuitButtonPressed"]

@@ -1,5 +1,7 @@
 using Godot;
+using Godot.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class GameManager : Node
 {
@@ -13,7 +15,7 @@ public partial class GameManager : Node
     private List<Node3D> treasureChests = new();
 
     // References
-    private CharacterBody3D player;
+    private PlayerController player;
 
     public override void _Ready()
     {
@@ -97,8 +99,25 @@ public partial class GameManager : Node
     /// Stops the game in a win or loss.
     /// </summary>
     /// <param name="win">If the game should end in a win (false for loss)</param>
-    public void FinishGame(bool win)
+    public async void FinishGame(bool win)
     {
-        GetTree().ChangeSceneToFile(win ? gameWinUIScenePath : gameOverUIScenePath);
+        if (win)
+        {
+            // Stop monster accidently killing player while animation is playing
+            Array<Node> monsters = GetTree().GetNodesInGroup("Monster");
+            foreach (MonsterAI monster in monsters.Cast<MonsterAI>())
+                monster.freezeAI = true;
+
+            // Play exit animation
+            await ((DropTreasure)GetTree().GetFirstNodeInGroup("GameExit")).PlayExitAnimation();
+
+            // Change to win screen
+            GetTree().ChangeSceneToFile(gameWinUIScenePath);
+        }
+        else
+        {
+            // Change to lose screen
+            GetTree().ChangeSceneToFile(gameOverUIScenePath);
+        }
     }
 }
