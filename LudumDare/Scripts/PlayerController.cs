@@ -243,7 +243,6 @@ public partial class PlayerController : CharacterBody3D
                 {
                     // Drop
                     carryingTreasure.Reparent(GetTree().Root);
-                    // TODO: Add some force forward
                     GD.Print("Dropped : " + carryingTreasure);
                     carryingTreasure.AddChild(carryingTreasureCollider1);
                     carryingTreasure.AddChild(carryingTreasureCollider2);
