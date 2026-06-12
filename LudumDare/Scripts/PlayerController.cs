@@ -144,7 +144,7 @@ public partial class PlayerController : CharacterBody3D
             uIManger.TogglePaused();
 
         // Get player input in vector2 and convert into world direction
-        Vector2 input = Input.GetVector("move_left", "move_right", "move_down", "move_up").Normalized(); 
+        Vector2 input = Input.GetVector("move_left", "move_right", "move_back", "move_forward").Normalized(); 
         Vector3 direction = (input.X * Basis.X + input.Y * -Basis.Z).Normalized();
 
         // Set speed depending on if player is sprinting or carrying a treasure chest

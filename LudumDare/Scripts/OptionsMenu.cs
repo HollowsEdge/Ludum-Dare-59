@@ -6,7 +6,8 @@ using System.Linq;
 public partial class OptionsMenu : Control
 {
     [ExportCategory("UI References")]
-
+    [Export] private Control mainGraphicsMenu;
+    [Export] private Control controlsMenu;
     [Export] private OptionButton displayButton;
     [Export] private Label resolutionScaleText;
     [Export] private Slider resolutionScaleSlider;
@@ -42,6 +43,7 @@ public partial class OptionsMenu : Control
 
     public override void _Ready()
     {
+        OnTabChanged(0);
         resolutionButton.Clear();
         int i = 0;
         foreach (string key in resolutions.Keys)
@@ -115,6 +117,7 @@ public partial class OptionsMenu : Control
     {
         // Create new save file
         ConfigFile config = new();
+        config.Load("user://settings.cfg");
 
         // Store settings
         config.SetValue("Player", "Display", displayButton.Selected);
@@ -202,5 +205,11 @@ public partial class OptionsMenu : Control
     public double GetSensitivityValue()
     {
         return sensSlider.Value;
+    }
+
+    public void OnTabChanged(int tab)
+    {
+        mainGraphicsMenu.Visible = tab == 0;
+        controlsMenu.Visible = tab == 1;
     }
 }

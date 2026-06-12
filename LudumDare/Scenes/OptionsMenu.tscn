@@ -2,8 +2,52 @@
 
 [ext_resource type="Script" uid="uid://bijux4nbtbxq1" path="res://Scripts/OptionsMenu.cs" id="1_jrbyj"]
 [ext_resource type="AudioStream" uid="uid://bamqsegbb7m5e" path="res://Sounds/MenuButtons.mp3" id="2_1jju4"]
+[ext_resource type="Script" uid="uid://dspr2flwb8raa" path="res://Scripts/RebindButton.cs" id="4_itlgr"]
 
-[node name="OptionsMenu" type="Control" unique_id=430232927 node_paths=PackedStringArray("displayButton", "resolutionScaleText", "resolutionScaleSlider", "scalingModeButton", "upscalingButton", "resolutionButton", "vSyncButton", "sensText", "sensSlider", "audioText", "audioSlider", "audioButtonClick")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uw46w"]
+content_margin_left = 30.0
+content_margin_top = 4.0
+content_margin_right = 30.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0.6)
+border_width_left = 1
+border_width_right = 1
+border_color = Color(0.175, 0.175, 0.175, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3oclb"]
+content_margin_left = 30.0
+content_margin_top = 4.0
+content_margin_right = 30.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.3)
+border_width_left = 1
+border_width_right = 1
+border_color = Color(0.175, 0.175, 0.175, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_itlgr"]
+content_margin_left = 30.0
+content_margin_top = 4.0
+content_margin_right = 30.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+border_width_top = 2
+border_color = Color(1, 1, 1, 0.75)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x12ra"]
+content_margin_left = 30.0
+content_margin_top = 4.0
+content_margin_right = 30.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.3)
+border_width_left = 1
+border_width_right = 1
+border_color = Color(0.175, 0.175, 0.175, 1)
+corner_detail = 1
+
+[node name="OptionsMenu" type="Control" unique_id=430232927 node_paths=PackedStringArray("mainGraphicsMenu", "controlsMenu", "displayButton", "resolutionScaleText", "resolutionScaleSlider", "scalingModeButton", "upscalingButton", "resolutionButton", "vSyncButton", "sensText", "sensSlider", "audioText", "audioSlider", "audioButtonClick")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,17 +55,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jrbyj")
-displayButton = NodePath("BG/VBoxContainer/DisplayColorBox/Display/DisplayOptionButton")
-resolutionScaleText = NodePath("BG/VBoxContainer/ResolutionScaleColorBox/ResolutionScale/ResolutionScaleLabel")
-resolutionScaleSlider = NodePath("BG/VBoxContainer/ResolutionScaleColorBox/ResolutionScale/ResolutionScaleSlider")
-scalingModeButton = NodePath("BG/VBoxContainer/ScalingModeBox/ScalingMode/ScalingModeButton")
-upscalingButton = NodePath("BG/VBoxContainer/FSRPresetsBox/FSRPresets/FSRPresetsButton")
-resolutionButton = NodePath("BG/VBoxContainer/ResolutionColorBox/Resolution/ResolutionOptionButton")
-vSyncButton = NodePath("BG/VBoxContainer/VsyncColorBox/Vsync/VsyncOptionButton")
-sensText = NodePath("BG/VBoxContainer/SensitivityColorBox/ResolutionScale/CurrNumLabel")
-sensSlider = NodePath("BG/VBoxContainer/SensitivityColorBox/ResolutionScale/SensSlider")
-audioText = NodePath("BG/VBoxContainer/AudioColorBox/ResolutionScale/CurrNumLabel")
-audioSlider = NodePath("BG/VBoxContainer/AudioColorBox/ResolutionScale/AudioSlider")
+mainGraphicsMenu = NodePath("Main")
+controlsMenu = NodePath("Controls")
+displayButton = NodePath("Main/VBoxContainer/DisplayColorBox/Display/DisplayOptionButton")
+resolutionScaleText = NodePath("Main/VBoxContainer/ResolutionScaleColorBox/ResolutionScale/ResolutionScaleLabel")
+resolutionScaleSlider = NodePath("Main/VBoxContainer/ResolutionScaleColorBox/ResolutionScale/ResolutionScaleSlider")
+scalingModeButton = NodePath("Main/VBoxContainer/ScalingModeBox/ScalingMode/ScalingModeButton")
+upscalingButton = NodePath("Main/VBoxContainer/FSRPresetsBox/FSRPresets/FSRPresetsButton")
+resolutionButton = NodePath("Main/VBoxContainer/ResolutionColorBox/Resolution/ResolutionOptionButton")
+vSyncButton = NodePath("Main/VBoxContainer/VsyncColorBox/Vsync/VsyncOptionButton")
+sensText = NodePath("Main/VBoxContainer/SensitivityColorBox/ResolutionScale/CurrNumLabel")
+sensSlider = NodePath("Main/VBoxContainer/SensitivityColorBox/ResolutionScale/SensSlider")
+audioText = NodePath("Main/VBoxContainer/AudioColorBox/ResolutionScale/CurrNumLabel")
+audioSlider = NodePath("Main/VBoxContainer/AudioColorBox/ResolutionScale/AudioSlider")
 audioButtonClick = NodePath("AudioStreamPlayer")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=551612539]
@@ -34,29 +80,48 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -244.39532
-offset_top = -1.0
+offset_top = -13.0
 offset_right = 244.39532
-offset_bottom = 112.0
+offset_bottom = 100.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 66
 text = "Options"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BG" type="ColorRect" parent="." unique_id=1756819013]
+[node name="TabBar" type="TabBar" parent="." unique_id=446010071]
+layout_mode = 0
+offset_left = 359.0
+offset_top = 102.0
+offset_right = 921.0
+offset_bottom = 144.0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_uw46w")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_3oclb")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_itlgr")
+theme_override_styles/tab_disabled = SubResource("StyleBoxFlat_x12ra")
+current_tab = 0
+tab_alignment = 1
+close_with_middle_mouse = false
+scrolling_enabled = false
+tab_count = 2
+tab_0/title = "General"
+tab_1/title = "Controls"
+
+[node name="Main" type="ColorRect" parent="." unique_id=1756819013]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 359.0
-offset_top = 118.0
+offset_top = 143.0
 offset_right = -359.0
-offset_bottom = -118.0
+offset_bottom = -93.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BG" unique_id=892501566]
+[node name="VBoxContainer" type="VBoxContainer" parent="Main" unique_id=892501566]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,12 +135,12 @@ grow_vertical = 2
 theme_override_constants/separation = 5
 alignment = 1
 
-[node name="DisplayColorBox" type="ColorRect" parent="BG/VBoxContainer" unique_id=934598511]
+[node name="DisplayColorBox" type="ColorRect" parent="Main/VBoxContainer" unique_id=934598511]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
 
-[node name="Display" type="HBoxContainer" parent="BG/VBoxContainer/DisplayColorBox" unique_id=1190098217]
+[node name="Display" type="HBoxContainer" parent="Main/VBoxContainer/DisplayColorBox" unique_id=1190098217]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -89,14 +154,14 @@ grow_vertical = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Label" type="Label" parent="BG/VBoxContainer/DisplayColorBox/Display" unique_id=920674114]
+[node name="Label" type="Label" parent="Main/VBoxContainer/DisplayColorBox/Display" unique_id=920674114]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Display : "
 vertical_alignment = 1
 
-[node name="DisplayOptionButton" type="OptionButton" parent="BG/VBoxContainer/DisplayColorBox/Display" unique_id=863669017]
+[node name="DisplayOptionButton" type="OptionButton" parent="Main/VBoxContainer/DisplayColorBox/Display" unique_id=863669017]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -112,12 +177,12 @@ popup/item_1/id = 3
 popup/item_2/text = "Windowed"
 popup/item_2/id = 0
 
-[node name="ResolutionScaleColorBox" type="ColorRect" parent="BG/VBoxContainer" unique_id=1387470398]
+[node name="ResolutionScaleColorBox" type="ColorRect" parent="Main/VBoxContainer" unique_id=1387470398]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
 
-[node name="ResolutionScale" type="HBoxContainer" parent="BG/VBoxContainer/ResolutionScaleColorBox" unique_id=1337470898]
+[node name="ResolutionScale" type="HBoxContainer" parent="Main/VBoxContainer/ResolutionScaleColorBox" unique_id=1337470898]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -131,14 +196,14 @@ grow_vertical = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Label" type="Label" parent="BG/VBoxContainer/ResolutionScaleColorBox/ResolutionScale" unique_id=985748953]
+[node name="Label" type="Label" parent="Main/VBoxContainer/ResolutionScaleColorBox/ResolutionScale" unique_id=985748953]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Resolution Scale: "
 vertical_alignment = 1
 
-[node name="ResolutionScaleSlider" type="HSlider" parent="BG/VBoxContainer/ResolutionScaleColorBox/ResolutionScale" unique_id=1762738663]
+[node name="ResolutionScaleSlider" type="HSlider" parent="Main/VBoxContainer/ResolutionScaleColorBox/ResolutionScale" unique_id=1762738663]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -150,7 +215,7 @@ value = 100.0
 scrollable = false
 ticks_on_borders = true
 
-[node name="ResolutionScaleLabel" type="Label" parent="BG/VBoxContainer/ResolutionScaleColorBox/ResolutionScale" unique_id=1844708551]
+[node name="ResolutionScaleLabel" type="Label" parent="Main/VBoxContainer/ResolutionScaleColorBox/ResolutionScale" unique_id=1844708551]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 15
@@ -158,12 +223,12 @@ text = "100% - 1920x1080"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScalingModeBox" type="ColorRect" parent="BG/VBoxContainer" unique_id=225808088]
+[node name="ScalingModeBox" type="ColorRect" parent="Main/VBoxContainer" unique_id=225808088]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
 
-[node name="ScalingMode" type="HBoxContainer" parent="BG/VBoxContainer/ScalingModeBox" unique_id=493190823]
+[node name="ScalingMode" type="HBoxContainer" parent="Main/VBoxContainer/ScalingModeBox" unique_id=493190823]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -177,14 +242,14 @@ grow_vertical = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Label" type="Label" parent="BG/VBoxContainer/ScalingModeBox/ScalingMode" unique_id=1861734123]
+[node name="Label" type="Label" parent="Main/VBoxContainer/ScalingModeBox/ScalingMode" unique_id=1861734123]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Scaling Mode : "
 vertical_alignment = 1
 
-[node name="ScalingModeButton" type="OptionButton" parent="BG/VBoxContainer/ScalingModeBox/ScalingMode" unique_id=1682859598]
+[node name="ScalingModeButton" type="OptionButton" parent="Main/VBoxContainer/ScalingModeBox/ScalingMode" unique_id=1682859598]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -198,12 +263,12 @@ popup/item_0/id = 0
 popup/item_1/text = "FSR 2.2"
 popup/item_1/id = 1
 
-[node name="FSRPresetsBox" type="ColorRect" parent="BG/VBoxContainer" unique_id=304439534]
+[node name="FSRPresetsBox" type="ColorRect" parent="Main/VBoxContainer" unique_id=304439534]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
 
-[node name="FSRPresets" type="HBoxContainer" parent="BG/VBoxContainer/FSRPresetsBox" unique_id=811468931]
+[node name="FSRPresets" type="HBoxContainer" parent="Main/VBoxContainer/FSRPresetsBox" unique_id=811468931]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -217,14 +282,14 @@ grow_vertical = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Label" type="Label" parent="BG/VBoxContainer/FSRPresetsBox/FSRPresets" unique_id=766916249]
+[node name="Label" type="Label" parent="Main/VBoxContainer/FSRPresetsBox/FSRPresets" unique_id=766916249]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Upscaling : "
 vertical_alignment = 1
 
-[node name="FSRPresetsButton" type="OptionButton" parent="BG/VBoxContainer/FSRPresetsBox/FSRPresets" unique_id=189678003]
+[node name="FSRPresetsButton" type="OptionButton" parent="Main/VBoxContainer/FSRPresetsBox/FSRPresets" unique_id=189678003]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -242,12 +307,12 @@ popup/item_2/id = 2
 popup/item_3/text = "Performance"
 popup/item_3/id = 3
 
-[node name="ResolutionColorBox" type="ColorRect" parent="BG/VBoxContainer" unique_id=925129183]
+[node name="ResolutionColorBox" type="ColorRect" parent="Main/VBoxContainer" unique_id=925129183]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
 
-[node name="Resolution" type="HBoxContainer" parent="BG/VBoxContainer/ResolutionColorBox" unique_id=2137382006]
+[node name="Resolution" type="HBoxContainer" parent="Main/VBoxContainer/ResolutionColorBox" unique_id=2137382006]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -261,14 +326,14 @@ grow_vertical = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Label" type="Label" parent="BG/VBoxContainer/ResolutionColorBox/Resolution" unique_id=303745092]
+[node name="Label" type="Label" parent="Main/VBoxContainer/ResolutionColorBox/Resolution" unique_id=303745092]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Resolution : "
 vertical_alignment = 1
 
-[node name="ResolutionOptionButton" type="OptionButton" parent="BG/VBoxContainer/ResolutionColorBox/Resolution" unique_id=795409269]
+[node name="ResolutionOptionButton" type="OptionButton" parent="Main/VBoxContainer/ResolutionColorBox/Resolution" unique_id=795409269]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -284,12 +349,12 @@ popup/item_1/id = 1
 popup/item_2/text = "1920x1080"
 popup/item_2/id = 2
 
-[node name="VsyncColorBox" type="ColorRect" parent="BG/VBoxContainer" unique_id=1878484674]
+[node name="VsyncColorBox" type="ColorRect" parent="Main/VBoxContainer" unique_id=1878484674]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
 
-[node name="Vsync" type="HBoxContainer" parent="BG/VBoxContainer/VsyncColorBox" unique_id=428976300]
+[node name="Vsync" type="HBoxContainer" parent="Main/VBoxContainer/VsyncColorBox" unique_id=428976300]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -303,14 +368,14 @@ grow_vertical = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Label" type="Label" parent="BG/VBoxContainer/VsyncColorBox/Vsync" unique_id=2123381592]
+[node name="Label" type="Label" parent="Main/VBoxContainer/VsyncColorBox/Vsync" unique_id=2123381592]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "vSync : "
 vertical_alignment = 1
 
-[node name="VsyncOptionButton" type="OptionButton" parent="BG/VBoxContainer/VsyncColorBox/Vsync" unique_id=1211103574]
+[node name="VsyncOptionButton" type="OptionButton" parent="Main/VBoxContainer/VsyncColorBox/Vsync" unique_id=1211103574]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -328,12 +393,12 @@ popup/item_2/id = 2
 popup/item_3/text = "Mailbox"
 popup/item_3/id = 3
 
-[node name="SensitivityColorBox" type="ColorRect" parent="BG/VBoxContainer" unique_id=339630236]
+[node name="SensitivityColorBox" type="ColorRect" parent="Main/VBoxContainer" unique_id=339630236]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
 
-[node name="ResolutionScale" type="HBoxContainer" parent="BG/VBoxContainer/SensitivityColorBox" unique_id=305189336]
+[node name="ResolutionScale" type="HBoxContainer" parent="Main/VBoxContainer/SensitivityColorBox" unique_id=305189336]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -347,14 +412,14 @@ grow_vertical = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Label" type="Label" parent="BG/VBoxContainer/SensitivityColorBox/ResolutionScale" unique_id=834045946]
+[node name="Label" type="Label" parent="Main/VBoxContainer/SensitivityColorBox/ResolutionScale" unique_id=834045946]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Sensitivity: "
 vertical_alignment = 1
 
-[node name="SensSlider" type="HSlider" parent="BG/VBoxContainer/SensitivityColorBox/ResolutionScale" unique_id=1663496097]
+[node name="SensSlider" type="HSlider" parent="Main/VBoxContainer/SensitivityColorBox/ResolutionScale" unique_id=1663496097]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -368,19 +433,19 @@ tick_count = 5
 ticks_on_borders = true
 ticks_position = 2
 
-[node name="CurrNumLabel" type="Label" parent="BG/VBoxContainer/SensitivityColorBox/ResolutionScale" unique_id=773650866]
+[node name="CurrNumLabel" type="Label" parent="Main/VBoxContainer/SensitivityColorBox/ResolutionScale" unique_id=773650866]
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
 text = "1.5"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AudioColorBox" type="ColorRect" parent="BG/VBoxContainer" unique_id=1542472827]
+[node name="AudioColorBox" type="ColorRect" parent="Main/VBoxContainer" unique_id=1542472827]
 layout_mode = 2
 size_flags_vertical = 3
 color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
 
-[node name="ResolutionScale" type="HBoxContainer" parent="BG/VBoxContainer/AudioColorBox" unique_id=698146986]
+[node name="ResolutionScale" type="HBoxContainer" parent="Main/VBoxContainer/AudioColorBox" unique_id=698146986]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -394,14 +459,14 @@ grow_vertical = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Label" type="Label" parent="BG/VBoxContainer/AudioColorBox/ResolutionScale" unique_id=488995344]
+[node name="Label" type="Label" parent="Main/VBoxContainer/AudioColorBox/ResolutionScale" unique_id=488995344]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "Audio: "
 vertical_alignment = 1
 
-[node name="AudioSlider" type="HSlider" parent="BG/VBoxContainer/AudioColorBox/ResolutionScale" unique_id=1105997609]
+[node name="AudioSlider" type="HSlider" parent="Main/VBoxContainer/AudioColorBox/ResolutionScale" unique_id=1105997609]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -412,46 +477,383 @@ scrollable = false
 ticks_on_borders = true
 ticks_position = 2
 
-[node name="CurrNumLabel" type="Label" parent="BG/VBoxContainer/AudioColorBox/ResolutionScale" unique_id=1641461343]
+[node name="CurrNumLabel" type="Label" parent="Main/VBoxContainer/AudioColorBox/ResolutionScale" unique_id=1641461343]
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
 text = "100%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="." unique_id=1001597963]
+[node name="Controls" type="ColorRect" parent="." unique_id=535395095]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 359.0
+offset_top = 143.0
+offset_right = -359.0
+offset_bottom = -93.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Controls" unique_id=831388790]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -5.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="Forward" type="ColorRect" parent="Controls/VBoxContainer" unique_id=1135134563]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
+
+[node name="HBox" type="HBoxContainer" parent="Controls/VBoxContainer/Forward" unique_id=812987933]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = -8.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="Controls/VBoxContainer/Forward/HBox" unique_id=941038974]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Move Forward : "
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Controls/VBoxContainer/Forward/HBox" unique_id=576565554 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_mode = 1
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "move_forward"
+
+[node name="Button2" type="Button" parent="Controls/VBoxContainer/Forward/HBox" unique_id=2011089641 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "move_forward"
+isControllerBinding = true
+
+[node name="Left" type="ColorRect" parent="Controls/VBoxContainer" unique_id=72851146]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
+
+[node name="HBox" type="HBoxContainer" parent="Controls/VBoxContainer/Left" unique_id=510275433]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = -8.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="Controls/VBoxContainer/Left/HBox" unique_id=1329209902]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Move Left : "
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Controls/VBoxContainer/Left/HBox" unique_id=271724797 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_mode = 1
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "move_left"
+
+[node name="Button2" type="Button" parent="Controls/VBoxContainer/Left/HBox" unique_id=382514841 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "move_left"
+isControllerBinding = true
+
+[node name="Back" type="ColorRect" parent="Controls/VBoxContainer" unique_id=1171238201]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
+
+[node name="HBox" type="HBoxContainer" parent="Controls/VBoxContainer/Back" unique_id=286857078]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = -8.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="Controls/VBoxContainer/Back/HBox" unique_id=2070018651]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Move Back : "
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Controls/VBoxContainer/Back/HBox" unique_id=255516375 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_mode = 1
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "move_back"
+
+[node name="Button2" type="Button" parent="Controls/VBoxContainer/Back/HBox" unique_id=290311375 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "move_back"
+isControllerBinding = true
+
+[node name="Right" type="ColorRect" parent="Controls/VBoxContainer" unique_id=643441496]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
+
+[node name="HBox" type="HBoxContainer" parent="Controls/VBoxContainer/Right" unique_id=1586614976]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = -8.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="Controls/VBoxContainer/Right/HBox" unique_id=636041321]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Move Right : "
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Controls/VBoxContainer/Right/HBox" unique_id=1786092055 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_mode = 1
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "move_right"
+
+[node name="Button2" type="Button" parent="Controls/VBoxContainer/Right/HBox" unique_id=131599114 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "move_right"
+isControllerBinding = true
+
+[node name="Sprint" type="ColorRect" parent="Controls/VBoxContainer" unique_id=158074677]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
+
+[node name="HBox" type="HBoxContainer" parent="Controls/VBoxContainer/Sprint" unique_id=940487052]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = -8.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="Controls/VBoxContainer/Sprint/HBox" unique_id=1837285540]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Sprint : "
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Controls/VBoxContainer/Sprint/HBox" unique_id=210679403 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_mode = 1
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "sprint"
+
+[node name="Button2" type="Button" parent="Controls/VBoxContainer/Sprint/HBox" unique_id=965855052 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "sprint"
+isControllerBinding = true
+
+[node name="Scan" type="ColorRect" parent="Controls/VBoxContainer" unique_id=769422444]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
+
+[node name="HBox" type="HBoxContainer" parent="Controls/VBoxContainer/Scan" unique_id=384665934]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = -8.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="Controls/VBoxContainer/Scan/HBox" unique_id=1456130554]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Scan : "
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Controls/VBoxContainer/Scan/HBox" unique_id=228510141 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_mode = 1
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "scan"
+
+[node name="Button2" type="Button" parent="Controls/VBoxContainer/Scan/HBox" unique_id=2040733630 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "scan"
+isControllerBinding = true
+
+[node name="Interact" type="ColorRect" parent="Controls/VBoxContainer" unique_id=2042157848]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.16206557, 0.1620656, 0.16206554, 0.50980395)
+
+[node name="HBox" type="HBoxContainer" parent="Controls/VBoxContainer/Interact" unique_id=901747782]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = -8.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="Controls/VBoxContainer/Interact/HBox" unique_id=1179108773]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Interact : "
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Controls/VBoxContainer/Interact/HBox" unique_id=1939898516 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_mode = 1
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "interact"
+
+[node name="Button2" type="Button" parent="Controls/VBoxContainer/Interact/HBox" unique_id=1601496840 node_paths=PackedStringArray("buttonClick")]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_itlgr")
+buttonClick = NodePath("../../../../../AudioStreamPlayer")
+actionName = "interact"
+isControllerBinding = true
+
+[node name="BackButton" type="Button" parent="." unique_id=1001597963]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -170.0
-offset_top = -97.0
-offset_right = 170.0
-offset_bottom = -25.0
+offset_left = -155.0
+offset_top = -78.0
+offset_right = 155.0
+offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 40
 text = "Back"
 
-[connection signal="item_selected" from="BG/VBoxContainer/DisplayColorBox/Display/DisplayOptionButton" to="." method="OnDisplayChanged"]
-[connection signal="item_selected" from="BG/VBoxContainer/DisplayColorBox/Display/DisplayOptionButton" to="AudioStreamPlayer" method="play"]
-[connection signal="pressed" from="BG/VBoxContainer/DisplayColorBox/Display/DisplayOptionButton" to="AudioStreamPlayer" method="play"]
-[connection signal="value_changed" from="BG/VBoxContainer/ResolutionScaleColorBox/ResolutionScale/ResolutionScaleSlider" to="." method="OnScaleSliderChanged"]
-[connection signal="value_changed" from="BG/VBoxContainer/ResolutionScaleColorBox/ResolutionScale/ResolutionScaleSlider" to="AudioStreamPlayer" method="play"]
-[connection signal="item_selected" from="BG/VBoxContainer/ScalingModeBox/ScalingMode/ScalingModeButton" to="." method="OnScalingModeChanged"]
-[connection signal="item_selected" from="BG/VBoxContainer/ScalingModeBox/ScalingMode/ScalingModeButton" to="AudioStreamPlayer" method="play"]
-[connection signal="pressed" from="BG/VBoxContainer/ScalingModeBox/ScalingMode/ScalingModeButton" to="AudioStreamPlayer" method="play"]
-[connection signal="item_selected" from="BG/VBoxContainer/FSRPresetsBox/FSRPresets/FSRPresetsButton" to="." method="OnUpscaleValueChanged"]
-[connection signal="item_selected" from="BG/VBoxContainer/FSRPresetsBox/FSRPresets/FSRPresetsButton" to="AudioStreamPlayer" method="play"]
-[connection signal="pressed" from="BG/VBoxContainer/FSRPresetsBox/FSRPresets/FSRPresetsButton" to="AudioStreamPlayer" method="play"]
-[connection signal="item_selected" from="BG/VBoxContainer/ResolutionColorBox/Resolution/ResolutionOptionButton" to="AudioStreamPlayer" method="play"]
-[connection signal="pressed" from="BG/VBoxContainer/ResolutionColorBox/Resolution/ResolutionOptionButton" to="AudioStreamPlayer" method="play"]
-[connection signal="item_selected" from="BG/VBoxContainer/VsyncColorBox/Vsync/VsyncOptionButton" to="AudioStreamPlayer" method="play"]
-[connection signal="pressed" from="BG/VBoxContainer/VsyncColorBox/Vsync/VsyncOptionButton" to="AudioStreamPlayer" method="play"]
-[connection signal="value_changed" from="BG/VBoxContainer/SensitivityColorBox/ResolutionScale/SensSlider" to="." method="SetSensText"]
-[connection signal="value_changed" from="BG/VBoxContainer/SensitivityColorBox/ResolutionScale/SensSlider" to="AudioStreamPlayer" method="play"]
-[connection signal="value_changed" from="BG/VBoxContainer/AudioColorBox/ResolutionScale/AudioSlider" to="." method="OnAudioSliderChanged"]
-[connection signal="value_changed" from="BG/VBoxContainer/AudioColorBox/ResolutionScale/AudioSlider" to="AudioStreamPlayer" method="play"]
-[connection signal="pressed" from="Button" to="." method="OnMainMenuButtonPressed"]
+[connection signal="tab_selected" from="TabBar" to="." method="OnTabChanged"]
+[connection signal="tab_selected" from="TabBar" to="AudioStreamPlayer" method="play"]
+[connection signal="item_selected" from="Main/VBoxContainer/DisplayColorBox/Display/DisplayOptionButton" to="." method="OnDisplayChanged"]
+[connection signal="item_selected" from="Main/VBoxContainer/DisplayColorBox/Display/DisplayOptionButton" to="AudioStreamPlayer" method="play"]
+[connection signal="pressed" from="Main/VBoxContainer/DisplayColorBox/Display/DisplayOptionButton" to="AudioStreamPlayer" method="play"]
+[connection signal="value_changed" from="Main/VBoxContainer/ResolutionScaleColorBox/ResolutionScale/ResolutionScaleSlider" to="." method="OnScaleSliderChanged"]
+[connection signal="value_changed" from="Main/VBoxContainer/ResolutionScaleColorBox/ResolutionScale/ResolutionScaleSlider" to="AudioStreamPlayer" method="play"]
+[connection signal="item_selected" from="Main/VBoxContainer/ScalingModeBox/ScalingMode/ScalingModeButton" to="." method="OnScalingModeChanged"]
+[connection signal="item_selected" from="Main/VBoxContainer/ScalingModeBox/ScalingMode/ScalingModeButton" to="AudioStreamPlayer" method="play"]
+[connection signal="pressed" from="Main/VBoxContainer/ScalingModeBox/ScalingMode/ScalingModeButton" to="AudioStreamPlayer" method="play"]
+[connection signal="item_selected" from="Main/VBoxContainer/FSRPresetsBox/FSRPresets/FSRPresetsButton" to="." method="OnUpscaleValueChanged"]
+[connection signal="item_selected" from="Main/VBoxContainer/FSRPresetsBox/FSRPresets/FSRPresetsButton" to="AudioStreamPlayer" method="play"]
+[connection signal="pressed" from="Main/VBoxContainer/FSRPresetsBox/FSRPresets/FSRPresetsButton" to="AudioStreamPlayer" method="play"]
+[connection signal="item_selected" from="Main/VBoxContainer/ResolutionColorBox/Resolution/ResolutionOptionButton" to="AudioStreamPlayer" method="play"]
+[connection signal="pressed" from="Main/VBoxContainer/ResolutionColorBox/Resolution/ResolutionOptionButton" to="AudioStreamPlayer" method="play"]
+[connection signal="item_selected" from="Main/VBoxContainer/VsyncColorBox/Vsync/VsyncOptionButton" to="AudioStreamPlayer" method="play"]
+[connection signal="pressed" from="Main/VBoxContainer/VsyncColorBox/Vsync/VsyncOptionButton" to="AudioStreamPlayer" method="play"]
+[connection signal="value_changed" from="Main/VBoxContainer/SensitivityColorBox/ResolutionScale/SensSlider" to="." method="SetSensText"]
+[connection signal="value_changed" from="Main/VBoxContainer/SensitivityColorBox/ResolutionScale/SensSlider" to="AudioStreamPlayer" method="play"]
+[connection signal="value_changed" from="Main/VBoxContainer/AudioColorBox/ResolutionScale/AudioSlider" to="." method="OnAudioSliderChanged"]
+[connection signal="value_changed" from="Main/VBoxContainer/AudioColorBox/ResolutionScale/AudioSlider" to="AudioStreamPlayer" method="play"]
+[connection signal="pressed" from="BackButton" to="." method="OnMainMenuButtonPressed"]

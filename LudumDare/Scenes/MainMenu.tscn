@@ -102,7 +102,7 @@ size = Vector2(3, 3)
 
 [node name="MainMenuScene" type="Node3D" unique_id=1945999567]
 
-[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "mainMenuFocusButton", "optionsMenu", "creditsMenu", "creditsFocusButton", "difficultySelectionMenu", "difficultySelectionFocusButton", "seedSpinBox", "chestNumSpinBox", "monsterNumSpinBox", "audioButtonClick", "introCameraAnimation")]
+[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "mainMenuFocusButton", "optionsMenu", "optionsFocusButton", "creditsMenu", "creditsFocusButton", "difficultySelectionMenu", "difficultySelectionFocusButton", "seedSpinBox", "chestNumSpinBox", "monsterNumSpinBox", "audioButtonClick", "introCameraAnimation")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -113,6 +113,7 @@ script = ExtResource("1_65ows")
 mainMenu = NodePath("MainMenu")
 mainMenuFocusButton = NodePath("MainMenu/ButtonHolder/PlayButton")
 optionsMenu = NodePath("OptionsMenu")
+optionsFocusButton = NodePath("OptionsMenu/TabBar")
 creditsMenu = NodePath("Credits")
 creditsFocusButton = NodePath("Credits/Button")
 difficultySelectionMenu = NodePath("DifficultySelection")
@@ -476,6 +477,7 @@ https://freesound.org/people/joedeshon/sounds/673267/
 
 Textures:
 https://ambientcg.com/
+Xelu Free Controller & Key Prompts - https://thoseawesomeguys.com/prompts/
 
 Other:
 https://www.roguebasin.com/index.php/Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels
@@ -664,7 +666,7 @@ spot_range = 10.0
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/OptionsButton" to="MainMenuUI" method="OnOptionsButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/Credits" to="MainMenuUI" method="OnCreditsButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/MainMenu/ButtonHolder/QuitButton" to="MainMenuUI" method="OnQuitButtonPressed"]
-[connection signal="pressed" from="MainMenuUI/OptionsMenu/Button" to="MainMenuUI" method="OnMainMenuButtonPressed"]
+[connection signal="pressed" from="MainMenuUI/OptionsMenu/BackButton" to="MainMenuUI" method="OnMainMenuButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/BackButton" to="MainMenuUI" method="OnMainMenuButtonPressed"]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/PlayButton" to="MainMenuUI" method="PlayGame"]
 [connection signal="pressed" from="MainMenuUI/DifficultySelection/ButtonHolder/PeacefulButton" to="MainMenuUI/DifficultySelection/Selection/VBoxContainer/Seed/SeedBox" method="set_value_no_signal" binds= [0.0]]
