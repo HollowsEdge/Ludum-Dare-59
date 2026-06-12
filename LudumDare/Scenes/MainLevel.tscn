@@ -93,7 +93,7 @@ pausedMenuRoot = NodePath("PauseMenuRoot")
 pausedMenu = NodePath("PauseMenuRoot/PauseMenuUI")
 mainMenuFocusButton = NodePath("PauseMenuRoot/PauseMenuUI/ButtonHolder/ResumeButton")
 optionsMenu = NodePath("PauseMenuRoot/OptionsMenu")
-optionsMenuFocusButton = NodePath("PauseMenuRoot/OptionsMenu/Sens/ColorRect/SensSlider")
+optionsMenuFocusButton = NodePath("PauseMenuRoot/OptionsMenu/TabBar")
 audioButtonClick = NodePath("AudioStreamPlayer")
 
 [node name="PauseMenuRoot" type="Control" parent="PlayerUI" unique_id=1647853109]
@@ -205,6 +205,5 @@ navigation_mesh = SubResource("NavigationMesh_dnhx3")
 [connection signal="pressed" from="PlayerUI/PauseMenuRoot/PauseMenuUI/ButtonHolder/OptionsButton" to="PlayerUI" method="OnOptionsPressed"]
 [connection signal="pressed" from="PlayerUI/PauseMenuRoot/PauseMenuUI/ButtonHolder/MenuButton" to="PlayerUI" method="OnMenuButtonPressed"]
 [connection signal="pressed" from="PlayerUI/PauseMenuRoot/PauseMenuUI/ButtonHolder/QuitButton" to="PlayerUI" method="OnQuitButtonPressed"]
-[connection signal="pressed" from="PlayerUI/PauseMenuRoot/OptionsMenu/Button" to="PlayerUI" method="OnOptionsBackPressed"]
 
 [editable path="PlayerUI/PauseMenuRoot/OptionsMenu"]

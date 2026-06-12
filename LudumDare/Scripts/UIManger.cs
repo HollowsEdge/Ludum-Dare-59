@@ -120,12 +120,12 @@ public partial class UIManger : Control
     {
         bool originalUsingGamepad = LevelLoader.usingController;
         // Check if the event is part of a controller
-        if (@event is InputEventJoypadButton joyEvent)
+        if (@event is InputEventJoypadButton joyButton && joyButton.Pressed)
         {
-            if (joyEvent.Pressed && !LevelLoader.usingController)
+            if (!LevelLoader.usingController)
                 LevelLoader.usingController = true;
         }
-        else if (@event is InputEventJoypadMotion)
+        else if (@event is InputEventJoypadMotion joyMotion && Mathf.Abs(joyMotion.AxisValue) > 0.2f)
         {
             if (!LevelLoader.usingController)
                 LevelLoader.usingController = true;
@@ -134,37 +134,46 @@ public partial class UIManger : Control
         {
             LevelLoader.usingController = false;
         }
-        else if (@event is InputEventMouseButton mouseButton)
+        else if (@event is InputEventMouseButton mouseButton && mouseButton.Pressed)
         {
-            if (mouseButton.Pressed)
-                LevelLoader.usingController = false;
+            LevelLoader.usingController = false;
         }
-        else if (@event is InputEventKey keyButton)
+        else if (@event is InputEventKey keyButton && keyButton.Pressed)
         {
-            if (keyButton.Pressed)
-                LevelLoader.usingController = false;
+            LevelLoader.usingController = false;
         }
 
         if (originalUsingGamepad != LevelLoader.usingController)
         {
             if (LevelLoader.usingController)
             {
-                switch (currentMenu)
+                if (GetTree().Paused)
                 {
-                    case CurrentMenu.Main:
-                        mainMenuFocusButton.GrabFocus();
-                        break;
-                    case CurrentMenu.Options:
-                        optionsMenuFocusButton.GrabFocus();
-                        break;
+                    switch (currentMenu)
+                    {
+                        case CurrentMenu.Main:
+                            mainMenuFocusButton.GrabFocus();
+                            break;
+                        case CurrentMenu.Options:
+                            optionsMenuFocusButton.GrabFocus();
+                            break;
+                    }
                 }
+                
                 Input.MouseMode = Input.MouseModeEnum.Hidden;
             }
             else
             {
-                // release focus of any up item currently focused
-                GetViewport().GuiReleaseFocus();
-                Input.MouseMode = Input.MouseModeEnum.Visible;
+                if (GetTree().Paused)
+                {                    
+                    // release focus of any up item currently focused
+                    GetViewport().GuiReleaseFocus();
+                    Input.MouseMode = Input.MouseModeEnum.Visible;
+                }
+                else
+                {
+                    Input.MouseMode = Input.MouseModeEnum.Captured;
+                }
             }
         }
     }

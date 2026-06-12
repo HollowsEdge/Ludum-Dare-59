@@ -175,12 +175,12 @@ public partial class MainMenuUI : Control
     {
         bool originalUsingGamepad = LevelLoader.usingController;
         // Check if the event is part of a controller
-        if (@event is InputEventJoypadButton joyEvent)
+        if (@event is InputEventJoypadButton joyButton && joyButton.Pressed)
         {
-            if (joyEvent.Pressed && !LevelLoader.usingController)
+            if (!LevelLoader.usingController)
                 LevelLoader.usingController = true;
         }
-        else if(@event is InputEventJoypadMotion)
+        else if(@event is InputEventJoypadMotion joyMotion && Mathf.Abs(joyMotion.AxisValue) > 0.2f)
         {
             if (!LevelLoader.usingController)
                 LevelLoader.usingController = true;
@@ -189,15 +189,13 @@ public partial class MainMenuUI : Control
         {
             LevelLoader.usingController = false;
         }
-        else if (@event is InputEventMouseButton mouseButton)
+        else if (@event is InputEventMouseButton mouseButton && mouseButton.Pressed)
         {
-            if(mouseButton.Pressed)
-                LevelLoader.usingController = false;
+            LevelLoader.usingController = false;
         }
-        else if (@event is InputEventKey keyButton)
+        else if (@event is InputEventKey keyButton && keyButton.Pressed)
         {
-            if (keyButton.Pressed)
-                LevelLoader.usingController = false;
+            LevelLoader.usingController = false;
         }
 
         if(originalUsingGamepad != LevelLoader.usingController)

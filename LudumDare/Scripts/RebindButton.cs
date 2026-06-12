@@ -120,7 +120,7 @@ public partial class RebindButton : Button
             else if (isControllerBinding && inputEvent is InputEventJoypadMotion joyMotion)
             {
                 Text = "";
-                string path = $"res://Images/ControllerIcons/{joyMotion.Axis.ToString()[..^1]}.png";
+                string path = $"res://Images/ControllerIcons/{joyMotion.Axis}{(joyMotion.AxisValue > 0 ? '+' : '-')}.png";
                 if (ResourceLoader.Exists(path))
                     Icon = GD.Load<CompressedTexture2D>(path);
                 else

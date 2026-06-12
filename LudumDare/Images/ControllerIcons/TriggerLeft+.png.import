@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qetqlino8trr"
-path="res://.godot/imported/Left.png-24a886624f4360eb1d8782eff3f33245.ctex"
+uid="uid://wdqwntmmoqi4"
+path="res://.godot/imported/TriggerLeft+.png-897e8786e4d8d27e44a5af74fe7cbcf9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/ControllerIcons/Left.png"
-dest_files=["res://.godot/imported/Left.png-24a886624f4360eb1d8782eff3f33245.ctex"]
+source_file="res://Images/ControllerIcons/TriggerLeft+.png"
+dest_files=["res://.godot/imported/TriggerLeft+.png-897e8786e4d8d27e44a5af74fe7cbcf9.ctex"]
 
 [params]
 

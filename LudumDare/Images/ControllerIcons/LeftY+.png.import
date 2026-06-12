@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mtw3anymffb"
-path="res://.godot/imported/Right.png-ef77c71c8c32c810c451caa24beb4505.ctex"
+uid="uid://chv75w040ll5u"
+path="res://.godot/imported/LeftY+.png-6c6c19fa7aa487dfa45499d9d9d4f943.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/ControllerIcons/Right.png"
-dest_files=["res://.godot/imported/Right.png-ef77c71c8c32c810c451caa24beb4505.ctex"]
+source_file="res://Images/ControllerIcons/LeftY+.png"
+dest_files=["res://.godot/imported/LeftY+.png-6c6c19fa7aa487dfa45499d9d9d4f943.ctex"]
 
 [params]
 

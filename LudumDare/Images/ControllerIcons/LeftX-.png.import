@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dctt8pj4kjc8p"
-path="res://.godot/imported/TriggerRight.png-b814f773a319dcb4d6991b67a94f2dec.ctex"
+uid="uid://busfssmism00c"
+path="res://.godot/imported/LeftX-.png-dea2e87eb27a376a49a65712ec84fc80.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/ControllerIcons/TriggerRight.png"
-dest_files=["res://.godot/imported/TriggerRight.png-b814f773a319dcb4d6991b67a94f2dec.ctex"]
+source_file="res://Images/ControllerIcons/LeftX-.png"
+dest_files=["res://.godot/imported/LeftX-.png-dea2e87eb27a376a49a65712ec84fc80.ctex"]
 
 [params]
 
