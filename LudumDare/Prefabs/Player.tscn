@@ -18,12 +18,12 @@ radius = 0.35
 
 [sub_resource type="BoxMesh" id="BoxMesh_0rwas"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b43ah"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lhekp"]
 shading_mode = 0
 vertex_color_use_as_albedo = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_x3d5u"]
-material = SubResource("StandardMaterial3D_b43ah")
+material = SubResource("StandardMaterial3D_lhekp")
 radius = 0.02
 height = 0.04
 radial_segments = 8

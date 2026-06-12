@@ -11,8 +11,11 @@ config_version=5
 [application]
 
 config/name="Treasures Below"
+config/version="2.0"
 run/main_scene="uid://dwu30f7dnl5v5"
 config/features=PackedStringArray("4.6", "C#", "Mobile")
+config/icon="uid://ckgokf53f2g74"
+config/windows_native_icon="res://Images/GameIcon.ico"
 
 [autoload]
 
