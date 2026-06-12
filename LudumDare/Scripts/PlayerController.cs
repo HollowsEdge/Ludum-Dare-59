@@ -23,7 +23,10 @@ public partial class PlayerController : CharacterBody3D
     [Export] private AudioStreamPlayer3D footstepsAudio;
     [Export] public float footstepDelayWalk = .5f;
     [Export] public float footstepDelayRun = .3f;
-   
+
+    [ExportCategory("Treasure Audio")]
+    [Export] private AudioStreamPlayer3D treasureCollectAudio;
+
     // Camera and movement
     private float currSpeed;
     private float xRot;
@@ -230,6 +233,7 @@ public partial class PlayerController : CharacterBody3D
                 if (exitArea.OverlapsBody(GetNode<PlayerController>(GetPath())))
                 {
                     // Drop
+                    treasureCollectAudio.Play();
                     ((DropTreasure)exitArea).RecieveTreasure(carryingTreasure);
                     GD.Print("SUCCESS : " + carryingTreasure);
                     carryingTreasure.QueueFree();
