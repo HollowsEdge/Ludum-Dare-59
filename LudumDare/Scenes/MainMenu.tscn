@@ -102,7 +102,7 @@ size = Vector2(3, 3)
 
 [node name="MainMenuScene" type="Node3D" unique_id=1945999567]
 
-[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "mainMenuFocusButton", "optionsMenu", "optionsFocusButton", "creditsMenu", "creditsFocusButton", "difficultySelectionMenu", "difficultySelectionFocusButton", "seedSpinBox", "chestNumSpinBox", "monsterNumSpinBox", "audioButtonClick", "introCameraAnimation")]
+[node name="MainMenuUI" type="Control" parent="." unique_id=1927087077 node_paths=PackedStringArray("mainMenu", "mainMenuFocusButton", "optionsMenu", "creditsMenu", "creditsFocusButton", "difficultySelectionMenu", "difficultySelectionFocusButton", "seedSpinBox", "chestNumSpinBox", "monsterNumSpinBox", "audioButtonClick", "introCameraAnimation")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -113,7 +113,6 @@ script = ExtResource("1_65ows")
 mainMenu = NodePath("MainMenu")
 mainMenuFocusButton = NodePath("MainMenu/ButtonHolder/PlayButton")
 optionsMenu = NodePath("OptionsMenu")
-optionsFocusButton = NodePath("OptionsMenu/Sens/ColorRect/SensSlider")
 creditsMenu = NodePath("Credits")
 creditsFocusButton = NodePath("Credits/Button")
 difficultySelectionMenu = NodePath("DifficultySelection")
@@ -126,7 +125,6 @@ introCameraAnimation = NodePath("../AnimationPlayer")
 metadata/_edit_use_anchors_ = true
 
 [node name="MainMenu" type="Control" parent="MainMenuUI" unique_id=917621942]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -157,41 +155,41 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -426.865
-offset_top = -112.0
-offset_right = 0.13549805
-offset_bottom = 304.0
+offset_left = -340.0
+offset_top = -85.0
+offset_right = -39.99994
+offset_bottom = 215.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
 alignment = 1
 
 [node name="PlayButton" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=1825381018]
-custom_minimum_size = Vector2(0, 95)
 layout_mode = 2
+size_flags_vertical = 3
 focus_neighbor_bottom = NodePath("../OptionsButton")
 theme_override_font_sizes/font_size = 40
 text = "Play"
 
 [node name="OptionsButton" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=1490167389]
-custom_minimum_size = Vector2(0, 95)
 layout_mode = 2
+size_flags_vertical = 3
 focus_neighbor_top = NodePath("../PlayButton")
 focus_neighbor_bottom = NodePath("../Credits")
 theme_override_font_sizes/font_size = 40
 text = "Options"
 
 [node name="Credits" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=1167275407]
-custom_minimum_size = Vector2(0, 95)
 layout_mode = 2
+size_flags_vertical = 3
 focus_neighbor_top = NodePath("../OptionsButton")
 focus_neighbor_bottom = NodePath("../QuitButton")
 theme_override_font_sizes/font_size = 40
 text = "Credits"
 
 [node name="QuitButton" type="Button" parent="MainMenuUI/MainMenu/ButtonHolder" unique_id=507176736]
-custom_minimum_size = Vector2(0, 95)
 layout_mode = 2
+size_flags_vertical = 3
 focus_neighbor_top = NodePath("../Credits")
 theme_override_font_sizes/font_size = 40
 text = "Quit"
@@ -204,50 +202,34 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 33.0
-offset_top = -111.0
-offset_right = 462.0
-offset_bottom = 306.0
+offset_top = -110.0
+offset_right = 419.0
+offset_bottom = 250.00049
 color = Color(0, 0, 0, 0.62352943)
-
-[node name="RichTextLabel" type="RichTextLabel" parent="MainMenuUI/MainMenu/Tutorial" unique_id=77495456]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 31.0
-offset_bottom = -320.00006
-grow_horizontal = 2
-grow_vertical = 2
-text = "TUTORIAL
---------
-"
-horizontal_alignment = 1
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="MainMenuUI/MainMenu/Tutorial" unique_id=514267824]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 23.0
-offset_top = 81.0
-offset_right = -23.0
-offset_bottom = 29.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Controls:
+text = "TUTORIAL
+--------
+Default Controls:
 WASD --- Move
 Mouse --- Look
 E --- Interact / Pickup / Drop
 Left Click --- Scan
 Shift --- Run
 
-
 Objective:
 Find treasure using your scanner and bring it back to the enterance while avoiding the monster. Place the chest on the spawn mat at the enterance."
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="OptionsMenu" parent="MainMenuUI" unique_id=430232927 instance=ExtResource("2_koqhg")]
-visible = true
+visible = false
 layout_mode = 1
 
 [node name="DifficultySelection" type="Control" parent="MainMenuUI" unique_id=1020554810]

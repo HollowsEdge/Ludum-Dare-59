@@ -23,6 +23,8 @@ LevelLoader="*uid://bcrcry52jx11f"
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/size/resizable=false
+window/size/maximize_disabled=true
+window/stretch/mode="canvas_items"
 
 [dotnet]
 
@@ -126,4 +128,3 @@ pause={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
-renderer/rendering_method="mobile"
