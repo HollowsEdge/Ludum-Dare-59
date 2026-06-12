@@ -5,6 +5,7 @@
 [ext_resource type="Material" uid="uid://ccx7v7jii6aa7" path="res://Materials/Fabric.tres" id="2_yuhrt"]
 [ext_resource type="PackedScene" uid="uid://b4je123osxljp" path="res://Models/CaveOpening.glb" id="3_j5asw"]
 [ext_resource type="Material" uid="uid://kpkideeg5njj" path="res://Materials/ScanMaterial.tres" id="4_kuowo"]
+[ext_resource type="Shader" uid="uid://co8d66ovey1j" path="res://Materials/Shaders/PlayerExitDropGodrays.gdshader" id="6_0nnm2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xr358"]
 size = Vector3(3, 5, 3)
@@ -98,9 +99,56 @@ _data = {
 &"RESET": SubResource("Animation_0nnm2")
 }
 
+[sub_resource type="QuadMesh" id="QuadMesh_kuowo"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0nnm2"]
+noise_type = 4
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3cmoo"]
+noise = SubResource("FastNoiseLite_0nnm2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3cmoo"]
+render_priority = 0
+shader = ExtResource("6_0nnm2")
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_3cmoo")
+shader_parameter/beam_color = Color(0.99999994, 0.9735939, 0.8957425, 1)
+shader_parameter/intensity = 0.5
+shader_parameter/noise_scale = 2.75
+shader_parameter/noise_speed = 0.02
+shader_parameter/fade_start = 2.0
+shader_parameter/fade_end = 0.5
+
+[sub_resource type="Gradient" id="Gradient_0nnm2"]
+offsets = PackedFloat32Array(0, 0.41935483)
+colors = PackedColorArray(1, 1, 1, 0.20392157, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3cmoo"]
+gradient = SubResource("Gradient_0nnm2")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_memxi"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0.7058824)
+albedo_texture = SubResource("GradientTexture2D_3cmoo")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_xqt2l"]
+material = SubResource("StandardMaterial3D_memxi")
+size = Vector2(0.025, 0.025)
+
+[sub_resource type="Curve" id="Curve_0agpw"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.9758064, 0.326178), -2.2154472, 0.0, 0, 0]
+point_count = 3
+
 [node name="PlayerDropBox" type="Node3D" unique_id=2147074141]
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1621386024 node_paths=PackedStringArray("floorMeshNode", "animationPlayer") groups=["GameExit"]]
+visible = false
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_jal7x")
@@ -124,6 +172,7 @@ shadow_enabled = true
 transform = Transform3D(-1, -8.742278e-08, 0, 8.742278e-08, -1, 0, 0, 0, 1, 0, 4.551, 0)
 
 [node name="Plane" parent="cave" index="0" unique_id=138377278]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -1.7681009e-07, 2.0224717, 0)
 visible = false
 
 [node name="Plane_001" parent="cave" index="1" unique_id=1593947678]
@@ -137,5 +186,34 @@ libraries/ = SubResource("AnimationLibrary_3cmoo")
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1492156893]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 fov = 30.0
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=16181630]
+transform = Transform3D(0.96229935, 0, 0, 0, 2.5502784, 0.2799985, 0, -0.7312806, 0.9764708, 0, 1.4407226, -0.10287756)
+mesh = SubResource("QuadMesh_kuowo")
+surface_material_override/0 = SubResource("ShaderMaterial_3cmoo")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=503620028]
+transform = Transform3D(-3.0907714e-08, -2.8928218e-08, 1.015822, -0.20275368, 2.3079722, 0, -0.7070861, -0.66180044, -4.440299e-08, -0.14521772, 1.4407226, 0.22485667)
+mesh = SubResource("QuadMesh_kuowo")
+surface_material_override/0 = SubResource("ShaderMaterial_3cmoo")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=1632742837]
+transform = Transform3D(1.4809368, 0, 0, 0, 1.2008197, 0, 0, 0, 1.4425983, 0, 1.1845672, 0)
+lifetime = 3.0
+speed_scale = 0.25
+randomness = 0.5
+mesh = SubResource("QuadMesh_xqt2l")
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.1
+initial_velocity_max = 1.0
+angular_velocity_min = -0.5
+angular_velocity_max = 0.5
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_curve = SubResource("Curve_0agpw")
 
 [editable path="cave"]

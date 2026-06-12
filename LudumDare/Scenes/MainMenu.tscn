@@ -247,9 +247,11 @@ Find treasure using your scanner and bring it back to the enterance while avoidi
 horizontal_alignment = 1
 
 [node name="OptionsMenu" parent="MainMenuUI" unique_id=430232927 instance=ExtResource("2_koqhg")]
+visible = true
 layout_mode = 1
 
 [node name="DifficultySelection" type="Control" parent="MainMenuUI" unique_id=1020554810]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
