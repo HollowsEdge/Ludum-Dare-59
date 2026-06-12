@@ -174,6 +174,7 @@ public partial class MainMenuUI : Control
     public override void _Input(InputEvent @event)
     {
         bool originalUsingGamepad = LevelLoader.usingController;
+
         // Check if the event is part of a controller
         if (@event is InputEventJoypadButton joyButton && joyButton.Pressed)
         {
@@ -198,10 +199,12 @@ public partial class MainMenuUI : Control
             LevelLoader.usingController = false;
         }
 
+        // Check if the input device has changed
         if(originalUsingGamepad != LevelLoader.usingController)
         {
             if (LevelLoader.usingController)
             {
+                // Update UI focus
                 switch (currentMenu)
                 {
                     case CurrentMenu.Main:
@@ -221,7 +224,7 @@ public partial class MainMenuUI : Control
             }
             else
             {
-                // release focus of any up item currently focused
+                // Release focus of any up item currently focused
                 GetViewport().GuiReleaseFocus();
                 Input.MouseMode = Input.MouseModeEnum.Visible;
             }

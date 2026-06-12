@@ -1,8 +1,8 @@
 using Godot;
-using System;
 
 public partial class CameraItemLag : Node3D
 {
+    [ExportCategory("References")]
     [Export] private Camera3D camera;
     [Export] private PlayerController player;
 

@@ -119,6 +119,7 @@ public partial class UIManger : Control
     public override void _Input(InputEvent @event)
     {
         bool originalUsingGamepad = LevelLoader.usingController;
+
         // Check if the event is part of a controller
         if (@event is InputEventJoypadButton joyButton && joyButton.Pressed)
         {
@@ -143,10 +144,12 @@ public partial class UIManger : Control
             LevelLoader.usingController = false;
         }
 
+        // Check if the input device has changed
         if (originalUsingGamepad != LevelLoader.usingController)
         {
             if (LevelLoader.usingController)
             {
+                // Update focus if in pause menu
                 if (GetTree().Paused)
                 {
                     switch (currentMenu)
@@ -164,6 +167,7 @@ public partial class UIManger : Control
             }
             else
             {
+                // Update focus if in pause menu
                 if (GetTree().Paused)
                 {                    
                     // release focus of any up item currently focused

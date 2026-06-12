@@ -353,6 +353,7 @@ public partial class LevelGenerate : Node3D
         currentPrecent = 5;
         OnLoadPrecentChanged?.Invoke(currentPrecent);
         await ToSignal(GetTree(), "process_frame");
+
         // Generate the cave using marching cubes
         await GenerateCave();
         currentPrecent = 60;

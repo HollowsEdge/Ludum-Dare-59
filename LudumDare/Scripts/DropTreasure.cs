@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 
 public partial class DropTreasure : Area3D
 {
+    [ExportCategory("References")]
     [Export] private PackedScene treasureScene;
     [Export] private MeshInstance3D floorMeshNode;
     [Export] private AnimationPlayer animationPlayer;
 
-    // References
     private PlayerController player;
     private GameManager gameManager;
 

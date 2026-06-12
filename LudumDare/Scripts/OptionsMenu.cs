@@ -1,7 +1,5 @@
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public partial class OptionsMenu : Control
 {
@@ -67,7 +65,10 @@ public partial class OptionsMenu : Control
         vSyncButton.Select((int)config.GetValue("Player", "vSync", (int)DisplayServer.WindowGetVsyncMode()));
         sensSlider.Value = (float)config.GetValue("Player", "Sensitivity", 1f);
         audioSlider.Value = (float)config.GetValue("Player", "Audio", 100f);
+
         ApplySettings();
+
+        // Update incompatable settings
         resolutionButton.Disabled = displayButton.Selected <= 1; // Disable if in fullscreen
         resolutionScaleSlider.Editable = displayButton.Selected <= 1 && scalingModeButton.Selected == 0; // Enable if in fullscreen or fsr
         upscalingButton.Disabled = scalingModeButton.Selected == 0;
@@ -84,6 +85,9 @@ public partial class OptionsMenu : Control
         OnOptionsChanged?.Invoke();
     }
 
+    /// <summary>
+    /// Applies display settings using DisplayServer
+    /// </summary>
     public void ApplySettings()
     {
         DisplayServer.WindowSetMode((DisplayServer.WindowMode)displayButton.GetSelectedId());
@@ -115,7 +119,7 @@ public partial class OptionsMenu : Control
     /// </summary>
     public void SaveGame()
     {
-        // Create new save file
+        // Load save file
         ConfigFile config = new();
         config.Load("user://settings.cfg");
 
@@ -133,7 +137,10 @@ public partial class OptionsMenu : Control
         config.Save("user://settings.cfg");
     }
 
-
+    /// <summary>
+    /// Changes the game resolution scale.
+    /// </summary>
+    /// <param name="value">New slider value</param>
     void OnScaleSliderChanged(float value) {
 
         float resolutionScale = value / 100f;
@@ -142,26 +149,29 @@ public partial class OptionsMenu : Control
         GetViewport().Scaling3DScale = resolutionScale;
     }
 
+    /// <summary>
+    /// Manages settings when display is changed
+    /// </summary>
     public void OnDisplayChanged(int _)
     {
         if(displayButton.Selected <= 1)
-        {
             resolutionButton.Select(0);
-        }
         else
-        {
             resolutionScaleSlider.Value = 100;
-        }
             
         resolutionButton.Disabled = displayButton.Selected <= 1;
-        resolutionScaleSlider.Editable = displayButton.Selected <= 1 && scalingModeButton.Selected == 0; // Enable if in fullscreen or fsr
+        resolutionScaleSlider.Editable = displayButton.Selected <= 1 && scalingModeButton.Selected == 0; // Enable if in fullscreen or FSR
 
     }
 
+    /// <summary>
+    /// Sets the scaling mode of the game.
+    /// </summary>
+    /// <param name="index">Selected option index</param>
     public void OnScalingModeChanged(int index)
     {
         upscalingButton.Disabled = scalingModeButton.Selected == 0;
-        resolutionScaleSlider.Editable = displayButton.Selected <= 1 && scalingModeButton.Selected == 0; // Enable if in fullscreen or fsr
+        resolutionScaleSlider.Editable = displayButton.Selected <= 1 && scalingModeButton.Selected == 0; // Enable if in fullscreen or FSR
 
         if (index == 1)
             OnUpscaleValueChanged(upscalingButton.Selected);
@@ -170,6 +180,10 @@ public partial class OptionsMenu : Control
         GetViewport().Scaling3DMode = index == 1 ? Viewport.Scaling3DModeEnum.Fsr2 : Viewport.Scaling3DModeEnum.Bilinear;
     }
 
+    /// <summary>
+    /// Updates resolution based on recomended presets for FSR 2
+    /// </summary>
+    /// <param name="index">Selected option index</param>
     public void OnUpscaleValueChanged(int index)
     {
         switch (index)
@@ -207,6 +221,10 @@ public partial class OptionsMenu : Control
         return sensSlider.Value;
     }
 
+    /// <summary>
+    /// Switchs the options menu.
+    /// </summary>
+    /// <param name="tab">Index of selected tab</param>
     public void OnTabChanged(int tab)
     {
         mainGraphicsMenu.Visible = tab == 0;

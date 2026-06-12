@@ -22,6 +22,9 @@ public partial class LevelLoader : Node
         loadingMenu.Hide(); // Hide loading menu
     }
 
+    /// <summary>
+    /// Loads the game scene
+    /// </summary>
     public async void LoadGame()
     {
         // Show Loading Menu
@@ -40,6 +43,7 @@ public partial class LevelLoader : Node
         LevelGenerate loadedGameScene = gameScene.Instantiate<LevelGenerate>();
         loadedGameScene.OnLoadPrecentChanged += OnGameLoadPrecentChanged;
 
+        // Add scene to tree
         GetTree().Root.AddChild(loadedGameScene);
         GetTree().CurrentScene = loadedGameScene;
 
@@ -74,6 +78,10 @@ public partial class LevelLoader : Node
         isLoading = false;
     }
 
+    /// <summary>
+    /// Handles updating the game load precentage.
+    /// </summary>
+    /// <param name="currPrecent">How far the game had loaded 0-100</param>
     void OnGameLoadPrecentChanged(int currPrecent)
     {
         currentGameLoadPrecentage = currPrecent;
