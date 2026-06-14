@@ -24,35 +24,35 @@ Shift --- Run
 Many bugfixes, QOL, and some visual changes.
 
 Changelog:
-Fixes
-    Add frame delay in main menu before loading game scene so loading screen shows
-    Audio in game scene 
-    Add "Made by Hollow's Edge" to credits menu 
-    Dots continue to exist between runs 
-    Add comments to code
+- Fixes:
+    - Add frame delay in main menu before loading game scene so loading screen shows
+    - Audio in game scene 
+    - Add "Made by Hollow's Edge" to credits menu 
+    - Dots continue to exist between runs 
+    - Add comments to code
 
-Additions:
-    Add cooldown UI to scanner
-    Add option menu to pause screen
-    Add raycast to monster vision
-    Add Async loading
-    Add semi controller support
-    Add intro cutscene
-    Added second texture shader to cave rock texture
-    Add chest at exit on collection - random place
-    Add item follow camera delay
-    Added monster grab scanner collision
-    Add item bob as walking
-    Added second cave texture to make the walls look more interesting
-    Add ending cutscene
-    Add entrance godrays
-    Add entrance particles
-    Add chest collection sound
-    Add fade in on game start
-    Add custom runs with seed, monster amount, chest amount
-    Add sounds to option screen
-    Updated and added to Options menu
-    Control Rebinding
+- Additions:
+    - Add cooldown UI to scanner
+    - Add option menu to pause screen
+    - Add raycast to monster vision
+    - Add Async loading
+    - Add semi controller support
+    - Add intro cutscene
+    - Added second texture shader to cave rock texture
+    - Add chest at exit on collection - random place
+    - Add item follow camera delay
+    - Added monster grab scanner collision
+    - Add item bob as walking
+    - Added second cave texture to make the walls look more interesting
+    - Add ending cutscene
+    - Add entrance godrays
+    - Add entrance particles
+    - Add chest collection sound
+    - Add fade in on game start
+    - Add custom runs with seed, monster amount, chest amount
+    - Add sounds to option screen
+    - Updated and added to Options menu
+    - Control Rebinding
 
 # V2.1
 
