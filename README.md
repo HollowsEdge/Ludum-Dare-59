@@ -57,3 +57,7 @@ Changelog:
 # V2.1
 
 Fixed major issue where ingame options menu back button didn't work
+
+# Screenshots
+<img width="2559" height="1439" alt="2" src="https://github.com/user-attachments/assets/3233cc24-9b9d-449d-8c74-984ccfd39656" />
+<img width="2559" height="1439" alt="3" src="https://github.com/user-attachments/assets/2725ce64-4f67-4f5a-a6c8-468a5c3c82e5" />
