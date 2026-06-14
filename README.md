@@ -53,3 +53,7 @@ Additions:
     Add sounds to option screen
     Updated and added to Options menu
     Control Rebinding
+
+# V2.1
+
+Fixed major issue where ingame options menu back button didn't work
